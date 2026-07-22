@@ -1,691 +1,1044 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maurya Restaurant & Sweets | Fine North Indian, Chinese & Traditional Sweets in Lucknow</title>
+    <title>360 Degree Dining | Luxury Multi-Cuisine & Open Lawn Restaurant Varanasi</title>
+    <meta name="description" content="Experience premium global cuisine at 360 Degree Dining, Varanasi. Enjoy a 'Vintage India' themed environment with expansive open lawns, serving North Indian, Pan-Asian, Italian, and Mediterranean delicacies.">
     
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            red: '#DC2626',
-                            crimson: '#991B1B',
-                            darkRed: '#7F1D1D',
-                            amber: '#F59E0B',
-                            gold: '#D4AF37',
-                            darkBg: '#0D0E12',
-                            cardBg: '#161922',
-                            borderDark: '#262A36'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    
+    <!-- Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+    <!-- Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        .glass-nav {
-            background: rgba(13, 14, 18, 0.88);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border-bottom: 1px solid rgba(220, 38, 38, 0.2);
+        /* --- BRAND STYLE ARCHITECTURE --- */
+        :root {
+            --gold: #C5A880;            /* Vintage Gold/Champagne */
+            --gold-glow: rgba(197, 168, 128, 0.3);
+            --dark: #0D0E10;            /* Velvet Noir */
+            --surface: #16181C;         /* Elevated Surface */
+            --terracotta: #A95C42;      /* Brick Arch Accent */
+            --text-light: #F3F4F6;
+            --text-muted: #9CA3AF;
+            --font-display: 'Cinzel', serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --border-glass: rgba(255, 255, 255, 0.05);
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .glass-card {
-            background: rgba(22, 25, 34, 0.75);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+
+        /* --- BASIC STRUCTURAL RESET --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
         }
-        .glass-card-hover:hover {
-            border-color: rgba(220, 38, 38, 0.5);
-            box-shadow: 0 12px 35px -10px rgba(220, 38, 38, 0.25);
+
+        body {
+            background-color: var(--dark);
+            color: var(--text-light);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.7;
         }
-        .text-gradient-red {
-            background: linear-gradient(135deg, #EF4444 0%, #DC2626 50%, #B91C1C 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+
+        ::-webkit-scrollbar {
+            width: 6px;
         }
-        .text-gradient-gold {
-            background: linear-gradient(135deg, #FDE047 0%, #D4AF37 50%, #CA8A04 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
         }
-        .bg-gradient-red {
-            background: linear-gradient(135deg, #EF4444 0%, #DC2626 50%, #991B1B 100%);
+        ::-webkit-scrollbar-thumb {
+            background: #252830;
+            border-radius: 3px;
         }
-        .bg-radial-glow {
-            background: radial-gradient(circle at 50% 20%, rgba(220, 38, 38, 0.15) 0%, transparent 70%);
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1320px;
+            margin: 0 auto;
+        }
+
+        /* --- TYPOGRAPHY ENGINE --- */
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 90px;
+        }
+
+        .tagline {
+            color: var(--gold);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.35em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: block;
+            font-family: var(--font-body);
+        }
+
+        .section-title {
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            line-height: 1.2;
+            color: var(--text-light);
+        }
+
+        .section-title span {
+            color: var(--gold);
+        }
+
+        section {
+            padding: 140px 0;
+            position: relative;
+        }
+
+        /* --- INTERACTIVE ACTION ACCELERATORS --- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 18px 42px;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 0;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: var(--dark);
+            border: 1px solid var(--gold);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--gold);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--gold-glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--border-glass);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: translateY(-3px);
+        }
+
+        /* --- SCROLL ANIMATION DRIVERS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(45px);
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- HEADER NAVIGATION STRUCTURE --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 35px 0;
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            padding: 20px 0;
+            background: rgba(13, 14, 16, 0.92);
+            backdrop-filter: blur(25px);
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .nav-flex {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-box {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            color: var(--text-light);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+
+        .logo-box span {
+            color: var(--gold);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--gold);
+        }
+
+        .menu-toggle {
+            display: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* --- HERO DISPLAY AREA --- */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(180deg, rgba(13,14,16,0.2) 0%, rgba(13,14,16,0.95) 100%), 
+                        url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+            padding-top: 120px;
+        }
+
+        .hero-container {
+            max-width: 950px;
+        }
+
+        .hero-container h1 {
+            font-size: clamp(3rem, 7vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .hero-container h1 span {
+            color: transparent;
+            -webkit-text-stroke: 1px var(--text-light);
+        }
+
+        .hero-subtext {
+            font-size: 1.3rem;
+            font-family: var(--font-display);
+            color: var(--text-muted);
+            margin-bottom: 50px;
+            max-width: 700px;
+        }
+
+        .hero-btn-layout {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* --- THE LEGACY CONCEPT SECTION --- */
+        .legacy-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 90px;
+            align-items: center;
+        }
+
+        .legacy-content p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .legacy-visuals {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .visual-block {
+            border: 1px solid var(--border-glass);
+            padding: 10px;
+            background: rgba(255,255,255,0.01);
+        }
+
+        .legacy-visuals img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: sepia(20%) contrast(105%);
+            transition: var(--transition);
+        }
+
+        .legacy-visuals img:hover {
+            filter: sepia(0%) contrast(100%);
+        }
+
+        /* --- AMENITIES & FEATURES --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid var(--border-glass);
+            padding: 65px 45px;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--gold);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        .feature-card i {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 30px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 18px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* --- HIGH CONVERSION MENU PRESENTATION --- */
+        .menu-tabs-row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        .tab-trigger {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 5px 20px;
+            transition: var(--transition);
+            border-bottom: 1px solid transparent;
+        }
+
+        .tab-trigger.active, .tab-trigger:hover {
+            color: var(--gold);
+            border-bottom-color: var(--gold);
+        }
+
+        .menu-items-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px 80px;
+        }
+
+        .food-item-card {
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+            padding-bottom: 25px;
+        }
+
+        .food-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 10px;
+        }
+
+        .food-header h4 {
+            font-size: 1.4rem;
+            color: var(--text-light);
+        }
+
+        .food-price {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .food-item-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* --- OPEN LAWN & EXPERIENTIAL GALLERY --- */
+        .gallery-mosaic {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 25px;
+        }
+
+        .mosaic-item {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            border: 1px solid var(--border-glass);
+        }
+
+        .mosaic-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .mosaic-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* --- AGGREGATED PATRON REVIEWS --- */
+        .reputation-banner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            background: rgba(255,255,255,0.01);
+            border: 1px solid var(--border-glass);
+            width: max-content;
+            margin: 0 auto 80px auto;
+            padding: 25px 55px;
+        }
+
+        .reputation-score {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            color: var(--gold);
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .stars-group i {
+            color: #FFC72C;
+            font-size: 1.1rem;
+            margin-right: 3px;
+        }
+
+        .reviews-container-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .patron-card {
+            background: var(--surface);
+            padding: 55px 45px;
+            border: 1px solid var(--border-glass);
+            position: relative;
+        }
+
+        .patron-card p {
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 35px;
+            font-size: 1.05rem;
+        }
+
+        .patron-name h5 {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        .patron-name span {
+            color: var(--gold);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        /* --- IMMERSIVE CTA BLOCK --- */
+        .conversion-cta {
+            background: linear-gradient(rgba(13,14,16,0.9), rgba(13,14,16,0.9)), 
+                        url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+            padding: 130px 0;
+            text-align: center;
+            border-top: 1px solid var(--border-glass);
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .conversion-cta h2 {
+            font-size: clamp(2.4rem, 5vw, 4.4rem);
+            margin-bottom: 25px;
+        }
+
+        .conversion-cta p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 650px;
+            margin: 0 auto 45px auto;
+            font-family: var(--font-display);
+        }
+
+        /* --- LOCATION PANEL & TARGETED MAP --- */
+        .contact-layout-box {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 90px;
+        }
+
+        .contact-info-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 45px;
+        }
+
+        .contact-node {
+            display: flex;
+            gap: 25px;
+        }
+
+        .contact-node i {
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-top: 5px;
+        }
+
+        .contact-node h4 {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+
+        .contact-node p, .contact-node a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 1.05rem;
+        }
+
+        .map-frame-holder {
+            height: 100%;
+            min-height: 450px;
+            border: 1px solid var(--border-glass);
+        }
+
+        /* --- PREMIUM BASE FOOTER --- */
+        footer {
+            background: #08090B;
+            padding: 95px 0 45px 0;
+            border-top: 1px solid var(--border-glass);
+        }
+
+        .footer-grid-layout {
+            display: grid;
+            grid-template-columns: 1.5fr 0.8fr 0.8fr;
+            gap: 80px;
+            margin-bottom: 70px;
+        }
+
+        .footer-brand h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            max-width: 380px;
+        }
+
+        .footer-links-group h4 {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 25px;
+        }
+
+        .footer-links-group ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-links-group a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        .footer-links-group a:hover {
+            color: var(--gold);
+            padding-left: 6px;
+        }
+
+        .social-media-strip {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .social-btn-node {
+            width: 42px;
+            height: 42px;
+            border: 1px solid var(--border-glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-btn-node:hover {
+            background: var(--gold);
+            color: var(--dark);
+            border-color: var(--gold);
+            transform: translateY(-4px);
+        }
+
+        .footer-copyright-bar {
+            border-top: 1px solid rgba(255,255,255,0.03);
+            padding-top: 35px;
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* --- SCREEN RESPONSIVE RESTRUCTURING --- */
+        @media (max-width: 992px) {
+            .menu-toggle {
+                display: block;
+            }
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 400px;
+                height: 100vh;
+                background: #111317;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 35px;
+                transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+                box-shadow: -15px 0 45px rgba(0,0,0,0.7);
+                border-left: 1px solid var(--border-glass);
+            }
+            .nav-menu.active {
+                right: 0;
+            }
+            .legacy-layout, .menu-items-grid, .contact-layout-box, .footer-grid-layout {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+            .reputation-banner {
+                width: 100%;
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
-<body class="bg-brand-darkBg font-sans text-slate-300 antialiased selection:bg-brand-red selection:text-white">
+<body>
 
-    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 glass-nav">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between">
-                
-                <a href="#" class="flex items-center gap-3 group">
-                    <div class="w-11 h-11 rounded-2xl bg-gradient-red flex items-center justify-center text-white font-serif font-bold text-xl shadow-lg shadow-red-600/30 group-hover:scale-105 transition-transform">
-                        M
-                    </div>
-                    <div>
-                        <span class="font-serif font-bold text-lg sm:text-xl tracking-tight text-white block leading-none">MAURYA RESTAURANT</span>
-                        <span class="text-[9px] uppercase tracking-[0.2em] text-brand-red font-bold block mt-1">& Traditional Sweets</span>
-                    </div>
-                </a>
-
-                <div class="hidden lg:flex items-center gap-8 text-xs font-semibold uppercase tracking-wider text-slate-300">
-                    <a href="#about" class="hover:text-brand-red transition-colors">Our Story</a>
-                    <a href="#services" class="hover:text-brand-red transition-colors">Dining & Sweets</a>
-                    <a href="#menu" class="hover:text-brand-red transition-colors">Specialties</a>
-                    <a href="#why-us" class="hover:text-brand-red transition-colors">Why Choose Us</a>
-                    <a href="#reviews" class="hover:text-brand-red transition-colors">Reviews</a>
-                    <a href="#contact" class="hover:text-brand-red transition-colors">Location</a>
-                </div>
-
-                <div class="hidden sm:flex items-center gap-4">
-                    <a href="tel:09792049188" class="text-xs font-bold text-slate-300 hover:text-brand-red flex items-center gap-2">
-                        <i class="fa-solid fa-phone text-brand-red"></i>
-                        <span>097920 49188</span>
-                    </a>
-                    <a href="#contact" class="bg-gradient-red hover:brightness-110 text-white font-bold text-xs uppercase tracking-wider px-5 py-2.5 rounded-full shadow-lg shadow-red-600/25 transition-all transform hover:-translate-y-0.5">
-                        Reserve / Order
-                    </a>
-                </div>
-
-                <button id="mobile-menu-btn" class="lg:hidden text-slate-300 hover:text-brand-red focus:outline-none p-2">
-                    <i class="fa-solid fa-bars text-xl"></i>
-                </button>
+    <!-- --- FLOATING TRANSPARENT NAVBAR --- -->
+    <header id="navigation-bar">
+        <div class="container nav-flex">
+            <a href="#hero" class="logo-box">360&deg; DINING<span>.</span></a>
+            <ul class="nav-menu" id="drawer-menu">
+                <li><a href="#hero" class="nav-link">Home</a></li>
+                <li><a href="#legacy" class="nav-link">Our Concept</a></li>
+                <li><a href="#features" class="nav-link">Amenities</a></li>
+                <li><a href="#menu" class="nav-link">Menu Highlights</a></li>
+                <li><a href="#gallery" class="nav-link">The Lawns</a></li>
+                <li><a href="#reviews" class="nav-link">Reviews</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menu-trigger-btn">
+                <i class="fa-solid fa-bars-staggered"></i>
             </div>
         </div>
+    </header>
 
-        <div id="mobile-menu" class="hidden lg:hidden px-4 pt-4 pb-6 mt-2 bg-slate-900/95 border-b border-brand-borderDark">
-            <div class="flex flex-col gap-4 text-sm font-semibold uppercase tracking-wider text-slate-300">
-                <a href="#about" class="py-2 border-b border-slate-800 hover:text-brand-red">Our Story</a>
-                <a href="#services" class="py-2 border-b border-slate-800 hover:text-brand-red">Dining & Sweets</a>
-                <a href="#menu" class="py-2 border-b border-slate-800 hover:text-brand-red">Specialties</a>
-                <a href="#why-us" class="py-2 border-b border-slate-800 hover:text-brand-red">Why Choose Us</a>
-                <a href="#reviews" class="py-2 border-b border-slate-800 hover:text-brand-red">Customer Reviews</a>
-                <a href="#contact" class="py-2 hover:text-brand-red">Location & Contact</a>
-                <div class="pt-2 flex flex-col gap-3">
-                    <a href="tel:09792049188" class="w-full text-center bg-slate-800 border border-slate-700 text-white font-bold py-3 rounded-xl">
-                        <i class="fa-solid fa-phone text-brand-red mr-2"></i> Call: 097920 49188
-                    </a>
-                    <a href="#contact" class="w-full text-center bg-gradient-red text-white font-bold py-3 rounded-xl shadow-md uppercase text-xs tracking-wider">
-                        Book a Table
-                    </a>
+    <!-- --- IMPACT HERO SCREEN --- -->
+    <section id="hero">
+        <div class="container">
+            <div class="hero-container">
+                <span class="tagline">Vintage India Themed Multi-Cuisine Culinary Art</span>
+                <h1>CULINARY SPLENDOR<br>FROM EVERY <span>ANGLE</span></h1>
+                <p class="hero-subtext">Immerse your senses inside Varanasi's landmark estate. A majestic fusion of heritage arched architectures, open air alfresco lawns, and custom multi-cuisine recipes.</p>
+                <div class="hero-btn-layout">
+                    <a href="tel:09415920147" class="btn btn-primary">Reserve A Table</a>
+                    <a href="#menu" class="btn btn-secondary">Explore Highlights</a>
                 </div>
-            </div>
-        </div>
-    </nav>
-
-    <section class="relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden bg-radial-glow">
-        <div class="absolute top-1/4 right-0 w-96 h-96 bg-red-600/15 rounded-full blur-[140px] pointer-events-none"></div>
-        <div class="absolute bottom-10 left-10 w-80 h-80 bg-amber-600/10 rounded-full blur-[120px] pointer-events-none"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-                
-                <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
-                    
-                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/90 border border-brand-red/30 text-brand-red text-xs font-semibold tracking-wider uppercase">
-                        <span class="w-2 h-2 rounded-full bg-brand-red animate-ping"></span>
-                        Lucknow's Iconic North Indian & Sweets Destination
-                    </div>
-
-                    <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.12]">
-                        Authentic Flavors, <br>
-                        <span class="text-gradient-red">Sweet Heritage.</span>
-                    </h1>
-
-                    <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                        Indulge in rich North Indian thalis, sizzled Chinese delicacies, authentic South Indian dosas, and handcrafted Indian mithais. Experience all-you-can-eat dining and private dining halls right in Transport Nagar, Lucknow.
-                    </p>
-
-                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
-                        <a href="#menu" class="bg-gradient-red hover:brightness-110 text-white font-bold px-8 py-4 rounded-xl shadow-xl shadow-red-600/20 transition-all transform hover:-translate-y-1 text-xs uppercase tracking-wider">
-                            Explore Menu Specialties
-                        </a>
-                        <a href="tel:09792049188" class="glass-card hover:bg-slate-800/80 text-white font-semibold px-8 py-4 rounded-xl border border-slate-700/80 transition-all flex items-center gap-2 text-xs uppercase tracking-wider">
-                            <i class="fa-solid fa-phone text-brand-red"></i> Direct Order
-                        </a>
-                    </div>
-
-                    <div class="pt-8 border-t border-slate-800/80 grid grid-cols-3 gap-4 max-w-lg mx-auto lg:mx-0">
-                        <div>
-                            <div class="flex items-center justify-center lg:justify-start text-brand-amber font-serif font-bold text-2xl sm:text-3xl">
-                                1,000+ <i class="fa-solid fa-star text-sm ml-1 text-amber-400"></i>
-                            </div>
-                            <p class="text-xs text-slate-500 uppercase font-semibold mt-1">Google & Justdial Reviews</p>
-                        </div>
-                        <div>
-                            <div class="font-serif font-bold text-2xl sm:text-3xl text-white">₹1–200</div>
-                            <p class="text-xs text-slate-500 uppercase font-semibold mt-1">Budget Friendly</p>
-                        </div>
-                        <div>
-                            <div class="font-serif font-bold text-2xl sm:text-3xl text-emerald-400">4.4 / 5</div>
-                            <p class="text-xs text-slate-500 uppercase font-semibold mt-1">Swiggy Rating</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="lg:col-span-5 relative">
-                    <div class="relative mx-auto max-w-md lg:max-w-none">
-                        
-                        <div class="relative rounded-3xl overflow-hidden border-2 border-brand-red/30 shadow-2xl group">
-                            <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=1000&q=80" alt="North Indian Thali & Sweets" class="w-full h-[480px] object-cover group-hover:scale-105 transition-transform duration-700">
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
-                            
-                            <div class="absolute bottom-6 left-6 right-6">
-                                <span class="bg-brand-red text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Iconic Hub</span>
-                                <h3 class="font-serif text-2xl font-bold text-white mt-2">North Indian, Chinese & Traditional Sweets</h3>
-                                <p class="text-xs text-slate-300 mt-1">Morang Mandi, Transport Nagar Rd, Lucknow</p>
-                            </div>
-                        </div>
-
-                        <div class="absolute -top-6 -left-6 glass-card p-4 rounded-2xl shadow-2xl hidden sm:flex items-center gap-3 border border-brand-red/20 max-w-[210px]">
-                            <div class="w-10 h-10 rounded-xl bg-red-500/20 text-brand-red flex items-center justify-center text-lg">
-                                <i class="fa-solid fa-utensils"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-bold text-white">Private Dining</h4>
-                                <p class="text-[10px] text-slate-400">A/C Family Halls</p>
-                            </div>
-                        </div>
-
-                        <div class="absolute -bottom-6 -right-6 glass-card p-4 rounded-2xl shadow-2xl hidden sm:flex items-center gap-3 border border-brand-red/20 max-w-[210px]">
-                            <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-brand-gold flex items-center justify-center text-lg">
-                                <i class="fa-solid fa-box-archive"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-bold text-white">Pure Desi Sweets</h4>
-                                <p class="text-[10px] text-slate-400">Fresh Daily Production</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
 
-    <section id="about" class="py-24 bg-brand-cardBg/60 relative border-y border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                
-                <div class="grid grid-cols-2 gap-4 relative">
-                    <div class="space-y-4">
-                        <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80" alt="North Indian Curry & Naan" class="rounded-2xl shadow-lg border border-slate-800 object-cover h-56 w-full">
-                        <img src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80" alt="Traditional Indian Sweets Mithai" class="rounded-2xl shadow-lg border border-slate-800 object-cover h-40 w-full">
+    <!-- --- THE HISTORIC LEGACY --- -->
+    <section id="legacy">
+        <div class="container">
+            <div class="legacy-layout">
+                <div class="legacy-content reveal">
+                    <span class="tagline">The Concept Architecture</span>
+                    <h2 class="section-title">Nostalgic Luxury, <span>Global Flavor Profile</span></h2>
+                    <p>360 Degree Dining provides a curated escape situated directly on the Varanasi Lucknow Road in Ganeshpur. Designed around a thoughtful 'Vintage India' aesthetic framework, the estate bridges regional culinary roots with modern presentation aesthetics.</p>
+                    <p>From expansive twilight open-air lawns to sophisticated interior fireplace dining zones, our structure easily formats memorable multi course family banquets and elegant corporate sessions.</p>
+                    <a href="#features" class="btn btn-secondary">View Amenities</a>
+                </div>
+                <div class="legacy-visuals reveal">
+                    <div class="visual-block">
+                        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600&auto=format&fit=crop" alt="Vintage Interior Dining Ambience at 360 Degree Dining">
                     </div>
-                    <div class="space-y-4 pt-8">
-                        <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=600&q=80" alt="Sizzling Chinese Dim Sums" class="rounded-2xl shadow-lg border border-slate-800 object-cover h-40 w-full">
-                        <img src="https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=600&q=80" alt="Crispy South Indian Dosa" class="rounded-2xl shadow-lg border border-slate-800 object-cover h-56 w-full">
+                    <div class="visual-block" style="margin-top: 30px;">
+                        <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=600&auto=format&fit=crop" alt="Premium Multi-Cuisine Plating Design">
                     </div>
                 </div>
-
-                <div class="space-y-6">
-                    <div class="inline-block text-brand-red text-xs font-bold uppercase tracking-widest">Our Story & Heritage</div>
-                    <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white leading-tight">
-                        A Culinary Landmark in <span class="text-gradient-red">Transport Nagar</span>
-                    </h2>
-                    <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
-                        Located at <strong class="text-white">f-49/308 Morang Mandi, Transport Nagar Rd</strong>, Maurya Restaurant & Sweets has been serving the people of Lucknow with authentic North Indian curries, Chinese wok creations, South Indian favorites, and handcrafted traditional sweets.
-                    </p>
-                    <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
-                        Whether you are stopping by for a hearty meal, celebrating with family in our <strong class="text-white">Private Dining Rooms</strong>, or picking up freshly prepared festival sweet boxes, we guarantee rich taste and warm hospitality at unbeatable prices (₹1–200 per person).
-                    </p>
-
-                    <div class="grid grid-cols-2 gap-4 pt-2">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-circle-check text-brand-red text-lg"></i>
-                            <span class="text-xs sm:text-sm font-semibold text-slate-200">North Indian Thalis</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-circle-check text-brand-red text-lg"></i>
-                            <span class="text-xs sm:text-sm font-semibold text-slate-200">Fresh Traditional Sweets</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-circle-check text-brand-red text-lg"></i>
-                            <span class="text-xs sm:text-sm font-semibold text-slate-200">Private Dining Room</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-circle-check text-brand-red text-lg"></i>
-                            <span class="text-xs sm:text-sm font-semibold text-slate-200">All You Can Eat Option</span>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
 
-    <section id="services" class="py-24 bg-brand-darkBg relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- --- AMENITIES MATRIX --- -->
+    <section id="features" style="background: rgba(255,255,255,0.01);">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="tagline">Estate Features</span>
+                <h2 class="section-title">Designed For Elite <span>Hospitality</span></h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card reveal">
+                    <i class="fa-solid fa-tree"></i>
+                    <h3>Expansive Alfresco Lawns</h3>
+                    <p>Dine beneath structural fairy lit wooden trellises and lush green landscaping optimized for atmospheric open air gatherings.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <i class="fa-solid fa-fire-burner"></i>
+                    <h3>Vintage Indoor Seating</h3>
+                    <p>Dine inside architectural brick masonry arches featuring rich heritage motifs and custom warm amber glow points.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <i class="fa-solid fa-utensils"></i>
+                    <h3>Vast Global Portfolio</h3>
+                    <p>A broad multi-cuisine matrix highlighting authentic North Indian, Pan Asian, Italian, Mediterranean, and Mexican recipes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- PERSUASIVE MENU SYSTEM --- -->
+    <section id="menu">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="tagline">The Gastronomy</span>
+                <h2 class="section-title">Signature <span>Menu Highlights</span></h2>
+            </div>
             
-            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
-                <span class="text-brand-red font-bold text-xs uppercase tracking-widest">Dining & Experience</span>
-                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white">4 Multi-Cuisine Dining Options</h2>
-                <p class="text-slate-400 text-sm sm:text-base">Designed for quick casual bites, sweet cravings, happy hour treats, or private family gatherings.</p>
+            <div class="menu-tabs-row reveal">
+                <button class="tab-trigger active" onclick="toggleMenuCategory('indian')">North Indian Core</button>
+                <button class="tab-trigger" onclick="toggleMenuCategory('global')">Global Specialties</button>
             </div>
 
-            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                
-                <div class="glass-card p-6 rounded-3xl glass-card-hover transition-all duration-300 group">
-                    <div class="w-12 h-12 rounded-2xl bg-red-500/20 text-brand-red flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-bowl-rice"></i>
-                    </div>
-                    <h3 class="font-serif text-lg font-bold text-white mb-2">North Indian & Chinese</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed">
-                        Rich butter paneer, dal makhani, tandoori rotis alongside hot wok noodles, Manchurian, and dim sums.
-                    </p>
-                </div>
-
-                <div class="glass-card p-6 rounded-3xl glass-card-hover transition-all duration-300 group">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-500/20 text-brand-gold flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-candy-cane"></i>
-                    </div>
-                    <h3 class="font-serif text-lg font-bold text-white mb-2">Traditional Sweets counter</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed">
-                        Handmade Kaju Katli, Gulab Jamun, Rasgulla, Motichoor Ladoo, and fresh seasonal ghee mithai boxes.
-                    </p>
-                </div>
-
-                <div class="glass-card p-6 rounded-3xl glass-card-hover transition-all duration-300 group border-brand-red/30">
-                    <div class="w-12 h-12 rounded-2xl bg-red-500/20 text-brand-red flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-door-closed"></i>
-                    </div>
-                    <h3 class="font-serif text-lg font-bold text-white mb-2">Private Dining Room</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed">
-                        Dedicated air-conditioned private space for family celebrations, birthday parties, and corporate lunches.
-                    </p>
-                </div>
-
-                <div class="glass-card p-6 rounded-3xl glass-card-hover transition-all duration-300 group">
-                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-utensils"></i>
-                    </div>
-                    <h3 class="font-serif text-lg font-bold text-white mb-2">All You Can Eat & Happy Hour</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed">
-                        Hearty unlimited dining options & happy-hour deals crafted for hungry travelers and local regulars.
-                    </p>
-                </div>
-
+            <div class="menu-items-grid reveal" id="menu-injected-container">
+                <!-- Programmatically generated content outputs safely here -->
             </div>
         </div>
     </section>
 
-    <section id="menu" class="py-24 bg-brand-cardBg/80 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+    <!-- --- ESTATED OPEN LAWN GALLERY --- -->
+    <section id="gallery" style="background: rgba(255,255,255,0.01);">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="tagline">The Estate Architecture</span>
+                <h2 class="section-title">Visual <span>Atmosphere</span></h2>
+            </div>
+            <div class="gallery-mosaic">
+                <div class="gallery-mosaic reveal">
+                    <div class="mosaic-item">
+                        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=600&auto=format&fit=crop" alt="Heritage Arches Storefront Seating Layout">
+                    </div>
+                </div>
+                <div class="gallery-mosaic reveal">
+                    <div class="mosaic-item">
+                        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=600&auto=format&fit=crop" alt="Premium Global Gourmet Cuisines">
+                    </div>
+                </div>
+                <div class="gallery-mosaic reveal">
+                    <div class="mosaic-item">
+                        <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=600&auto=format&fit=crop" alt="Open Air Evening Lawn Lighting Trellis">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- GOOGLE REVIEWS AGGREGATION --- -->
+    <section id="reviews">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="tagline">Verified Social Proof</span>
+                <h2 class="section-title">The Benchmark of <span>Trust</span></h2>
+            </div>
+
+            <div class="reputation-banner reveal">
+                <div class="reputation-score">4.6</div>
                 <div>
-                    <span class="text-brand-red font-bold text-xs uppercase tracking-widest">Our Culinary Highlights</span>
-                    <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white mt-2">Diner Favorites</h2>
+                    <div class="stars-group">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <div style="color: var(--text-muted); font-size: 0.95rem; margin-top: 5px;">3,382+ Verified Google Customer Ratings</div>
                 </div>
-                <p class="text-slate-400 text-sm max-w-md">
-                    Prepared daily using pure ingredients, fresh dairy products, and authentic spices.
-                </p>
             </div>
 
-            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                
-                <div class="glass-card rounded-2xl overflow-hidden group hover:border-brand-red/40 transition-all">
-                    <div class="h-48 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=500&q=80" alt="Royal North Indian Thali" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <span class="absolute top-3 right-3 bg-brand-red text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase">Bestseller</span>
-                    </div>
-                    <div class="p-6 space-y-2">
-                        <h4 class="font-serif text-lg font-bold text-white">Royal North Indian Thali</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed">Paneer butter masala, dal fry, seasonal sabzi, rice, butter roti, salad & sweet.</p>
-                        <div class="pt-2 flex items-center justify-between">
-                            <span class="text-brand-red font-bold text-sm">₹150 onwards</span>
-                            <span class="text-[10px] text-slate-500 uppercase font-semibold"><i class="fa-solid fa-star text-amber-400"></i> Popular</span>
-                        </div>
+            <div class="reviews-container-grid">
+                <div class="patron-card reveal">
+                    <p>"Breathtaking vintage storefront combined with absolute gourmet luxury. The Kadhai Paneer possesses deep authentic spice texture, and the outdoor lawns are pure bliss."</p>
+                    <div class="patron-name">
+                        <h5>Rohan Malhotra</h5>
+                        <span>Verified Local Guide</span>
                     </div>
                 </div>
-
-                <div class="glass-card rounded-2xl overflow-hidden group hover:border-brand-red/40 transition-all">
-                    <div class="h-48 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=500&q=80" alt="Assorted Indian Sweets Box" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <span class="absolute top-3 right-3 bg-amber-500 text-slate-950 text-[10px] font-bold px-3 py-1 rounded-full uppercase">Pure Desi Ghee</span>
-                    </div>
-                    <div class="p-6 space-y-2">
-                        <h4 class="font-serif text-lg font-bold text-white">Assorted Mithai Box</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed">Fresh Kaju Katli, Motichoor Ladoo, Gulab Jamun, and seasonal milk sweets.</p>
-                        <div class="pt-2 flex items-center justify-between">
-                            <span class="text-brand-gold font-bold text-sm">₹200 / box</span>
-                            <span class="text-[10px] text-slate-500 uppercase font-semibold"><i class="fa-solid fa-star text-amber-400"></i> Fresh Daily</span>
-                        </div>
+                <div class="patron-card reveal">
+                    <p>"Exceptional design layouts for hosting family get-togethers. The choice across Pan-Asian and Continental items ensures total group satisfaction."</p>
+                    <div class="patron-name">
+                        <h5>Dr. Kriti Jaiswal</h5>
+                        <span>Premium Estate Regular</span>
                     </div>
                 </div>
-
-                <div class="glass-card rounded-2xl overflow-hidden group hover:border-brand-red/40 transition-all">
-                    <div class="h-48 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=500&q=80" alt="Special Chinese Manchurian Noodles" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    </div>
-                    <div class="p-6 space-y-2">
-                        <h4 class="font-serif text-lg font-bold text-white">Veg Manchurian Noodles</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed">Wok-tossed hakka noodles served with crispy vegetable Manchurian balls in rich gravy.</p>
-                        <div class="pt-2 flex items-center justify-between">
-                            <span class="text-brand-red font-bold text-sm">₹120 onwards</span>
-                            <span class="text-[10px] text-slate-500 uppercase font-semibold"><i class="fa-solid fa-star text-amber-400"></i> Indo-Chinese</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-card rounded-2xl overflow-hidden group hover:border-brand-red/40 transition-all">
-                    <div class="h-48 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=500&q=80" alt="Crispy Masala Dosa" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    </div>
-                    <div class="p-6 space-y-2">
-                        <h4 class="font-serif text-lg font-bold text-white">Butter Masala Dosa</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed">Crispy golden dosa stuffed with spiced potato masala, served with sambhar and chutneys.</p>
-                        <div class="pt-2 flex items-center justify-between">
-                            <span class="text-brand-red font-bold text-sm">₹90 onwards</span>
-                            <span class="text-[10px] text-slate-500 uppercase font-semibold"><i class="fa-solid fa-star text-amber-400"></i> South Indian</span>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
 
-    <section id="why-us" class="py-24 bg-brand-darkBg relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                
-                <div class="space-y-6">
-                    <span class="text-brand-red font-bold text-xs uppercase tracking-widest">Why Diners Choose Maurya</span>
-                    <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white leading-tight">
-                        Quality Taste That Keeps Lucknow Coming Back
-                    </h2>
-                    <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
-                        We combine traditional culinary heritage with hygienic standards, affordable pricing, and versatile dining setups.
-                    </p>
-
-                    <div class="space-y-4 pt-2">
-                        <div class="flex items-start gap-4 p-4 rounded-2xl glass-card">
-                            <div class="w-10 h-10 rounded-xl bg-red-500/20 text-brand-red flex items-center justify-center shrink-0 font-bold">1</div>
-                            <div>
-                                <h4 class="text-white font-bold text-sm">Diverse Multi-Cuisine Menu</h4>
-                                <p class="text-xs text-slate-400 mt-1">North Indian, Chinese, South Indian & Mithai all under one roof.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4 p-4 rounded-2xl glass-card">
-                            <div class="w-10 h-10 rounded-xl bg-red-500/20 text-brand-red flex items-center justify-center shrink-0 font-bold">2</div>
-                            <div>
-                                <h4 class="text-white font-bold text-sm">Unbeatable Pocket-Friendly Rates</h4>
-                                <p class="text-xs text-slate-400 mt-1">Delicious meals averaging ₹1 to ₹200 per person with generous portion sizes.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4 p-4 rounded-2xl glass-card">
-                            <div class="w-10 h-10 rounded-xl bg-red-500/20 text-brand-red flex items-center justify-center shrink-0 font-bold">3</div>
-                            <div>
-                                <h4 class="text-white font-bold text-sm">Family & Private Party Comfort</h4>
-                                <p class="text-xs text-slate-400 mt-1">Air-conditioned private dining rooms suitable for small family functions & gatherings.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="relative">
-                    <div class="rounded-3xl overflow-hidden border border-brand-red/30 shadow-2xl">
-                        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Maurya Restaurant Atmosphere" class="w-full h-[450px] object-cover">
-                    </div>
-                </div>
-
-            </div>
+    <!-- --- IMPACT CONVERSION CALL TO ACTION --- -->
+    <section class="conversion-cta">
+        <div class="container reveal">
+            <h2>Secure Your Heritage Fine Dining Experience</h2>
+            <p>Ensure your family or corporate reservation table is fully locked in ahead of schedule.</p>
+            <a href="tel:09415920147" class="btn btn-primary">Call Guest Desk: 094159 20147</a>
         </div>
     </section>
 
-    <section id="reviews" class="py-24 bg-brand-cardBg/60 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
-                <span class="text-brand-red font-bold text-xs uppercase tracking-widest">Customer Appreciation</span>
-                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white">Backed by 1,000+ Reviews Across Web</h2>
-                <div class="flex items-center justify-center gap-2 text-amber-400 text-lg">
-                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
-                    <span class="text-white font-bold text-sm ml-2">4.4 Rating on Swiggy</span>
-                </div>
+    <!-- --- MAPS & DIRECTION PATHWAYS --- -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="tagline">Find The Estate</span>
+                <h2 class="section-title">Directions & <span>Hours</span></h2>
             </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                
-                <div class="glass-card p-8 rounded-3xl flex flex-col justify-between">
-                    <div class="space-y-4">
-                        <div class="text-amber-400 text-xs flex gap-1">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <p class="text-slate-300 text-xs sm:text-sm italic leading-relaxed">
-                            "Awesome food in Transport Nagar area! The North Indian thali is very delicious and affordable. Sweets are always fresh and taste like pure desi ghee."
-                        </p>
-                    </div>
-                    <div class="pt-6 border-t border-slate-800 mt-6 flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-full bg-brand-red text-white font-bold flex items-center justify-center text-xs">M</div>
+            <div class="contact-layout-box">
+                <div class="contact-info-stack reveal">
+                    <div class="contact-node">
+                        <i class="fa-solid fa-map-location-dot"></i>
                         <div>
-                            <h4 class="text-white text-xs font-bold">Manoj Kumar</h4>
-                            <p class="text-[10px] text-slate-500">Google Local Guide</p>
+                            <h4>Estate Address</h4>
+                            <p>Varanasi Lucknow Road, Ganeshpur, Tarna, Varanasi, Uttar Pradesh 221003</p>
                         </div>
                     </div>
-                </div>
-
-                <div class="glass-card p-8 rounded-3xl flex flex-col justify-between">
-                    <div class="space-y-4">
-                        <div class="text-amber-400 text-xs flex gap-1">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <p class="text-slate-300 text-xs sm:text-sm italic leading-relaxed">
-                            "We booked their Private Dining Room for a family birthday lunch. Great service, polite staff, and delicious Chinese noodles & paneer curries."
-                        </p>
-                    </div>
-                    <div class="pt-6 border-t border-slate-800 mt-6 flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-full bg-amber-500 text-slate-950 font-bold flex items-center justify-center text-xs">S</div>
+                    <div class="contact-node">
+                        <i class="fa-solid fa-phone-volume"></i>
                         <div>
-                            <h4 class="text-white text-xs font-bold">Sunita Maurya</h4>
-                            <p class="text-[10px] text-slate-500">Swiggy Customer</p>
+                            <h4>Helpline Phone Operations</h4>
+                            <p><a href="tel:09415920147">094159 20147</a></p>
                         </div>
                     </div>
-                </div>
-
-                <div class="glass-card p-8 rounded-3xl flex flex-col justify-between">
-                    <div class="space-y-4">
-                        <div class="text-amber-400 text-xs flex gap-1">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <p class="text-slate-300 text-xs sm:text-sm italic leading-relaxed">
-                            "Best place near Morang Mandi for quick lunch and fresh sweets. Very clean, fast service, and pocket friendly pricing!"
-                        </p>
-                    </div>
-                    <div class="pt-6 border-t border-slate-800 mt-6 flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-xs">A</div>
+                    <div class="contact-node">
+                        <i class="fa-solid fa-hourglass-start"></i>
                         <div>
-                            <h4 class="text-white text-xs font-bold">Amit Singh</h4>
-                            <p class="text-[10px] text-slate-500">Justdial Reviewer</p>
+                            <h4>Daily Service Timings</h4>
+                            <p>Open Daily: 11:00 AM – 10:45 PM</p>
+                            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 5px;">Happy-Hour Food & All-You-Can-Eat Arrays Available</p>
                         </div>
                     </div>
                 </div>
-
+                <div class="map-container reveal">
+                    <div class="map-frame-holder">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3604.288220807775!2d82.9515647!3d25.3616666!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398e217dce2d6f27%3A0xc6cf39a3f29a008a!2s360%20Degree%20Dining!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin" 
+                                width="100%" height="100%" style="border:0; filter: invert(90%) hue-rotate(180deg);" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="py-16 bg-gradient-red text-white relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-6">
-            <h2 class="font-serif text-3xl sm:text-5xl font-bold">Hungry or Planning a Family Gathering?</h2>
-            <p class="text-red-100 max-w-xl mx-auto text-xs sm:text-sm">Visit Maurya Restaurant at Morang Mandi or reserve our Private Dining Hall today!</p>
-            <div class="pt-2 flex flex-wrap justify-center gap-4">
-                <a href="tel:09792049188" class="bg-slate-950 text-white font-bold px-8 py-4 rounded-xl shadow-xl hover:bg-slate-900 transition-all uppercase text-xs tracking-wider flex items-center gap-2">
-                    <i class="fa-solid fa-phone text-brand-red"></i> Call 097920 49188
-                </a>
-                <a href="#contact" class="bg-white text-slate-950 font-bold px-8 py-4 rounded-xl shadow-xl hover:bg-slate-100 transition-all uppercase text-xs tracking-wider">
-                    Get Location Map
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="py-24 bg-brand-darkBg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-12 gap-12">
-                
-                <div class="lg:col-span-5 space-y-8">
-                    <div>
-                        <span class="text-brand-red font-bold text-xs uppercase tracking-widest">Visit Us</span>
-                        <h2 class="font-serif text-3xl font-bold text-white mt-1">Location & Timings</h2>
-                        <p class="text-slate-400 text-xs sm:text-sm mt-2">Conveniently located at Morang Mandi in Transport Nagar, Lucknow.</p>
-                    </div>
-
-                    <div class="space-y-6">
-                        <div class="flex items-start gap-4">
-                            <div class="w-11 h-11 rounded-xl bg-red-500/20 text-brand-red flex items-center justify-center text-lg shrink-0">
-                                <i class="fa-solid fa-location-dot"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-white text-sm">Address</h4>
-                                <p class="text-xs sm:text-sm text-slate-400 mt-1 leading-relaxed">
-                                    f-49/308 Morang Mandi, Transport Nagar Rd,<br>
-                                    Lucknow, Uttar Pradesh 226012
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4">
-                            <div class="w-11 h-11 rounded-xl bg-red-500/20 text-brand-red flex items-center justify-center text-lg shrink-0">
-                                <i class="fa-solid fa-phone"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-white text-sm">Phone Contact</h4>
-                                <p class="text-xs sm:text-sm text-slate-400 mt-1">
-                                    <a href="tel:09792049188" class="hover:text-brand-red">097920 49188</a>
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4">
-                            <div class="w-11 h-11 rounded-xl bg-red-500/20 text-brand-red flex items-center justify-center text-lg shrink-0">
-                                <i class="fa-solid fa-clock"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-white text-sm">Operating Hours</h4>
-                                <p class="text-xs sm:text-sm text-slate-400 mt-1">Open Daily: 10:00 AM – 11:00 PM</p>
-                            </div>
-                        </div>
+    <!-- --- LUXURY BRAND FOOTER --- -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid-layout">
+                <div class="footer-brand">
+                    <a href="#hero" class="logo-box">360&deg; DINING<span>.</span></a>
+                    <p style="margin-top: 20px;">Setting unprecedented limits across the heritage dining sector through multi-cuisine precision and curated architecture layouts.</p>
+                    <div class="social-media-strip">
+                        <a href="https://instagram.com/360_dining" target="_blank" class="social-btn-node"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="social-btn-node"><i class="fa-brands fa-facebook-f"></i></a>
                     </div>
                 </div>
-
-                <div class="lg:col-span-7">
-                    <div class="glass-card rounded-3xl p-8 sm:p-10 border border-slate-800">
-                        <h3 class="font-serif text-2xl font-bold text-white mb-2">Book a Table / Private Dining</h3>
-                        <p class="text-xs text-slate-400 mb-8">Send your details for instant table booking or sweet box orders.</p>
-
-                        <form onsubmit="event.preventDefault(); alert('Thank you! Your request has been sent. We will call you back shortly.');" class="space-y-5">
-                            <div class="grid sm:grid-cols-2 gap-5">
-                                <div>
-                                    <label class="block text-xs font-semibold uppercase text-slate-300 mb-2">Your Name</label>
-                                    <input type="text" required placeholder="e.g. Rahul Maurya" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:outline-none focus:border-brand-red transition-colors">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-semibold uppercase text-slate-300 mb-2">Phone Number</label>
-                                    <input type="tel" required placeholder="e.g. 9876543210" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:outline-none focus:border-brand-red transition-colors">
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-xs font-semibold uppercase text-slate-300 mb-2">Service Type</label>
-                                <select class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-sm focus:outline-none focus:border-brand-red transition-colors">
-                                    <option>Dine-in Table Booking</option>
-                                    <option>Private Dining Room Reservation</option>
-                                    <option>Bulk Sweet Box Order</option>
-                                    <option>Take-away Pick Up</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label class="block text-xs font-semibold uppercase text-slate-300 mb-2">Message / Special Instructions</label>
-                                <textarea rows="3" placeholder="Specify number of guests, special dishes, or party date..." class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:outline-none focus:border-brand-red transition-colors"></textarea>
-                            </div>
-
-                            <button type="submit" class="w-full bg-gradient-red text-white font-bold py-4 rounded-xl shadow-lg hover:brightness-110 transition-all uppercase text-xs tracking-wider">
-                                Confirm Booking Request
-                            </button>
-                        </form>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-slate-950 text-slate-400 pt-16 pb-8 border-t border-slate-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-slate-900">
-                
-                <div class="md:col-span-2 space-y-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl bg-gradient-red flex items-center justify-center text-white font-serif font-bold text-lg">
-                            M
-                        </div>
-                        <span class="font-serif font-bold text-xl text-white tracking-wider">MAURYA RESTAURANT</span>
-                    </div>
-                    <p class="text-xs leading-relaxed text-slate-400 max-w-sm">
-                        Serving authentic North Indian, Chinese, South Indian dishes and traditional handmade sweets in Transport Nagar, Lucknow.
-                    </p>
-                </div>
-
-                <div>
-                    <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-4">Quick Links</h4>
-                    <ul class="space-y-2 text-xs">
-                        <li><a href="#about" class="hover:text-brand-red transition-colors">Our Story</a></li>
-                        <li><a href="#services" class="hover:text-brand-red transition-colors">Dining Services</a></li>
-                        <li><a href="#menu" class="hover:text-brand-red transition-colors">Specialties</a></li>
-                        <li><a href="#reviews" class="hover:text-brand-red transition-colors">Customer Reviews</a></li>
-                        <li><a href="#contact" class="hover:text-brand-red transition-colors">Location & Phone</a></li>
+                <div class="footer-links-group">
+                    <h4>The Brand Hub</h4>
+                    <ul>
+                        <li><a href="#legacy">Our Concept Philosophy</a></li>
+                        <li><a href="#features">Estate Amenities</a></li>
+                        <li><a href="#menu">Signature Global Menu</a></li>
                     </ul>
                 </div>
-
-                <div>
-                    <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-4">Contact Info</h4>
-                    <p class="text-xs leading-relaxed text-slate-400 mb-2">
-                        f-49/308 Morang Mandi, Transport Nagar Rd, Lucknow, UP 226012
-                    </p>
-                    <p class="text-xs text-brand-red font-bold">Ph: 097920 49188</p>
+                <div class="footer-links-group">
+                    <h4>Reservations</h4>
+                    <ul>
+                        <li><a href="#contact">Find Map Route</a></li>
+                        <li><a href="https://www.zomato.com" target="_blank">Order on Zomato</a></li>
+                    </ul>
                 </div>
-
             </div>
-
-            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-600 gap-4">
-                <p>&copy; 2026 Maurya Restaurant & Sweets. All rights reserved.</p>
-                <p class="uppercase tracking-widest text-[10px]">Website Redesign Concept Proposal</p>
+            <div class="footer-copyright-bar">
+                <p>&copy; 2026 360 Degree Dining. All Rights Reserved.</p>
+                <p>Designed for Culinary Luxury</p>
             </div>
         </div>
     </footer>
 
+    <!-- --- VANILLA INTERACTION ENGINE --- -->
     <script>
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
+        // --- MOBILE NAV BAR OVERLAY TOGGLE ---
+        const triggerBtn = document.getElementById('menu-trigger-btn');
+        const drawerMenu = document.getElementById('drawer-menu');
+        const navigationLinks = document.querySelectorAll('.nav-link');
 
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
+        triggerBtn.addEventListener('click', () => {
+            drawerMenu.classList.toggle('active');
+            const icon = triggerBtn.querySelector('i');
+            icon.classList.toggle('fa-bars-staggered');
+            icon.classList.toggle('fa-xmark');
+        });
+
+        navigationLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                drawerMenu.classList.remove('active');
+                triggerBtn.querySelector('i').className = 'fa-solid fa-bars-staggered';
+            });
+        });
+
+        // --- STICKY TRANSPARENT NAVIGATION HEADER BEHAVIOR ---
+        const headerNode = document.getElementById('navigation-bar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 40) {
+                headerNode.classList.add('scrolled');
+            } else {
+                headerNode.classList.remove('scrolled');
+            }
+        });
+
+        // --- CORE MENU DATA ARCHITECTURE ---
+        const restaurantMenuData = {
+            indian: [
+                { name: "Kadhai Paneer Butter Masala", price: "₹340", desc: "Fresh artisanal cottage cheese chunks simmered within a rich velvety, buttery cashew paste gravy and freshly roasted house spices." },
+                { name: "Chilli Garlic Tandoori Naan", price: "₹90", desc: "Leavened traditional wheat flatbread layered intensely with minced aromatic garlic and green bird's-eye chillies, clay-baked." },
+                { name: "Dal Bukhari Heritage", price: "₹280", desc: "Black lentils slow-cooked overnight over live charcoal embers, deeply finished with farm-churned butter and raw organic cream." },
+                { name: "Murg Dum Biryani Awadh", price: "₹420", desc: "Aromatically layered long-grain basmati rice with tender spice-marinated chicken, sealed and slow dum-cooked." }
+            ],
+            global: [
+                { name: "Pan-Asian Chilli Garlic Noodles", price: "₹290", desc: "Wok-tossed fiery handmade noodles infused with high-heat charred garlic bulbs and garden fresh scallions." },
+                { name: "Fettuccine Alfredo Classico", price: "₹380", desc: "Imported flat ribbon pasta folded gently inside a reducing white sauce matrix of rich aged parmesan and wild field mushrooms." },
+                { name: "Mediterranean Hummus & Warm Pita", price: "₹260", desc: "Creamy stone-ground chickpea purée spiked with rich tahini oil and sumac dust, served with fire-baked pita." },
+                { name: "Artisanal Cake of the Day", price: "₹220", desc: "Decadent multi-layered premium dark chocolate sponge layered with rich dark cocoa ganache and glazed wild berries." }
+            ]
+        };
+
+        function toggleMenuCategory(selectedCategory) {
+            const containerNode = document.getElementById('menu-injected-container');
+            const tabButtons = document.querySelectorAll('.tab-trigger');
+            
+            // Sync active visual state on tab triggers
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            // Build and inject clean layout element rows safely
+            let matrixString = '';
+            restaurantMenuData[selectedCategory].forEach(item => {
+                matrixString += `
+                    <div class="food-item-card">
+                        <div class="food-header">
+                            <h4>${item.name}</h4>
+                            <span class="food-price">${item.price}</span>
+                        </div>
+                        <p>${item.desc}</p>
+                    </div>
+                `;
+            });
+            containerNode.innerHTML = matrixString;
+        }
+
+        // Initialize Core Structural State
+        window.addEventListener('DOMContentLoaded', () => {
+            toggleMenuCategory('indian');
+        });
+
+        // --- ELEMENT TRACKER VISIBILITY REVEALS ---
+        const elementsToReveal = document.querySelectorAll('.reveal');
+        
+        const computeScrollReveals = () => {
+            elementsToReveal.forEach(el => {
+                const innerViewportLimit = window.innerHeight;
+                const topMarginDistance = el.getBoundingClientRect().top;
+                const activatingOffset = 80;
+
+                if (topMarginDistance < innerViewportLimit - activatingOffset) {
+                    el.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', computeScrollReveals);
+        window.addEventListener('load', computeScrollReveals);
+
+        // --- SPY MECHANISM FOR NAV-LINKS STYLES ---
+        const layoutSections = document.querySelectorAll('section');
+        window.addEventListener('scroll', () => {
+            let trackedId = '';
+            layoutSections.forEach(s => {
+                const sTop = s.offsetTop;
+                if (window.pageYOffset >= (sTop - 250)) {
+                    trackedId = s.getAttribute('id');
+                }
+            });
+
+            navigationLinks.forEach(l => {
+                l.classList.remove('active');
+                if (l.getAttribute('href').includes(trackedId)) {
+                    l.classList.add('active');
+                }
+            });
         });
     </script>
 </body>
