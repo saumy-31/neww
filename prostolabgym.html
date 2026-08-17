@@ -1,0 +1,1900 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POWERFIT — Architect Your Physical Dominance</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- CDN Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/split-type"></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+  <style>
+    /* ==========================================================================
+       1. CORE CSS VARIABLES & RESET
+       ========================================================================== */
+    :root {
+      --bg: #050505;
+      --surface: #111111;
+      --surface-border: rgba(255, 255, 255, 0.08);
+      --primary: #ff3b30;
+      --secondary: #ff6b3d;
+      --white: #ffffff;
+      --muted: #a0a0a0;
+      --accent-glow: rgba(255, 59, 48, 0.35);
+      --glass: rgba(17, 17, 17, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      
+      --max-width: 1600px;
+      --nav-height: 90px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      background-color: var(--bg);
+      color: var(--white);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--white);
+      line-height: 1.5;
+      overflow-x: hidden;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    /* Ambient Canvas / Background Noise */
+    #ambient-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.8;
+    }
+
+    .noise-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Custom Cursor */
+    .custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 12px;
+      height: 12px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s;
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    .custom-cursor-follower {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(255, 59, 48, 0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease-out, width 0.3s, height 0.3s, border-color 0.3s;
+    }
+
+    .cursor-hover .custom-cursor {
+      width: 24px;
+      height: 24px;
+      background-color: var(--white);
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
+    }
+
+    .cursor-hover .custom-cursor-follower {
+      width: 60px;
+      height: 60px;
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* 12-Column Global Layout Grid System */
+    .container {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 2.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    section {
+      padding: 6rem 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, .font-display {
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .title-large {
+      font-size: clamp(2.5rem, 5vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 2rem;
+    }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .section-tag::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--primary);
+    }
+
+    /* Glassmorphic Components */
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .glass-card:hover {
+      border-color: rgba(255, 59, 48, 0.4);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 59, 48, 0.15);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 1.15rem 2.25rem;
+      border-radius: 100px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--white);
+      box-shadow: 0 10px 30px var(--accent-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(255, 59, 48, 0.5);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--white);
+      border: 1px solid var(--surface-border);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-3px);
+    }
+
+    /* Unified Grid Utilities */
+    .grid-12 {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5rem;
+    }
+
+    /* Standard Card Proportions */
+    .aspect-square { aspect-ratio: 1 / 1; }
+    .aspect-4-3 { aspect-ratio: 4 / 3; }
+    .aspect-16-9 { aspect-ratio: 16 / 9; }
+
+    /* Universal Object Fit */
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* ==========================================================================
+       2. PRELOADER
+       ========================================================================== */
+    #loader {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background-color: var(--bg);
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .loader-logo {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      margin-bottom: 2rem;
+      background: linear-gradient(90deg, #fff, var(--muted), #fff);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shine 2s linear infinite;
+    }
+
+    @keyframes shine {
+      to { background-position: 200% center; }
+    }
+
+    .loader-bar {
+      width: 200px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    .loader-progress {
+      position: absolute;
+      top: 0; left: 0; width: 0%; height: 100%;
+      background: var(--primary);
+      box-shadow: 0 0 10px var(--primary);
+    }
+
+    .loader-counter {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--muted);
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       3. NAVIGATION
+       ========================================================================== */
+    header {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      height: var(--nav-height);
+      z-index: 1000;
+      transition: all 0.4s ease;
+      display: flex;
+      align-items: center;
+    }
+
+    header.scrolled {
+      height: 70px;
+      background: rgba(5, 5, 5, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--surface-border);
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .logo span { color: var(--primary); }
+
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: color 0.3s ease;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; width: 0; height: 2px;
+      background: var(--primary);
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 0 8px var(--primary);
+    }
+
+    .nav-link:hover { color: var(--white); }
+    .nav-link:hover::after { width: 100%; }
+
+    /* ==========================================================================
+       4. HERO SECTION
+       ========================================================================== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: var(--nav-height);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      align-items: center;
+      gap: 2rem;
+      width: 100%;
+    }
+
+    .hero-content {
+      grid-column: span 7;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(3.2rem, 6vw, 6.5rem);
+      font-weight: 800;
+      line-height: 0.95;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+
+    .hero-content h1 .highlight {
+      background: linear-gradient(135deg, var(--white) 30%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 540px;
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .hero-image-container {
+      grid-column: span 5;
+      position: relative;
+    }
+
+    .hero-image-wrapper {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      width: 100%;
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      filter: grayscale(15%) contrast(110%);
+    }
+
+    .hero-stat-card {
+      position: absolute;
+      padding: 1.25rem 1.75rem;
+      background: rgba(17, 17, 17, 0.85);
+      backdrop-filter: blur(25px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      z-index: 10;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    .hero-stat-card.card-1 {
+      bottom: 6%;
+      left: -8%;
+    }
+
+    .hero-stat-card.card-2 {
+      top: 10%;
+      right: -6%;
+    }
+
+    .hero-stat-number {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .hero-stat-number span { color: var(--primary); }
+
+    .hero-stat-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.25rem;
+    }
+
+    /* ==========================================================================
+       5. BENTO GRID (FIXED: Content Driven Height, Proportions & Clean Cards)
+       ========================================================================== */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .bento-item {
+      padding: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .bento-item.col-8 { grid-column: span 8; }
+    .bento-item.col-4 { grid-column: span 4; }
+
+    .bento-content-top {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .bento-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(255, 59, 48, 0.1);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(255, 59, 48, 0.2);
+    }
+
+    .bento-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .bento-desc {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .bento-media-container {
+      margin-top: 1.75rem;
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    /* ==========================================================================
+       6. ELITE PROGRAMS
+       ========================================================================== */
+    .program-card {
+      grid-column: span 4;
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+      text-decoration: none;
+      color: var(--white);
+    }
+
+    .program-img {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      filter: brightness(0.65) contrast(110%);
+      z-index: 1;
+    }
+
+    .program-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(0deg, rgba(5,5,5,0.9) 0%, rgba(5,5,5,0.1) 60%, rgba(5,5,5,0) 100%);
+      z-index: 2;
+    }
+
+    .program-content {
+      position: relative;
+      z-index: 3;
+    }
+
+    .program-meta {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .program-badge {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .program-card:hover .program-img {
+      transform: scale(1.06);
+    }
+
+    /* ==========================================================================
+       7. TRANSFORMATION EXPERIENCE (FIXED: Reduced Gap, Centered Handle)
+       ========================================================================== */
+    .before-after-container {
+      width: 100%;
+      max-width: 960px;
+      margin: 1.5rem auto 3.5rem auto;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+      border: 1px solid var(--surface-border);
+    }
+
+    .ba-img {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+    }
+
+    .ba-before {
+      width: 50%;
+      overflow: hidden;
+      border-right: 2px solid var(--primary);
+      z-index: 2;
+    }
+
+    .ba-before img {
+      width: 960px;
+      max-width: none;
+      height: 100%;
+    }
+
+    .ba-slider {
+      position: absolute;
+      top: 0; bottom: 0; left: 50%;
+      width: 2px;
+      background: var(--primary);
+      cursor: ew-resize;
+      z-index: 10;
+      transform: translateX(-50%);
+    }
+
+    .ba-handle {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px; height: 44px;
+      background: var(--white);
+      color: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5), 0 0 15px var(--primary);
+      pointer-events: none;
+    }
+
+    .timeline-wrapper {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      position: relative;
+      margin-top: 2rem;
+    }
+
+    .timeline-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 22px; left: 10%; width: 80%; height: 2px;
+      background: var(--surface-border);
+      z-index: 1;
+    }
+
+    .timeline-step {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .timeline-node {
+      width: 44px;
+      height: 44px;
+      background: var(--surface);
+      border: 2px solid var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1.25rem;
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    /* ==========================================================================
+       8. BMI CALCULATOR
+       ========================================================================== */
+    .calculator-card {
+      grid-column: span 12;
+      padding: 3.5rem;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .calc-inputs {
+      grid-column: span 7;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .input-group label {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      color: var(--white);
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .input-group input:focus { border-color: var(--primary); }
+
+    .calc-display {
+      grid-column: span 5;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 1.5rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      border: 1px solid var(--surface-border);
+    }
+
+    .bmi-value {
+      font-family: var(--font-display);
+      font-size: 4.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+      margin: 0.75rem 0;
+      text-shadow: 0 0 30px var(--accent-glow);
+    }
+
+    .bmi-status {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       9. APP SHOWCASE
+       ========================================================================== */
+    .app-showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .app-info { grid-column: span 7; }
+
+    .app-visual {
+      grid-column: span 5;
+      display: flex;
+      justify-content: center;
+    }
+
+    .phone-mockup {
+      width: 300px;
+      height: 600px;
+      background: #000;
+      border-radius: 44px;
+      border: 4px solid #333;
+      position: relative;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.8), 0 0 40px rgba(255, 59, 48, 0.2);
+      padding: 10px;
+      overflow: hidden;
+    }
+
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 34px;
+      position: relative;
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 1rem;
+      overflow: hidden;
+    }
+
+    .phone-screen-bg {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 1;
+    }
+
+    .phone-notification {
+      position: relative;
+      z-index: 2;
+      background: rgba(17, 17, 17, 0.85);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--glass-border);
+      padding: 0.85rem 1rem;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* ==========================================================================
+       10. COACHES
+       ========================================================================== */
+    .coach-card {
+      grid-column: span 4;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .coach-img-wrapper {
+      width: 100%;
+    }
+
+    .coach-img {
+      filter: grayscale(25%);
+      transition: all 0.5s ease;
+    }
+
+    .coach-info {
+      position: absolute;
+      bottom: 0; left: 0; width: 100%;
+      padding: 1.75rem;
+      background: linear-gradient(0deg, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0) 100%);
+    }
+
+    .coach-card:hover .coach-img {
+      filter: grayscale(0%);
+      transform: scale(1.05);
+    }
+
+    /* ==========================================================================
+       11. GALLERY (FIXED: Rebuilt 4-Column CSS Grid - No Gaps or Empty Space)
+       ========================================================================== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .gallery-item {
+      grid-column: span 1;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery-item img {
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.08);
+    }
+
+    /* ==========================================================================
+       12. MEMBERSHIP PRICING
+       ========================================================================== */
+    .pricing-card {
+      grid-column: span 4;
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .pricing-card.featured {
+      background: linear-gradient(180deg, rgba(255,59,48,0.15) 0%, rgba(17,17,17,0.8) 100%);
+      border-color: var(--primary);
+    }
+
+    .pricing-price {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin: 1.25rem 0;
+      line-height: 1;
+    }
+
+    .pricing-price span {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .pricing-features {
+      list-style: none;
+      margin: 1.5rem 0 2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .pricing-features li i { color: var(--primary); }
+
+    /* ==========================================================================
+       13. FAQ ACCORDION
+       ========================================================================== */
+    .faq-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--surface-border);
+      padding: 1.75rem 0;
+    }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), margin-top 0.4s;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 200px;
+      margin-top: 1rem;
+    }
+
+    .faq-item.active .faq-icon {
+      transform: rotate(45deg);
+      color: var(--primary);
+    }
+
+    .faq-icon {
+      transition: transform 0.3s ease, color 0.3s ease;
+      font-size: 1.1rem;
+    }
+
+    /* ==========================================================================
+       14. FOOTER
+       ========================================================================== */
+    footer {
+      background: #020202;
+      border-top: 1px solid var(--surface-border);
+      padding: 5rem 0 2.5rem 0;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 2.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .footer-col-main { grid-column: span 5; }
+    .footer-col { grid-column: span 2; }
+    .footer-col-sub { grid-column: span 3; }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 1024px) {
+      .hero-content { grid-column: span 12; }
+      .hero-image-container { grid-column: span 12; margin-top: 2rem; }
+      .bento-item.col-8, .bento-item.col-4 { grid-column: span 12; }
+      .program-card, .coach-card, .pricing-card { grid-column: span 12; }
+      .calculator-card { grid-template-columns: 1fr; }
+      .calc-inputs, .calc-display { grid-column: span 12; }
+      .app-info, .app-visual { grid-column: span 12; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-col-main, .footer-col, .footer-col-sub { grid-column: span 12; }
+      .timeline-wrapper { grid-template-columns: 1fr; gap: 2rem; }
+      .timeline-wrapper::before { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Canvas -->
+  <canvas id="ambient-canvas"></canvas>
+  <div class="noise-overlay"></div>
+
+  <!-- Custom Cursor -->
+  <div class="custom-cursor"></div>
+  <div class="custom-cursor-follower"></div>
+
+  <!-- Preloader -->
+  <div id="loader">
+    <div class="loader-content">
+      <div class="loader-logo">POWERFIT</div>
+      <div class="loader-bar">
+        <div class="loader-progress" id="loader-progress"></div>
+      </div>
+      <div class="loader-counter" id="loader-counter">0%</div>
+    </div>
+  </div>
+
+  <!-- Header Navigation -->
+  <header>
+    <div class="container nav-container">
+      <a href="#" class="logo">POWER<span>FIT</span></a>
+      <ul class="nav-links">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#programs" class="nav-link">Programs</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#coaches" class="nav-link">Coaches</a></li>
+        <li><a href="#membership" class="nav-link">Membership</a></li>
+      </ul>
+      <a href="#membership" class="btn btn-primary">Join The Club</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="section-tag">Peak Human Performance</div>
+          <h1>Architect Your <span class="highlight">Physical</span> Dominance</h1>
+          <p class="hero-subtitle">An elite training ecosystem combining hyper-personalized strength programming, biomedical tracking, and world-class physical restoration.</p>
+          <div class="hero-cta-group">
+            <a href="#membership" class="btn btn-primary">Claim Membership <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="#experience" class="btn btn-secondary"><i class="fa-solid fa-play"></i> Watch Experience</a>
+          </div>
+        </div>
+        <div class="hero-image-container">
+          <div class="hero-image-wrapper glass-card">
+            <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1000&q=80" alt="Athlete" class="hero-image">
+          </div>
+          <div class="hero-stat-card card-1 glass-card">
+            <div class="hero-stat-number">99.8<span>%</span></div>
+            <div class="hero-stat-label">Member Transformation Rate</div>
+          </div>
+          <div class="hero-stat-card card-2 glass-card">
+            <div class="hero-stat-number">12<span>K+</span></div>
+            <div class="hero-stat-label">Active Powerfit Athletes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Why Powerfit (Bento Grid - Fixed Layout & Heights) -->
+ <section id="about" class="section-padding">
+
+    <div class="container">
+
+        <div class="section-header">
+            <div class="section-tag">Why PowerFit</div>
+
+            <h2 class="title-large">
+                Engineered For The Top 1%
+            </h2>
+
+            <p class="section-description">
+                Every square foot of PowerFit is engineered around performance,
+                recovery, precision, and measurable athletic progress—not simply
+                another commercial gym.
+            </p>
+        </div>
+
+        <div class="bento-grid">
+
+            <!-- Large Card -->
+            <article class="glass-card bento-item col-8">
+
+                <div class="bento-media-container aspect-16-9">
+                    <img
+                        src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1600&q=80"
+                        alt="Elite Training"
+                    >
+                </div>
+
+                <div class="bento-content">
+
+                    <div class="bento-icon">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+
+                    <h3 class="bento-title">
+                        Biometric Precision Tracking
+                    </h3>
+
+                    <p class="bento-desc">
+                        Live performance tracking monitors heart rate,
+                        recovery, workload, and training intensity to
+                        optimize every workout.
+                    </p>
+
+                </div>
+
+            </article>
+
+            <!-- Small Card -->
+            <article class="glass-card bento-item col-4">
+
+                <div class="small-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=900&q=80"
+                        alt="Private Gym"
+                    >
+                </div>
+
+                <div class="bento-content">
+
+                    <div class="bento-icon">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+
+                    <h3 class="bento-title">
+                        Private Sanctuary
+                    </h3>
+
+                    <p class="bento-desc">
+                        Limited memberships guarantee privacy,
+                        zero waiting time and a distraction-free
+                        training environment.
+                    </p>
+
+                </div>
+
+            </article>
+
+            <!-- Small Card -->
+            <article class="glass-card bento-item col-4">
+
+                <div class="small-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=900&q=80"
+                        alt="Performance Nutrition"
+                    >
+                </div>
+
+                <div class="bento-content">
+
+                    <div class="bento-icon">
+                        <i class="fa-solid fa-dna"></i>
+                    </div>
+
+                    <h3 class="bento-title">
+                        Personalized Performance
+                    </h3>
+
+                    <p class="bento-desc">
+                        Training and nutrition plans are adapted
+                        to your goals, recovery rate and
+                        performance metrics.
+                    </p>
+
+                </div>
+
+            </article>
+
+            <!-- Large Card -->
+            <article class="glass-card bento-item col-8">
+
+                <div class="bento-media-container aspect-16-9">
+                    <img
+                        src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1600&q=80"
+                        alt="Recovery"
+                    >
+                </div>
+
+                <div class="bento-content">
+
+                    <div class="bento-icon">
+                        <i class="fa-solid fa-temperature-arrow-down"></i>
+                    </div>
+
+                    <h3 class="bento-title">
+                        Elite Recovery Zone
+                    </h3>
+
+                    <p class="bento-desc">
+                        Recovery is treated as seriously as training,
+                        with cold therapy, mobility work, recovery
+                        protocols and guided regeneration sessions.
+                    </p>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+  <!-- Section 3: Programs -->
+  <section id="programs">
+    <div class="container">
+      <div class="section-tag">Elite Training Programs</div>
+      <h2 class="title-large">Master Your Discipline</h2>
+      
+      <div class="grid-12">
+        <a href="#" class="program-card glass-card aspect-4-3">
+          <img src="https://images.unsplash.com/photo-1534367507873-d2d7e24c797f?auto=format&fit=crop&w=800&q=80" class="program-img" alt="Hypertrophy">
+          <div class="program-overlay"></div>
+          <div class="program-content">
+            <div class="program-meta">
+              <span class="program-badge">Advanced</span>
+              <span class="program-badge">60 Mins</span>
+            </div>
+            <h3 style="font-size: 1.5rem; margin-bottom: 0.25rem;">Hypertrophy</h3>
+            <p style="color: var(--muted); font-size: 0.85rem;">Targeted mechanical tension and metabolic stress engineering.</p>
+          </div>
+        </a>
+
+        <a href="#" class="program-card glass-card aspect-4-3">
+          <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=800&q=80" class="program-img" alt="Powerlifting">
+          <div class="program-overlay"></div>
+          <div class="program-content">
+            <div class="program-meta">
+              <span class="program-badge">Elite</span>
+              <span class="program-badge">90 Mins</span>
+            </div>
+            <h3 style="font-size: 1.5rem; margin-bottom: 0.25rem;">Powerlifting</h3>
+            <p style="color: var(--muted); font-size: 0.85rem;">Neurological recruitment designed to break absolute strength barriers.</p>
+          </div>
+        </a>
+
+        <a href="#" class="program-card glass-card aspect-4-3">
+          <img src="https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=800&q=80" class="program-img" alt="HIIT">
+          <div class="program-overlay"></div>
+          <div class="program-content">
+            <div class="program-meta">
+              <span class="program-badge">All Levels</span>
+              <span class="program-badge">45 Mins</span>
+            </div>
+            <h3 style="font-size: 1.5rem; margin-bottom: 0.25rem;">Conditioning</h3>
+            <p style="color: var(--muted); font-size: 0.85rem;">Anaerobic threshold protocols to maximize fat oxidation output.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Transformation Experience (Fixed Sizing & Gaps) -->
+  <section id="experience" class="section-padding">
+    <div class="container">
+
+        <div class="section-header text-center">
+
+            <div class="section-tag">
+                Transformation Experience
+            </div>
+
+            <h2 class="title-large">
+                The Proof of Mastery
+            </h2>
+
+            <p class="section-description">
+                Every member follows a carefully engineered performance system—
+                from assessment to transformation—designed to deliver measurable,
+                long-term athletic results.
+            </p>
+
+       <div class="before-after-container aspect-16-9" id="ba-slider-container">
+
+    <img
+        src="images/transformation.jpg"
+        alt="Body Transformation"
+        class="transformation-image"
+    >
+
+</div>
+
+        <div class="timeline-wrapper">
+
+            <div class="timeline-step">
+                <div class="timeline-node">01</div>
+                <h4>Assessment</h4>
+                <p>3D body scan, mobility screening, strength testing and performance analysis.</p>
+            </div>
+
+            <div class="timeline-step">
+                <div class="timeline-node">02</div>
+                <h4>Custom Blueprint</h4>
+                <p>Personalized training program and nutrition strategy built around your goals.</p>
+            </div>
+
+            <div class="timeline-step">
+                <div class="timeline-node">03</div>
+                <h4>Execution</h4>
+                <p>Elite coaching, weekly progress reviews and continuous optimization.</p>
+            </div>
+
+            <div class="timeline-step">
+                <div class="timeline-node">04</div>
+                <h4>Peak Performance</h4>
+                <p>Improved strength, endurance, body composition and sustainable lifestyle habits.</p>
+            </div>
+
+        </div>
+
+       
+    </div>
+</section>
+
+  <!-- Section 6: BMI Calculator -->
+  <section>
+    <div class="container">
+      <div class="grid-12">
+        <div class="glass-card calculator-card">
+          <div class="calc-inputs">
+            <div class="section-tag">Diagnostic Tool</div>
+            <h3 style="font-size: 2rem; margin-bottom: 1rem;">Calculate Your BMI</h3>
+            <div class="input-group">
+              <label>Height (CM)</label>
+              <input type="number" id="calc-height" value="180" placeholder="e.g. 180">
+            </div>
+            <div class="input-group">
+              <label>Weight (KG)</label>
+              <input type="number" id="calc-weight" value="82" placeholder="e.g. 82">
+            </div>
+          </div>
+
+          <div class="calc-display">
+            <span style="color: var(--muted); font-family: var(--font-display); text-transform: uppercase; font-size: 0.8rem;">Your Current BMI</span>
+            <div class="bmi-value" id="bmi-result">25.3</div>
+            <div class="bmi-status" id="bmi-status" style="color: var(--secondary);">Overweight</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 7: Mobile App Showcase -->
+  <section>
+    <div class="container">
+      <div class="app-showcase-grid">
+        <div class="app-info">
+          <div class="section-tag">Command Center</div>
+          <h2 class="title-large">The Powerfit OS</h2>
+          <p style="color: var(--muted); font-size: 1.05rem; line-height: 1.6; margin-bottom: 2rem;">Track workouts, reserve cryo-chambers, order post-workout nutrition, and view biometric progression in real time through our dedicated iOS application.</p>
+          <div style="display: flex; gap: 1rem;">
+            <a href="#" class="btn btn-secondary"><i class="fa-brands fa-apple" style="font-size: 1.1rem;"></i> App Store</a>
+            <a href="#" class="btn btn-secondary"><i class="fa-brands fa-google-play" style="font-size: 1.1rem;"></i> Google Play</a>
+          </div>
+        </div>
+
+        <div class="app-visual">
+          <div class="phone-mockup">
+            <div class="phone-screen">
+              <div class="phone-screen-bg">
+                <img src="https://images.unsplash.com/photo-1510519138161-58446230f71b?auto=format&fit=crop&w=800&q=80" alt="App Background">
+              </div>
+              <div class="phone-notification">
+                <i class="fa-solid fa-circle-check" style="color: var(--primary); font-size: 1.25rem;"></i>
+                <div>
+                  <div style="font-weight: 700; font-size: 0.8rem;">Workout Completed</div>
+                  <div style="font-size: 0.7rem; color: var(--muted);">840 kcal burned • 65 min</div>
+                </div>
+              </div>
+
+              <div class="phone-notification">
+                <i class="fa-solid fa-heart-pulse" style="color: var(--secondary); font-size: 1.25rem;"></i>
+                <div>
+                  <div style="font-weight: 700; font-size: 0.8rem;">Optimal Recovery</div>
+                  <div style="font-size: 0.7rem; color: var(--muted);">HRV Score: 88ms (Ready for PR)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 8: Coaches -->
+  <section id="coaches">
+    <div class="container">
+      <div class="section-tag">World-Class Mentors</div>
+      <h2 class="title-large">Guided By Titans</h2>
+
+      <div class="grid-12">
+        <div class="coach-card glass-card">
+          <div class="coach-img-wrapper aspect-4-3">
+            <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=800&q=80" class="coach-img" alt="Marcus Vance">
+          </div>
+          <div class="coach-info">
+            <h3 style="font-size: 1.5rem;">Marcus Vance</h3>
+            <p style="color: var(--primary); font-family: var(--font-display); font-size: 0.8rem; text-transform: uppercase;">Head Strength Director</p>
+          </div>
+        </div>
+
+        <div class="coach-card glass-card">
+          <div class="coach-img-wrapper aspect-4-3">
+            <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=800&q=80" class="coach-img" alt="Elena Rostova">
+          </div>
+          <div class="coach-info">
+            <h3 style="font-size: 1.5rem;">Elena Rostova</h3>
+            <p style="color: var(--primary); font-family: var(--font-display); font-size: 0.8rem; text-transform: uppercase;">Biomedical & Mobility</p>
+          </div>
+        </div>
+
+        <div class="coach-card glass-card">
+          <div class="coach-img-wrapper aspect-4-3">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" class="coach-img" alt="David Sterling">
+          </div>
+          <div class="coach-info">
+            <h3 style="font-size: 1.5rem;">David Sterling</h3>
+            <p style="color: var(--primary); font-family: var(--font-display); font-size: 0.8rem; text-transform: uppercase;">Hypertrophy Lead</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 9: Masonry Gallery (Rebuilt: Complete 4-Column Balanced Grid) -->
+  <section>
+    <div class="container">
+      <div class="section-tag">The Sanctuary</div>
+      <h2 class="title-large">Uncompromising Space</h2>
+
+      <div class="gallery-grid">
+        <div class="gallery-item aspect-square"><img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=800&q=80" alt="Facility 1"></div>
+        <div class="gallery-item aspect-square"><img src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=800&q=80" alt="Facility 2"></div>
+        <div class="gallery-item aspect-square"><img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80" alt="Facility 3"></div>
+        <div class="gallery-item aspect-square"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80" alt="Facility 4"></div>
+        <div class="gallery-item aspect-square"><img src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&w=800&q=80" alt="Facility 5"></div>
+        <div class="gallery-item aspect-square"><img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=800&q=80" alt="Facility 6"></div>
+        <div class="gallery-item aspect-square"><img src="https://images.pexels.com/photos/32610333/pexels-photo-32610333.jpeg" alt="Facility 7"></div>
+        <div class="gallery-item aspect-square"><img src="https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=800&q=80" alt="Facility 8"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 10: Membership Pricing -->
+  <section id="membership">
+    <div class="container">
+      <div class="section-tag">Exclusive Access</div>
+      <h2 class="title-large">Select Your Tier</h2>
+
+      <div class="grid-12">
+        <div class="glass-card pricing-card">
+          <div>
+            <h3 style="font-size: 1.35rem; font-family: var(--font-display);">ATHLETE</h3>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 0.35rem;">For dedicated athletes driving relentless daily progress.</p>
+            <div class="pricing-price">$299 <span>/ month</span></div>
+            <ul class="pricing-features">
+              <li><i class="fa-solid fa-check"></i> Unlimited Facility Access</li>
+              <li><i class="fa-solid fa-check"></i> Biometric Mobile Tracking</li>
+              <li><i class="fa-solid fa-check"></i> Standard Thermal Sauna</li>
+              <li><i class="fa-solid fa-check"></i> Monthly Assessment</li>
+            </ul>
+          </div>
+          <a href="#" class="btn btn-secondary" style="width: 100%;">Apply Now</a>
+        </div>
+
+        <div class="glass-card pricing-card featured">
+          <div>
+            <div class="section-tag" style="margin-bottom: 0.35rem;">MOST POPULAR</div>
+            <h3 style="font-size: 1.35rem; font-family: var(--font-display);">PRO DOMINANCE</h3>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 0.35rem;">Complete ecosystem for aggressive physical evolution.</p>
+            <div class="pricing-price">$499 <span>/ month</span></div>
+            <ul class="pricing-features">
+              <li><i class="fa-solid fa-check"></i> 24/7 VIP Sanctuary Access</li>
+              <li><i class="fa-solid fa-check"></i> Dedicated 1-on-1 Coach</li>
+              <li><i class="fa-solid fa-check"></i> Full Cryo & Oxygen Therapy</li>
+              <li><i class="fa-solid fa-check"></i> Custom Nutrition Protocols</li>
+            </ul>
+          </div>
+          <a href="#" class="btn btn-primary" style="width: 100%;">Claim Access</a>
+        </div>
+
+        <div class="glass-card pricing-card">
+          <div>
+            <h3 style="font-size: 1.35rem; font-family: var(--font-display);">BLACK CARD</h3>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 0.35rem;">Bespoke concierge program capped at 50 members globally.</p>
+            <div class="pricing-price">$999 <span>/ month</span></div>
+            <ul class="pricing-features">
+              <li><i class="fa-solid fa-check"></i> Everything in Pro Dominance</li>
+              <li><i class="fa-solid fa-check"></i> Private Locker & Valet</li>
+              <li><i class="fa-solid fa-check"></i> Unlimited Medical Diagnostics</li>
+              <li><i class="fa-solid fa-check"></i> Global Reciprocation</li>
+            </ul>
+          </div>
+          <a href="#" class="btn btn-secondary" style="width: 100%;">Inquire Invitation</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 12: FAQ -->
+  <section>
+    <div class="container">
+      <div class="section-tag">Knowledge Base</div>
+      <h2 class="title-large" style="text-align: center;">Frequently Asked</h2>
+
+      <div class="faq-container">
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Is there a cap on total facility memberships?</span>
+            <i class="fa-solid fa-plus faq-icon"></i>
+          </div>
+          <div class="faq-answer">
+            Yes. To guarantee zero waiting time for equipment and absolute focus, each Powerfit location limits active memberships strictly to 300 athletes.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How does the DNA customization protocol work?</span>
+            <i class="fa-solid fa-plus faq-icon"></i>
+          </div>
+          <div class="faq-answer">
+            Upon onboarding, our medical partner collects a simple cheek swab to sequence genes relating to nutrient absorption, tendon elasticity, and muscle fiber ratios.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Can I pause my membership for business travel?</span>
+            <i class="fa-solid fa-plus faq-icon"></i>
+          </div>
+          <div class="faq-answer">
+            Pro Dominance and Black Card tiers feature flexible hold capabilities allowing you to freeze your account for up to 90 days annually without losing your spot.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section style="text-align: center; padding: 8rem 0;">
+    <div class="container">
+      <h2 class="title-large">Ready To Transform?</h2>
+      <p style="color: var(--muted); font-size: 1.15rem; max-width: 580px; margin: 0 auto 2.5rem auto;">The physical standard you desire is one decision away. Step into the elite standard of human performance.</p>
+      <a href="#membership" class="btn btn-primary" style="font-size: 1rem; padding: 1.25rem 3rem;">Begin Your Evolution</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col-main">
+          <a href="#" class="logo" style="margin-bottom: 1.25rem;">POWER<span>FIT</span></a>
+          <p style="color: var(--muted); max-width: 320px; font-size: 0.9rem; line-height: 1.6;">The world’s premier physical transformation ecosystem. Engineered for those who demand ultimate athletic refinement.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 style="margin-bottom: 1.25rem; font-family: var(--font-display); font-size: 0.95rem;">Navigation</h4>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; color: var(--muted); font-size: 0.85rem;">
+            <li><a href="#about" style="color: inherit; text-decoration: none;">About Us</a></li>
+            <li><a href="#programs" style="color: inherit; text-decoration: none;">Programs</a></li>
+            <li><a href="#coaches" style="color: inherit; text-decoration: none;">Coaches</a></li>
+            <li><a href="#membership" style="color: inherit; text-decoration: none;">Membership</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 style="margin-bottom: 1.25rem; font-family: var(--font-display); font-size: 0.95rem;">Locations</h4>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; color: var(--muted); font-size: 0.85rem;">
+            <li>New York — Soho</li>
+            <li>Los Angeles — WeHo</li>
+            <li>London — Mayfair</li>
+            <li>Dubai — DIFC</li>
+          </ul>
+        </div>
+
+        <div class="footer-col-sub">
+          <h4 style="margin-bottom: 1.25rem; font-family: var(--font-display); font-size: 0.95rem;">Stay Elite</h4>
+          <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 1rem;">Subscribe to receive performance notes.</p>
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="email" placeholder="Enter your email" style="background: rgba(255,255,255,0.05); border: 1px solid var(--surface-border); border-radius: 8px; padding: 0.75rem 1rem; color: #fff; outline: none; width: 100%; font-size: 0.85rem;">
+            <button class="btn btn-primary" style="padding: 0.75rem 1rem;"><i class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 POWERFIT Inc. All Rights Reserved.</div>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="#" style="color: inherit; text-decoration: none;">Privacy Policy</a>
+          <a href="#" style="color: inherit; text-decoration: none;">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+     JAVASCRIPT (GSAP, LENIS, INTERACTION & CANVAS)
+     ========================================================================== -->
+  <script>
+    // 1. Smooth Scroll Engine Initialization (Lenis)
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smooth: true
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0, 0);
+
+    // 2. Preloader Animation
+    let progress = 0;
+    const progressEl = document.getElementById('loader-progress');
+    const counterEl = document.getElementById('loader-counter');
+    
+    const interval = setInterval(() => {
+      progress += Math.floor(Math.random() * 12) + 6;
+      if (progress > 100) progress = 100;
+      
+      progressEl.style.width = `${progress}%`;
+      counterEl.textContent = `${progress}%`;
+
+      if (progress === 100) {
+        clearInterval(interval);
+        gsap.to('#loader', {
+          opacity: 0,
+          duration: 0.6,
+          delay: 0.1,
+          onComplete: () => {
+            document.getElementById('loader').style.display = 'none';
+            initHeroAnimations();
+          }
+        });
+      }
+    }, 60);
+
+    // 3. Custom Cursor Movement
+    const cursor = document.querySelector('.custom-cursor');
+    const follower = document.querySelector('.custom-cursor-follower');
+
+    document.addEventListener('mousemove', (e) => {
+      gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+      gsap.to(follower, { x: e.clientX, y: e.clientY, duration: 0.25 });
+    });
+
+    document.querySelectorAll('a, button, .glass-card, .gallery-item').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+
+    // 4. Hero Section Animations
+    function initHeroAnimations() {
+      gsap.from('.hero-content .section-tag', { opacity: 0, y: 20, duration: 0.8 });
+      gsap.from('.hero-content h1', { opacity: 0, y: 30, duration: 0.9, delay: 0.1 });
+      gsap.from('.hero-subtitle', { opacity: 0, y: 20, duration: 0.8, delay: 0.3 });
+      gsap.from('.hero-cta-group', { opacity: 0, y: 20, duration: 0.8, delay: 0.4 });
+      gsap.from('.hero-image-wrapper', { opacity: 0, scale: 0.96, duration: 1, delay: 0.2 });
+      gsap.from('.hero-stat-card', { opacity: 0, y: 30, duration: 0.8, delay: 0.5, stagger: 0.15 });
+    }
+
+    // 5. Header Dynamic Sticky Behavior
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // 6. Before / After Interactive Slider (Centered & Fixed Boundaries)
+    const baContainer = document.getElementById('ba-slider-container');
+    const baBefore = document.getElementById('ba-before-img');
+    const baHandle = document.getElementById('ba-handle-line');
+
+    if (baContainer) {
+      let isDragging = false;
+
+      const updateSlider = (x) => {
+        const rect = baContainer.getBoundingClientRect();
+        let position = ((x - rect.left) / rect.width) * 100;
+        if (position < 0) position = 0;
+        if (position > 100) position = 100;
+        
+        baBefore.style.width = `${position}%`;
+        baHandle.style.left = `${position}%`;
+      };
+
+      baContainer.addEventListener('mousedown', () => isDragging = true);
+      window.addEventListener('mouseup', () => isDragging = false);
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        updateSlider(e.clientX);
+      });
+
+      baContainer.addEventListener('touchstart', () => isDragging = true);
+      window.addEventListener('touchend', () => isDragging = false);
+      window.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        updateSlider(e.touches[0].clientX);
+      });
+    }
+
+    // 7. BMI Calculator Logic
+    const heightInput = document.getElementById('calc-height');
+    const weightInput = document.getElementById('calc-weight');
+    const bmiResult = document.getElementById('bmi-result');
+    const bmiStatus = document.getElementById('bmi-status');
+
+    function calculateBMI() {
+      const h = parseFloat(heightInput.value) / 100;
+      const w = parseFloat(weightInput.value);
+
+      if (h > 0 && w > 0) {
+        const bmi = (w / (h * h)).toFixed(1);
+        bmiResult.textContent = bmi;
+
+        if (bmi < 18.5) {
+          bmiStatus.textContent = "Underweight";
+          bmiStatus.style.color = "#ffb300";
+        } else if (bmi >= 18.5 && bmi < 24.9) {
+          bmiStatus.textContent = "Optimal Physicality";
+          bmiStatus.style.color = "#30d158";
+        } else if (bmi >= 25 && bmi < 29.9) {
+          bmiStatus.textContent = "Overweight";
+          bmiStatus.style.color = "var(--secondary)";
+        } else {
+          bmiStatus.textContent = "High Density / Obese";
+          bmiStatus.style.color = "var(--primary)";
+        }
+      }
+    }
+
+    if (heightInput && weightInput) {
+      heightInput.addEventListener('input', calculateBMI);
+      weightInput.addEventListener('input', calculateBMI);
+    }
+
+    // 8. FAQ Accordion
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.querySelector('.faq-question').addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+        if (!isActive) item.classList.add('active');
+      });
+    });
+
+    // 9. Ambient Canvas Particles
+    const canvas = document.getElementById('ambient-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.3;
+        this.speedY = (Math.random() - 0.5) * 0.3;
+        this.alpha = Math.random() * 0.4 + 0.1;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        ctx.fillStyle = `rgba(255, 59, 48, ${this.alpha})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 35; i++) {
+      particles.push(new Particle());
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // 10. GSAP ScrollTrigger Animations
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.utils.toArray('section').forEach(section => {
+      gsap.from(section.querySelectorAll('.section-tag, .title-large, .glass-card, .program-card, .coach-card, .gallery-item'), {
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 85%',
+        },
+        y: 35,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.1,
+        ease: 'power3.out'
+      });
+    });
+  </script>
+</body>
+</html>

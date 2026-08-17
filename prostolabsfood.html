@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALMA — Honest Food & Botanical Drinks</title>
+
+  <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* ------------------------------------------
+       1. COLOR PALETTE & DESIGN SYSTEM
+    ------------------------------------------- */
+    :root {
+      --bg-warm: #FAF6F0;
+      --bg-card: #FFFFFF;
+      --terracotta: #D95338;
+      --matcha: #2D5A27;
+      --matcha-light: #EBF2E8;
+      --butter: #F7E7A1;
+      --charcoal: #1C1917;
+      --sand: #EFE8DC;
+      --sand-dark: #E2D7C5;
+      
+      --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --radius-sm: 16px;
+      --radius-md: 28px;
+      --radius-lg: 48px;
+      --radius-full: 999px;
+
+      --shadow-soft: 0 20px 40px rgba(28, 25, 23, 0.05);
+      --shadow-float: 0 30px 60px rgba(28, 25, 23, 0.08);
+      --shadow-pop: 0 12px 32px rgba(217, 83, 56, 0.2);
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --pad-x: clamp(1.5rem, 5vw, 5rem);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      background-color: var(--bg-warm);
+      color: var(--charcoal);
+      font-family: var(--font-body);
+      font-size: 16px;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    ::selection {
+      background-color: var(--terracotta);
+      color: #FFFFFF;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-warm); }
+    ::-webkit-scrollbar-thumb { background: var(--sand-dark); border-radius: var(--radius-full); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--terracotta); }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; height: auto; display: block; object-fit: cover; }
+
+    /* ------------------------------------------
+       2. CURSOR OVERLAYS
+    ------------------------------------------- */
+    .cursor-dot {
+      position: fixed;
+      top: 0; left: 0;
+      width: 12px; height: 12px;
+      background: var(--terracotta);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s var(--ease-back), height 0.3s var(--ease-back), background-color 0.3s ease;
+    }
+
+    .cursor-ring {
+      position: fixed;
+      top: 0; left: 0;
+      width: 44px; height: 44px;
+      border: 1.5px solid rgba(217, 83, 56, 0.3);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s var(--ease-out-expo), height 0.3s var(--ease-out-expo), border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    body.cursor-hover .cursor-dot {
+      width: 24px;
+      height: 24px;
+      background: var(--matcha);
+    }
+
+    body.cursor-hover .cursor-ring {
+      width: 64px;
+      height: 64px;
+      border-color: var(--matcha);
+      background: rgba(45, 90, 39, 0.05);
+    }
+
+    body.cursor-view .cursor-dot { opacity: 0; }
+    body.cursor-view .cursor-ring {
+      width: 88px;
+      height: 88px;
+      background: var(--terracotta);
+      border-color: var(--terracotta);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    body.cursor-view .cursor-ring::after {
+      content: 'EXPLORE';
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #FFFFFF;
+    }
+
+    /* ------------------------------------------
+       3. NAVIGATION & BADGES
+    ------------------------------------------- */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      padding: 1.75rem var(--pad-x);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      transition: padding 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .nav.scrolled {
+      padding: 1rem var(--pad-x);
+      background-color: rgba(250, 246, 240, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(28, 25, 23, 0.04);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.9rem;
+      color: var(--charcoal);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-brand-dot {
+      width: 10px;
+      height: 10px;
+      background-color: var(--terracotta);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-link {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      position: relative;
+      padding: 0.4rem 0;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0%; height: 2px;
+      background-color: var(--terracotta);
+      border-radius: 2px;
+      transition: width 0.3s var(--ease-out-expo);
+    }
+
+    .nav-link:hover::after { width: 100%; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.9rem 2rem;
+      border-radius: var(--radius-full);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.3s var(--ease-back), box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .btn-terracotta {
+      background-color: var(--terracotta);
+      color: #FFFFFF;
+      box-shadow: var(--shadow-pop);
+    }
+
+    .btn-terracotta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 36px rgba(217, 83, 56, 0.3);
+      background-color: #c4442a;
+    }
+
+    .btn-matcha {
+      background-color: var(--matcha);
+      color: #FFFFFF;
+    }
+
+    .btn-matcha:hover {
+      transform: translateY(-3px);
+      background-color: #23471f;
+    }
+
+    .btn-sand {
+      background-color: var(--sand);
+      color: var(--charcoal);
+    }
+
+    .btn-sand:hover {
+      background-color: var(--sand-dark);
+      transform: translateY(-2px);
+    }
+
+    /* Badge Pills */
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.25rem;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-matcha { background-color: var(--matcha-light); color: var(--matcha); }
+    .badge-butter { background-color: var(--butter); color: var(--charcoal); }
+
+    /* ------------------------------------------
+       4. HERO SECTION
+    ------------------------------------------- */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      padding: 9rem var(--pad-x) 4rem var(--pad-x);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3rem;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(3rem, 5.5vw, 5.2rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--charcoal);
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-title span.highlight {
+      color: var(--terracotta);
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero-title span.highlight::after {
+      content: '';
+      position: absolute;
+      bottom: 6px; left: 0;
+      width: 100%; height: 12px;
+      background-color: var(--butter);
+      z-index: -1;
+      border-radius: 6px;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+      color: #57534E;
+      font-weight: 400;
+      line-height: 1.6;
+      max-width: 540px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-img-main {
+      width: 100%;
+      max-width: 520px;
+      height: 600px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-float);
+      object-fit: cover;
+      transition: transform 0.6s var(--ease-out-expo);
+    }
+
+    .hero-visual:hover .hero-img-main {
+      transform: scale(1.02);
+    }
+
+    /* Floating Cards */
+    .float-card {
+      position: absolute;
+      background: var(--bg-card);
+      padding: 1.25rem 1.5rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-float);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      animation: floatSmooth 5s ease-in-out infinite;
+    }
+
+    .float-card-1 {
+      top: 8%; left: -2%;
+    }
+
+    .float-card-2 {
+      bottom: 10%; right: 0%;
+      animation-delay: -2.5s;
+    }
+
+    @keyframes floatSmooth {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .float-icon {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background-color: var(--butter);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: var(--terracotta);
+    }
+
+    /* ------------------------------------------
+       5. MARQUEE STRIP
+    ------------------------------------------- */
+    .marquee-wrap {
+      background-color: var(--matcha);
+      color: #FFFFFF;
+      padding: 1.25rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      margin: 3rem 0;
+    }
+
+    .marquee-content {
+      display: flex;
+      gap: 3rem;
+      animation: marquee 25s linear infinite;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .marquee-star {
+      color: var(--butter);
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ------------------------------------------
+       6. PHILOSOPHY / STORY
+    ------------------------------------------- */
+    .story-section {
+      padding: 8rem var(--pad-x);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .story-images {
+      position: relative;
+      height: 580px;
+    }
+
+    .story-img-1 {
+      width: 75%;
+      height: 440px;
+      border-radius: var(--radius-md);
+      position: absolute;
+      top: 0; left: 0;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .story-img-2 {
+      width: 60%;
+      height: 320px;
+      border-radius: var(--radius-md);
+      position: absolute;
+      bottom: 0; right: 0;
+      border: 8px solid var(--bg-warm);
+      box-shadow: var(--shadow-float);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .story-text p {
+      font-size: 1.15rem;
+      color: #57534E;
+      line-height: 1.7;
+      margin-bottom: 1.75rem;
+    }
+
+    /* ------------------------------------------
+       7. MENU SHOWCASE
+    ------------------------------------------- */
+    .menu-section {
+      padding: 8rem var(--pad-x);
+      background-color: #FAF2E8;
+      border-radius: var(--radius-lg);
+      margin: 0 var(--pad-x);
+    }
+
+    .menu-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 6rem auto;
+    }
+
+    .menu-item-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      margin-bottom: 7rem;
+    }
+
+    .menu-item-row.reverse {
+      direction: rtl;
+    }
+
+    .menu-item-row.reverse .menu-item-content {
+      direction: ltr;
+    }
+
+    .menu-img-wrap {
+      position: relative;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-float);
+      height: 480px;
+    }
+
+    .menu-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease-out-expo);
+    }
+
+    .menu-item-row:hover .menu-img-wrap img {
+      transform: scale(1.05);
+    }
+
+    .dish-tag {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      z-index: 2;
+    }
+
+    .menu-item-content {
+      padding: 1rem 0;
+    }
+
+    .dish-price-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1rem;
+    }
+
+    .dish-name {
+      font-family: var(--font-display);
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--charcoal);
+    }
+
+    .dish-price {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--terracotta);
+    }
+
+    .dish-story {
+      font-size: 1.1rem;
+      color: #57534E;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .ingredients-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+
+    .ing-tag {
+      padding: 0.4rem 1rem;
+      background-color: var(--bg-warm);
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+
+    .chef-note {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background-color: var(--butter);
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+
+    /* ------------------------------------------
+       8. CHEF SPOTLIGHT
+    ------------------------------------------- */
+    .chef-section {
+      padding: 10rem var(--pad-x);
+    }
+
+    .chef-card {
+      background-color: var(--charcoal);
+      color: #FFFFFF;
+      border-radius: var(--radius-lg);
+      padding: 5rem var(--pad-x);
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 5rem;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chef-portrait-wrap {
+      position: relative;
+    }
+
+    .chef-portrait {
+      width: 100%;
+      height: 520px;
+      border-radius: var(--radius-md);
+      object-fit: cover;
+    }
+
+    .chef-signature {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--butter);
+      margin-top: 1.5rem;
+    }
+
+    .chef-quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 2rem;
+      color: var(--bg-warm);
+    }
+
+    .fav-ingredients-list {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .fav-ing-item {
+      text-align: center;
+    }
+
+    .fav-ing-img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      margin-bottom: 0.5rem;
+      object-fit: cover;
+    }
+
+    /* ------------------------------------------
+       9. CREATIVE MASONRY GALLERY
+    ------------------------------------------- */
+    .gallery-section {
+      padding: 8rem var(--pad-x);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease-out-expo);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.06);
+    }
+
+    .gallery-item.col-4 { grid-column: span 4; height: 360px; }
+    .gallery-item.col-8 { grid-column: span 8; height: 360px; }
+    .gallery-item.col-6 { grid-column: span 6; height: 440px; }
+
+    /* Lightbox Modal */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(28, 25, 23, 0.92);
+      backdrop-filter: blur(20px);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+    }
+
+    #lightbox.active { display: flex; }
+
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 85vh;
+      border-radius: var(--radius-md);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 2rem;
+      right: 3rem;
+      color: #FFFFFF;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+
+    /* ------------------------------------------
+       10. RESERVATION & FOOTER
+    ------------------------------------------- */
+    .reservation-section {
+      padding: 8rem var(--pad-x);
+      background-color: var(--terracotta);
+      color: #FFFFFF;
+      border-radius: var(--radius-lg);
+      margin: 0 var(--pad-x) 4rem var(--pad-x);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .res-form {
+      background-color: #FFFFFF;
+      color: var(--charcoal);
+      padding: 3rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-float);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      border: 2px solid var(--sand);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--terracotta);
+    }
+
+    .footer {
+      padding: 4rem var(--pad-x) 2rem var(--pad-x);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px solid var(--sand);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      font-weight: 600;
+    }
+
+    /* ------------------------------------------
+       11. RESPONSIVE BREAKPOINTS
+    ------------------------------------------- */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; gap: 4rem; text-align: center; }
+      .hero-subtitle { margin: 0 auto 2.5rem auto; }
+      .hero-actions { justify-content: center; }
+      .story-section { grid-template-columns: 1fr; gap: 4rem; }
+      .story-images { height: 450px; }
+      .menu-item-row, .menu-item-row.reverse { grid-template-columns: 1fr; direction: ltr; }
+      .chef-card { grid-template-columns: 1fr; padding: 3rem 2rem; }
+      .reservation-section { grid-template-columns: 1fr; padding: 4rem 2rem; }
+      .gallery-item.col-4, .gallery-item.col-8, .gallery-item.col-6 { grid-column: span 12; height: 350px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .footer { flex-direction: column; gap: 2rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- ------------------------------------------
+       NAVBAR
+  ------------------------------------------- -->
+  <nav class="nav" id="navbar">
+    <a href="#" class="nav-brand">
+      ALMA<span class="nav-brand-dot"></span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#story" class="nav-link">Our Story</a></li>
+      <li><a href="#menu" class="nav-link">Menu</a></li>
+      <li><a href="#chef" class="nav-link">The Chef</a></li>
+      <li><a href="#gallery" class="nav-link">Gallery</a></li>
+    </ul>
+
+    <a href="#reserve" class="btn btn-terracotta">Book a Table</a>
+  </nav>
+
+  <!-- ------------------------------------------
+       HERO
+  ------------------------------------------- -->
+  <section class="hero" id="hero">
+    <div class="hero-text-side">
+      <span class="badge-pill badge-matcha" style="margin-bottom: 1.5rem;">
+        <i class="fa-solid fa-leaf"></i> Organic & Locally Foraged
+      </span>
+
+      <h1 class="hero-title">
+        Food made with <span class="highlight">soul</span> & wild instinct.
+      </h1>
+
+      <p class="hero-subtitle">
+        ALMA is an open-fire kitchen and botanical bar celebrating non-traditional seasonal gastronomy in the heart of the city.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#menu" class="btn btn-matcha">Explore Menu <i class="fa-solid fa-arrow-down"></i></a>
+        <a href="#reserve" class="btn btn-sand">Reserve Spot</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <!-- Main Image -->
+      <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop" class="hero-img-main" alt="ALMA Signature Dish">
+
+      <!-- Floating Card 1 -->
+      <div class="float-card float-card-1">
+        <div class="float-icon"><i class="fa-solid fa-fire"></i></div>
+        <div>
+          <div style="font-weight: 800; font-family: var(--font-display);">Open Wood-Fire</div>
+          <div style="font-size: 0.8rem; color: #78716C;">100% Cherry Wood</div>
+        </div>
+      </div>
+
+      <!-- Floating Card 2 -->
+      <div class="float-card float-card-2">
+        <div class="float-icon" style="background-color: var(--terracotta); color: #FFF;"><i class="fa-solid fa-award"></i></div>
+        <div>
+          <div style="font-weight: 800; font-family: var(--font-display);">Best New Eatery</div>
+          <div style="font-size: 0.8rem; color: #78716C;">Culinary Guide 2026</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------
+       MARQUEE STRIP
+  ------------------------------------------- -->
+  <div class="marquee-wrap">
+    <div class="marquee-content">
+      <div class="marquee-item"><span>WILD INGREDIENTS</span> <i class="fa-solid fa-asterisk marquee-star"></i></div>
+      <div class="marquee-item"><span>NATURAL WINES</span> <i class="fa-solid fa-asterisk marquee-star"></i></div>
+      <div class="marquee-item"><span>WOOD-FIRED FLAVORS</span> <i class="fa-solid fa-asterisk marquee-star"></i></div>
+      <div class="marquee-item"><span>NO SYNTHETIC ADDITIVES</span> <i class="fa-solid fa-asterisk marquee-star"></i></div>
+      <div class="marquee-item"><span>FARM-TO-TABLE DAILY</span> <i class="fa-solid fa-asterisk marquee-star"></i></div>
+
+      <!-- Repeat for seamless marquee -->
+      <div class="marquee-item"><span>WILD INGREDIENTS</span> <i class="fa-solid fa-asterisk marquee-star"></i></div>
+      <div class="marquee-item"><span>NATURAL WINES</span> <i class="fa-solid fa-asterisk marquee-star"></i></div>
+      <div class="marquee-item"><span>WOOD-FIRED FLAVORS</span> <i class="fa-solid fa-asterisk marquee-star"></i></div>
+      <div class="marquee-item"><span>NO SYNTHETIC ADDITIVES</span> <i class="fa-solid fa-asterisk marquee-star"></i></div>
+      <div class="marquee-item"><span>FARM-TO-TABLE DAILY</span> <i class="fa-solid fa-asterisk marquee-star"></i></div>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------
+       STORY / PHILOSOPHY
+  ------------------------------------------- -->
+  <section class="story-section" id="story">
+    <div class="story-images">
+      <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1000&auto=format&fit=crop" class="story-img-1" alt="Warm interior space">
+      <img src="https://images.unsplash.com/photo-1507048331197-7d4ac70811cf?q=80&w=800&auto=format&fit=crop" class="story-img-2" alt="Chef preparing herbs">
+    </div>
+
+    <div class="story-text">
+      <span class="badge-pill badge-butter">Unfiltered Gastronomy</span>
+      <h2 class="section-title">We stripped away fine-dining pretension to focus on pure flavor.</h2>
+      <p>
+        Founded by Chef Mateo Vance in 2024, ALMA was born out of a desire to connect people through raw, energetic dining. We harvest produce from our private 12-acre farm every morning and cook over open embers.
+      </p>
+      <p>
+        No white tablecloths. No stiff dress codes. Just vibrant plates, natural low-intervention wines, and good music.
+      </p>
+      <a href="#chef" class="btn btn-terracotta">Meet Our Team</a>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------
+       MENU SHOWCASE
+  ------------------------------------------- -->
+  <section class="menu-section" id="menu">
+    <div class="menu-header">
+      <span class="badge-pill badge-matcha">Seasonal Showcase</span>
+      <h2 class="section-title">Plates built on contrast & fire.</h2>
+      <p style="color: #57534E;">Each dish is designed to be shared across the table.</p>
+    </div>
+
+    <!-- Dish 1 -->
+    <div class="menu-item-row">
+      <div class="menu-img-wrap cursor-view-trigger">
+        <span class="badge-pill badge-butter dish-tag">Signature</span>
+        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000&auto=format&fit=crop" alt="Charred Heritage Carrot">
+      </div>
+      <div class="menu-item-content">
+        <div class="dish-price-header">
+          <h3 class="dish-name">Ember-Roasted Carrots</h3>
+          <span class="dish-price">$22</span>
+        </div>
+        <p class="dish-story">
+          Slow-roasted over cherrywood for 4 hours, rested on whip macadamia ricotta, and drizzled with smoked wild honey and toasted hazelnut crunch.
+        </p>
+        <div class="ingredients-tags">
+          <span class="ing-tag">Heritage Carrots</span>
+          <span class="ing-tag">Macadamia Ricotta</span>
+          <span class="ing-tag">Wild Honey</span>
+          <span class="ing-tag">Hazelnut</span>
+        </div>
+        <div class="chef-note">
+          <i class="fa-solid fa-quote-left" style="color: var(--terracotta);"></i>
+          <span>Pairs exceptionally with our skin-contact Amber Riesling.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dish 2 (Reversed) -->
+    <div class="menu-item-row reverse">
+      <div class="menu-img-wrap cursor-view-trigger">
+        <span class="badge-pill badge-matcha dish-tag">Fresh Catch</span>
+        <img src="https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=1000&auto=format&fit=crop" alt="Wild Sea Bass Ceviche">
+      </div>
+      <div class="menu-item-content">
+        <div class="dish-price-header">
+          <h3 class="dish-name">Wild Bass & Fermented Plum</h3>
+          <span class="dish-price">$28</span>
+        </div>
+        <p class="dish-story">
+          Line-caught local sea bass cured in fermented green plum tigre de leche, sprinkled with finger lime pearls and crisp beach succulents.
+        </p>
+        <div class="ingredients-tags">
+          <span class="ing-tag">Wild Bass</span>
+          <span class="ing-tag">Green Plum</span>
+          <span class="ing-tag">Finger Lime</span>
+          <span class="ing-tag">Coastal Herbs</span>
+        </div>
+        <div class="chef-note">
+          <i class="fa-solid fa-quote-left" style="color: var(--terracotta);"></i>
+          <span>Light, bright, and intensely refreshing start to your night.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dish 3 -->
+    <div class="menu-item-row">
+      <div class="menu-img-wrap cursor-view-trigger">
+        <span class="badge-pill badge-butter dish-tag">Crowd Favorite</span>
+        <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=1000&auto=format&fit=crop" alt="Smoked Cacao Dessert">
+      </div>
+      <div class="menu-item-content">
+        <div class="dish-price-header">
+          <h3 class="dish-name">Smoked Cacao & Sea Salt</h3>
+          <span class="dish-price">$16</span>
+        </div>
+        <p class="dish-story">
+          Single-origin 72% dark Venezuelan chocolate ganache, infused with birch smoke, Maldon sea salt, and extra virgin olive oil emulsion.
+        </p>
+        <div class="ingredients-tags">
+          <span class="ing-tag">72% Dark Cacao</span>
+          <span class="ing-tag">Birch Smoke</span>
+          <span class="ing-tag">Maldon Salt</span>
+          <span class="ing-tag">Olive Oil</span>
+        </div>
+        <div class="chef-note">
+          <i class="fa-solid fa-quote-left" style="color: var(--terracotta);"></i>
+          <span>Decadent yet balanced with a pinch of smoked salt finish.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------
+       CHEF SPOTLIGHT
+  ------------------------------------------- -->
+  <section class="chef-section" id="chef">
+    <div class="chef-card">
+      <div class="chef-portrait-wrap">
+        <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=1000&auto=format&fit=crop" class="chef-portrait" alt="Chef Mateo Vance">
+        <div class="chef-signature">Mateo Vance</div>
+      </div>
+
+      <div>
+        <span class="badge-pill badge-butter" style="margin-bottom: 1.5rem;">Head Chef & Founder</span>
+        <h3 class="chef-quote">"If you respect the fire and the farmer, 90% of your job as a cook is already finished."</h3>
+        <p style="color: #A8A29E; line-height: 1.7; font-size: 1.1rem;">
+          Mateo spent a decade cooking in Copenhagen, Basque Country, and Kyoto before returning home to launch ALMA. His focus remains steadfast: absolute ingredient integrity.
+        </p>
+
+        <div style="margin-top: 2rem;">
+          <div style="font-weight: 700; font-family: var(--font-display); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--butter);">Chef's Daily Staples:</div>
+          <div class="fav-ingredients-list">
+            <div class="fav-ing-item">
+              <img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=300&auto=format&fit=crop" class="fav-ing-img" alt="Wild Garlic">
+              <div style="font-size: 0.8rem; font-weight: 600;">Wild Garlic</div>
+            </div>
+            <div class="fav-ing-item">
+              <img src="https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=300&auto=format&fit=crop" class="fav-ing-img" alt="Morel Mushrooms">
+              <div style="font-size: 0.8rem; font-weight: 600;">Morel Fungi</div>
+            </div>
+            <div class="fav-ing-item">
+              <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=300&auto=format&fit=crop" class="fav-ing-img" alt="Sea Buckthorn">
+              <div style="font-size: 0.8rem; font-weight: 600;">Buckthorn</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------
+       MASONRY GALLERY
+  ------------------------------------------- -->
+  <section class="gallery-section" id="gallery">
+    <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+      <span class="badge-pill badge-matcha">Visual Journey</span>
+      <h2 class="section-title">Life inside our kitchen.</h2>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-item col-8 cursor-view-trigger" data-src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?q=80&w=1200&auto=format&fit=crop">
+        <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?q=80&w=1200&auto=format&fit=crop" alt="Dining atmosphere">
+      </div>
+      <div class="gallery-item col-4 cursor-view-trigger" data-src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=800&auto=format&fit=crop">
+        <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=800&auto=format&fit=crop" alt="Natural Wine Pour">
+      </div>
+      <div class="gallery-item col-6 cursor-view-trigger" data-src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1000&auto=format&fit=crop">
+        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1000&auto=format&fit=crop" alt="Open Fire Cooking">
+      </div>
+      <div class="gallery-item col-6 cursor-view-trigger" data-src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?q=80&w=1000&auto=format&fit=crop">
+        <img src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?q=80&w=1000&auto=format&fit=crop" alt="Plating precision">
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div id="lightbox">
+    <span class="lightbox-close" id="lightbox-close">&times;</span>
+    <img src="" class="lightbox-img" id="lightbox-img" alt="Gallery Zoom">
+  </div>
+
+  <!-- ------------------------------------------
+       RESERVATION
+  ------------------------------------------- -->
+  <section class="reservation-section" id="reserve">
+    <div>
+      <span class="badge-pill badge-butter" style="margin-bottom: 1.5rem;">Join Us</span>
+      <h2 style="font-family: var(--font-display); font-size: clamp(2.5rem, 4.5vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem;">
+        Ready for an unforgettable evening?
+      </h2>
+      <p style="font-size: 1.2rem; opacity: 0.9; line-height: 1.6; margin-bottom: 2.5rem;">
+        Bookings open 30 days in advance. For parties over 6 or private events, drop us a direct line.
+      </p>
+
+      <div style="display: flex; gap: 2rem;">
+        <div>
+          <div style="font-weight: 800; font-family: var(--font-display);">LOCATION</div>
+          <div style="opacity: 0.85; margin-top: 0.25rem;">428 Market Street, NY</div>
+        </div>
+        <div>
+          <div style="font-weight: 800; font-family: var(--font-display);">HOURS</div>
+          <div style="opacity: 0.85; margin-top: 0.25rem;">Wed - Sun: 5pm - 11pm</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <form class="res-form" onsubmit="event.preventDefault(); alert('Table Request Received! We will text you a confirmation shortly.');">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input type="text" class="form-control" placeholder="Alex Morgan" required>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <div class="form-group">
+          <label class="form-label">Guests</label>
+          <select class="form-control">
+            <option>2 People</option>
+            <option>3 People</option>
+            <option>4 People</option>
+            <option>5+ People</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date</label>
+          <input type="date" class="form-control" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Special Requests / Dietary Notes</label>
+        <input type="text" class="form-control" placeholder="Allergies, anniversaries, etc.">
+      </div>
+
+      <button type="submit" class="btn btn-terracotta" style="width: 100%; justify-content: center; padding: 1.1rem;">
+        Confirm Table Request
+      </button>
+    </form>
+  </section>
+
+  <!-- ------------------------------------------
+       FOOTER
+  ------------------------------------------- -->
+  <footer class="footer">
+    <div class="nav-brand">
+      ALMA<span class="nav-brand-dot"></span>
+    </div>
+
+    <ul class="footer-links">
+      <li><a href="#story">Story</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#chef">Chef</a></li>
+      <li><a href="#reserve">Reserve</a></li>
+    </ul>
+
+    <div style="font-size: 0.9rem; color: #78716C;">
+      © 2026 ALMA Eatery. All Rights Reserved.
+    </div>
+  </footer>
+
+  <!-- ------------------------------------------
+       GSAP & LENIS CDN
+  ------------------------------------------- -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+  <!-- ------------------------------------------
+       INTERACTION SCRIPTS
+  ------------------------------------------- -->
+  <script>
+    // 1. Lenis Smooth Scroll
+    gsap.registerPlugin(ScrollTrigger);
+
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // 2. Custom Cursor Logic
+    const cursorDot = document.getElementById('cursor-dot');
+    const cursorRing = document.getElementById('cursor-ring');
+
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      gsap.to(cursorDot, { x: mouseX, y: mouseY, duration: 0.1 });
+    });
+
+    function renderRing() {
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+      gsap.set(cursorRing, { x: ringX, y: ringY });
+      requestAnimationFrame(renderRing);
+    }
+    renderRing();
+
+    // Hover Classes
+    document.querySelectorAll('a, button, .btn').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+
+    document.querySelectorAll('.cursor-view-trigger').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-view'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-view'));
+    });
+
+    // 3. Navbar Scroll Effect
+    ScrollTrigger.create({
+      start: 'top -50',
+      onUpdate: (self) => {
+        if (self.scroll() > 50) {
+          document.getElementById('navbar').classList.add('scrolled');
+        } else {
+          document.getElementById('navbar').classList.remove('scrolled');
+        }
+      }
+    });
+
+    // 4. GSAP Animations
+    // Hero Entrance
+    const heroTL = gsap.timeline();
+    heroTL.from('.hero-title', { y: 60, opacity: 0, duration: 1, ease: 'power4.out', delay: 0.2 })
+          .from('.hero-subtitle', { y: 30, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.6')
+          .from('.hero-actions', { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.6')
+          .from('.hero-img-main', { scale: 0.9, opacity: 0, duration: 1.2, ease: 'power3.out' }, '-=1')
+          .from('.float-card', { y: 40, opacity: 0, duration: 0.8, stagger: 0.2, ease: 'back.out(1.7)' }, '-=0.6');
+
+    // Section Scroll Animations
+    gsap.utils.toArray('.story-section, .menu-item-row, .chef-card, .gallery-section').forEach(sec => {
+      gsap.from(sec, {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: sec,
+          start: 'top 80%'
+        }
+      });
+    });
+
+    // Parallax on Story Images
+    gsap.to('.story-img-2', {
+      y: -30,
+      scrollTrigger: {
+        trigger: '.story-section',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+
+    // 5. Lightbox Modal
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const src = item.getAttribute('data-src');
+        lightboxImg.src = src;
+        lightbox.classList.add('active');
+      });
+    });
+
+    lightboxClose.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+    });
+  </script>
+</body>
+</html>

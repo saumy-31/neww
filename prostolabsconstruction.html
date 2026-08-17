@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MONOLITH BUILDERS — Building India's Future</title>
+
+  <!-- Google Fonts: Space Grotesk & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- CDN Libraries: GSAP, ScrollTrigger, Lenis -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.27/bundled/lenis.min.js"></script>
+
+  <style>
+    /* ==========================================================================
+       1. CORE SYSTEM & CINEMATIC VARIABLES
+       ========================================================================== */
+    :root {
+      --bg-dark: #0A0B0E;
+      --bg-surface: #12141A;
+      --bg-card: #181B22;
+      --orange-fire: #FF5500;
+      --orange-glow: rgba(255, 85, 0, 0.4);
+      --amber-light: #FF9900;
+      --concrete-gray: #8A929A;
+      --steel-light: #E2E8F0;
+      --blueprint-cyan: #00F0FF;
+      --blueprint-bg: rgba(0, 240, 255, 0.03);
+      --dark-line: rgba(255, 255, 255, 0.08);
+
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+
+      --radius-sm: 4px;
+      --radius-md: 12px;
+      --radius-lg: 24px;
+
+      --transition-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html.lenis { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto; }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--steel-light);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      cursor: default;
+    }
+
+    /* Custom Cinematic Cursor */
+    #cursor {
+      position: fixed;
+      width: 14px;
+      height: 14px;
+      background: var(--orange-fire);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s var(--transition-cinematic), 
+                  height 0.3s var(--transition-cinematic), 
+                  background-color 0.3s;
+      box-shadow: 0 0 15px var(--orange-fire);
+    }
+
+    #cursor.hovered {
+      width: 70px;
+      height: 70px;
+      background: rgba(255, 85, 0, 0.15);
+      border: 1px solid var(--orange-fire);
+      box-shadow: 0 0 30px var(--orange-glow);
+    }
+
+    #cursor.hovered::after {
+      content: 'VIEW';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-heading);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--steel-light);
+    }
+
+    h1, h2, h3, h4, h5, .font-heading {
+      font-family: var(--font-heading);
+      color: var(--steel-light);
+      font-weight: 700;
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; height: auto; display: block; object-fit: cover; }
+
+    .container {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+    }
+
+    .section-padding { padding: 10rem 0; }
+    .text-center { text-align: center; }
+
+    .cinematic-tag {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--orange-fire);
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .cinematic-tag::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--orange-fire);
+      box-shadow: 0 0 10px var(--orange-fire);
+      border-radius: 50%;
+    }
+
+    .cinematic-title {
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .cinematic-desc {
+      color: var(--concrete-gray);
+      font-size: 1.15rem;
+      max-width: 600px;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* Dust Particles Canvas */
+    #dustCanvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.4;
+    }
+
+    /* ==========================================================================
+       2. SCENE 1: BLUEPRINT TRANSFORMATION HERO
+       ========================================================================== */
+    .hero-scene {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #06070A;
+    }
+
+    /* Blueprint Grid Layer */
+    .blueprint-grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(0, 240, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.1) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 1;
+      opacity: 0.6;
+      transition: opacity 1.5s var(--transition-cinematic);
+    }
+
+    /* Building Stages Wrapper */
+    .hero-building-stage {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+    }
+
+    .building-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      filter: contrast(1.1) brightness(0.9);
+      transition: opacity 1.2s var(--transition-cinematic), transform 1.5s var(--transition-cinematic);
+      transform: scale(1.05);
+    }
+
+    /* Blueprint Vector Lines Container */
+    .blueprint-svg-container {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .blueprint-svg-container svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .blueprint-line {
+      stroke: var(--blueprint-cyan);
+      stroke-width: 1.5;
+      fill: none;
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: drawBlueprint 3s forwards var(--transition-cinematic);
+    }
+
+    @keyframes drawBlueprint {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 5;
+      max-width: 900px;
+      text-align: center;
+      padding-top: 5rem;
+    }
+
+    .hero-headline {
+      font-size: clamp(3.5rem, 7vw, 6.5rem);
+      line-height: 0.95;
+      margin-bottom: 2rem;
+      text-shadow: 0 10px 40px rgba(0,0,0,0.8);
+    }
+
+    .hero-headline span.orange-glow {
+      color: var(--orange-fire);
+      text-shadow: 0 0 30px var(--orange-glow);
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-cinematic {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.2rem 2.8rem;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition-cinematic);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-orange {
+      background: var(--orange-fire);
+      color: var(--steel-light);
+      box-shadow: 0 0 30px var(--orange-glow);
+    }
+
+    .btn-orange:hover {
+      background: var(--steel-light);
+      color: var(--bg-dark);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 0 50px rgba(255,255,255,0.4);
+    }
+
+    .btn-outline {
+      background: rgba(18, 20, 26, 0.6);
+      color: var(--steel-light);
+      border: 1px solid var(--dark-line);
+      backdrop-filter: blur(12px);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--orange-fire);
+      color: var(--orange-fire);
+      transform: translateY(-3px);
+    }
+
+    /* Ambient Crane Background Animation */
+    .crane-silhouette {
+      position: absolute;
+      right: 5%;
+      top: 15%;
+      width: 320px;
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 2;
+      transform-origin: bottom center;
+      animation: subtleCraneMove 20s infinite ease-in-out alternate;
+    }
+
+    @keyframes subtleCraneMove {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(4deg); }
+    }
+
+    /* ==========================================================================
+       3. SCENE 2: MASSIVE INDUSTRIAL PHOTOGRAPHY
+       ========================================================================== */
+    .scene-industrial {
+      position: relative;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--dark-line);
+      border-bottom: 1px solid var(--dark-line);
+    }
+
+    .industrial-full-image {
+      position: relative;
+      height: 85vh;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .industrial-full-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: contrast(1.15) brightness(0.8);
+      transition: transform 1.5s var(--transition-cinematic);
+    }
+
+    .industrial-full-image:hover img {
+      transform: scale(1.05);
+    }
+
+    .industrial-caption-overlay {
+      position: absolute;
+      bottom: 4rem;
+      left: 4rem;
+      max-width: 500px;
+      z-index: 3;
+      background: rgba(10, 11, 14, 0.85);
+      backdrop-filter: blur(16px);
+      padding: 2rem 2.5rem;
+      border-left: 3px solid var(--orange-fire);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    }
+
+    /* ==========================================================================
+       4. SCENE 3: CONSTRUCTION TIMELINE (ANIMATED SCROLLING STAGES)
+       ========================================================================== */
+    .scene-timeline {
+      padding: 10rem 0;
+      background-color: var(--bg-dark);
+      position: relative;
+    }
+
+    .timeline-cinematic-track {
+      display: flex;
+      flex-direction: column;
+      gap: 6rem;
+      position: relative;
+      margin-top: 4rem;
+    }
+
+    .timeline-cinematic-track::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      background: var(--dark-line);
+      transform: translateX(-50%);
+    }
+
+    .timeline-stage-node {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+    }
+
+    .timeline-stage-node.alt {
+      direction: rtl;
+    }
+
+    .timeline-stage-node.alt .node-content {
+      direction: ltr;
+    }
+
+    .node-visual-box {
+      position: relative;
+      height: 380px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--dark-line);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    }
+
+    .node-visual-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .node-dot-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--bg-dark);
+      border: 3px solid var(--orange-fire);
+      box-shadow: 0 0 15px var(--orange-fire);
+      z-index: 5;
+    }
+
+    /* ==========================================================================
+       5. SCENE 4: FULL-SCREEN OVERSIZED PROJECTS
+       ========================================================================== */
+    .scene-projects {
+      background-color: var(--bg-dark);
+    }
+
+    .project-screen-item {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 6rem 0;
+      border-bottom: 1px solid var(--dark-line);
+    }
+
+    .project-screen-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .project-screen-grid.reverse {
+      grid-template-columns: 0.8fr 1.2fr;
+    }
+
+    .project-screen-grid.reverse .project-img-holder { order: 2; }
+    .project-screen-grid.reverse .project-details-holder { order: 1; }
+
+    .project-img-holder {
+      position: relative;
+      height: 75vh;
+      max-height: 700px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+      border: 1px solid var(--dark-line);
+    }
+
+    .project-img-holder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.2s var(--transition-cinematic);
+    }
+
+    .project-screen-item:hover .project-img-holder img {
+      transform: scale(1.05);
+    }
+
+    .project-spec-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--dark-line);
+      border-bottom: 1px solid var(--dark-line);
+    }
+
+    .spec-item .spec-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--concrete-gray);
+    }
+
+    .spec-item .spec-value {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      color: var(--steel-light);
+      font-weight: 600;
+      margin-top: 0.2rem;
+    }
+
+    /* ==========================================================================
+       6. SCENE 5: HEAVY EQUIPMENT HYDRAULIC INTERACTION
+       ========================================================================== */
+    .scene-equipment {
+      padding: 10rem 0;
+      background: radial-gradient(circle at center, var(--bg-surface) 0%, var(--bg-dark) 100%);
+      position: relative;
+    }
+
+    .excavator-stage-box {
+      position: relative;
+      max-width: 1100px;
+      margin: 0 auto;
+      height: 580px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--dark-line);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.9);
+    }
+
+    .excavator-stage-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--transition-cinematic), filter 0.8s ease;
+    }
+
+    .excavator-stage-box:hover img {
+      transform: scale(1.04) translateY(-10px);
+      filter: brightness(1.1);
+    }
+
+    .excavator-spec-overlay {
+      position: absolute;
+      top: 3rem;
+      right: 3rem;
+      background: rgba(18, 20, 26, 0.88);
+      backdrop-filter: blur(16px);
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--orange-glow);
+      max-width: 340px;
+    }
+
+    /* ==========================================================================
+       7. SCENE 6: CUMULATIVE COUNTER STATISTICS
+       ========================================================================== */
+    .scene-stats {
+      padding: 8rem 0;
+      background-color: var(--bg-surface);
+      border-top: 1px solid var(--dark-line);
+      border-bottom: 1px solid var(--dark-line);
+    }
+
+    .stats-cinematic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 3rem;
+      text-align: center;
+    }
+
+    .stat-node .counter-num {
+      font-family: var(--font-heading);
+      font-size: clamp(3.5rem, 6vw, 5rem);
+      font-weight: 700;
+      color: var(--orange-fire);
+      line-height: 1;
+      text-shadow: 0 0 25px var(--orange-glow);
+    }
+
+    .stat-node .counter-label {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--concrete-gray);
+      margin-top: 0.75rem;
+    }
+
+    /* ==========================================================================
+       8. SCENE 7: HORIZONTAL SCROLLING DRONE GALLERY
+       ========================================================================== */
+    .scene-drone-gallery {
+      padding: 10rem 0;
+      background-color: var(--bg-dark);
+      overflow: hidden;
+    }
+
+    .drone-track-wrapper {
+      display: flex;
+      gap: 3rem;
+      width: max-content;
+      margin-top: 4rem;
+    }
+
+    .drone-frame {
+      width: 520px;
+      height: 600px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--dark-line);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    }
+
+    .drone-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+
+    .drone-frame:hover img {
+      transform: scale(1.08);
+    }
+
+    .drone-frame-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem;
+      background: linear-gradient(to top, rgba(10,11,14,0.95) 0%, transparent 100%);
+    }
+
+    /* ==========================================================================
+       9. SCENE 8: MAGAZINE TESTIMONIALS
+       ========================================================================== */
+    .scene-magazine-reviews {
+      padding: 10rem 0;
+      background-color: var(--bg-surface);
+    }
+
+    .magazine-feature-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 4rem;
+      border: 1px solid var(--dark-line);
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .magazine-quote {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 400;
+      line-height: 1.3;
+      color: var(--steel-light);
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+
+    /* ==========================================================================
+       10. SCENE 9: LARGE CINEMATIC CTA & FOOTER
+       ========================================================================== */
+    .scene-cta-final {
+      padding: 12rem 0 8rem;
+      background: radial-gradient(circle at center, rgba(255, 85, 0, 0.12) 0%, var(--bg-dark) 70%);
+      text-align: center;
+    }
+
+    .cta-title-massive {
+      font-size: clamp(3rem, 7vw, 6rem);
+      line-height: 1;
+      margin-bottom: 2.5rem;
+    }
+
+    .footer-cinematic {
+      background-color: #060709;
+      padding: 6rem 0 3rem;
+      border-top: 1px solid var(--dark-line);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 4rem;
+      margin-bottom: 5rem;
+    }
+
+    .footer-brand-title {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      color: var(--steel-light);
+      margin-bottom: 1rem;
+    }
+
+    .footer-bottom-bar {
+      border-top: 1px solid var(--dark-line);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      color: var(--concrete-gray);
+      font-size: 0.85rem;
+    }
+
+    /* ==========================================================================
+       11. RESPONSIVE MEDIA QUERIES
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .hero-grid, .timeline-stage-node, .project-screen-grid, 
+      .project-screen-grid.reverse, .magazine-feature-card {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .timeline-cinematic-track::before { left: 0; }
+      .timeline-stage-node.alt { direction: ltr; }
+      .crane-silhouette { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .section-padding { padding: 6rem 0; }
+      .hero-headline { font-size: 3rem; }
+      .industrial-caption-overlay { left: 1rem; right: 1rem; bottom: 1rem; }
+      .excavator-stage-box { height: 400px; }
+      .excavator-spec-overlay { top: 1rem; right: 1rem; left: 1rem; max-width: none; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom-bar { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cinematic Follow Cursor -->
+  <div id="cursor"></div>
+
+  <!-- Ambient Construction Dust Canvas -->
+  <canvas id="dustCanvas"></canvas>
+
+  <!-- ==========================================================================
+     SCENE 1: BLUEPRINT TRANSFORMATION HERO
+     ========================================================================== -->
+  <section class="hero-scene" id="hero">
+    <!-- Blueprint Grid Lines -->
+    <div class="blueprint-grid-overlay" id="blueprintGrid"></div>
+
+    <!-- Building Transformation Layers -->
+    <div class="hero-building-stage">
+      <!-- Stage 01: Raw Blueprint SVG Vector Lines -->
+      <div class="blueprint-svg-container" id="blueprintSvg">
+        <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+          <path class="blueprint-line" d="M 300 800 V 200 L 720 100 L 1140 200 V 800 Z" />
+          <path class="blueprint-line" d="M 300 300 H 1140 M 300 450 H 1140 M 300 600 H 1140" />
+          <path class="blueprint-line" d="M 500 800 V 200 M 720 800 V 100 M 940 800 V 200" />
+        </svg>
+      </div>
+
+      <!-- Stage 02: Real Glass & Concrete Render Image -->
+      <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&q=80&w=1920" alt="Completed Skyscraper" class="building-layer" id="realBuildingImg">
+    </div>
+
+    <!-- Crane Background Element -->
+    <svg class="crane-silhouette" viewBox="0 0 100 200">
+      <path fill="#FF5500" d="M10 190 V10 H30 V190 Z M30 20 L90 5 V15 L30 30 Z" />
+    </svg>
+
+    <div class="container">
+      <div class="hero-content">
+        <div class="cinematic-tag"><i class="fa-solid fa-hard-hat"></i> Monolith Structural Engineering</div>
+        <h1 class="hero-headline">
+          Building <br>
+          <span class="orange-glow">Tomorrow.</span> Today.
+        </h1>
+        <div class="hero-cta-group">
+          <a href="#projects" class="btn-cinematic btn-orange">Explore Landmarks <i class="fa-solid fa-arrow-down"></i></a>
+          <a href="#timeline" class="btn-cinematic btn-outline">Watch Assembly</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     SCENE 2: MASSIVE INDUSTRIAL PHOTOGRAPHY
+     ========================================================================== -->
+  <section class="scene-industrial">
+    <div class="industrial-full-image hover-grow">
+      <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=1920" alt="Active Heavy Construction Site">
+      <div class="industrial-caption-overlay">
+        <span class="cinematic-tag">Unrivaled Scale</span>
+        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Heavy Civil Infrastructure</h3>
+        <p style="color: var(--concrete-gray); font-size: 0.9rem;">Deploying 200-ton high-reach cranes and mega-pour concrete logistics across India's key industrial corridors.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     SCENE 3: CONSTRUCTION TIMELINE (ANIMATED SCROLLING STAGES)
+     ========================================================================== -->
+  <section class="scene-timeline" id="timeline">
+    <div class="container">
+      <div class="text-center">
+        <span class="cinematic-tag">Structural Lifecycle</span>
+        <h2 class="cinematic-title">Anatomy of a Monolith</h2>
+        <p class="cinematic-desc" style="margin: 0 auto;">Watch how raw soil evolves step-by-step into a high-rise architectural landmark.</p>
+      </div>
+
+      <div class="timeline-cinematic-track">
+        <!-- Stage 1 -->
+        <div class="timeline-stage-node">
+          <div class="node-dot-center"></div>
+          <div>
+            <span class="cinematic-tag">Stage 01</span>
+            <h3 style="font-size: 2rem; margin-bottom: 1rem;">Ground Breaking & Deep Piling</h3>
+            <p class="cinematic-desc">Ultrasonic soil testing and friction pile drilling reaching 45 meters into bedrock for seismically isolated foundations.</p>
+          </div>
+          <div class="node-visual-box hover-grow">
+            <img src="https://images.unsplash.com/photo-1579412690850-bd41cd0af397?auto=format&fit=crop&q=80&w=800" alt="Deep Excavation">
+          </div>
+        </div>
+
+        <!-- Stage 2 -->
+        <div class="timeline-stage-node alt">
+          <div class="node-dot-center"></div>
+          <div class="node-content">
+            <span class="cinematic-tag">Stage 02</span>
+            <h3 style="font-size: 2rem; margin-bottom: 1rem;">Monolithic RCC Superstructure</h3>
+            <p class="cinematic-desc">High-strength M80 grade self-compacting concrete poured via automated boom pumps for high-rise cores.</p>
+          </div>
+          <div class="node-visual-box hover-grow">
+            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800" alt="RCC Superstructure">
+          </div>
+        </div>
+
+        <!-- Stage 3 -->
+        <div class="timeline-stage-node">
+          <div class="node-dot-center"></div>
+          <div>
+            <span class="cinematic-tag">Stage 03</span>
+            <h3 style="font-size: 2rem; margin-bottom: 1rem;">Unitized Glass Curtain Glazing</h3>
+            <p class="cinematic-desc">Thermally insulated double-glazed unitized glass panels installed with vacuum suction rig attachments.</p>
+          </div>
+          <div class="node-visual-box hover-grow">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800" alt="Glass Glazing Installation">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     SCENE 4: OVERSIZED FULL-SCREEN PROJECTS
+     ========================================================================== -->
+  <section class="scene-projects" id="projects">
+    <!-- Project Screen 1 -->
+    <div class="project-screen-item">
+      <div class="container">
+        <div class="project-screen-grid">
+          <div class="project-img-holder hover-grow">
+            <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=1200" alt="The Monolith Sky Tower">
+          </div>
+          <div class="project-details-holder">
+            <span class="cinematic-tag">Commercial Icon</span>
+            <h2 style="font-size: 3.2rem; margin-bottom: 1rem;">Monolith Sky Tower</h2>
+            <p style="color: var(--concrete-gray); font-size: 1.05rem;">
+              A 48-storey Grade-A commercial skyscraper engineered with a tuned mass damper system and IGBC Platinum sustainability accreditation.
+            </p>
+
+            <div class="project-spec-list">
+              <div class="spec-item">
+                <div class="spec-label">Location</div>
+                <div class="spec-value">BKC, Mumbai</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Built Area</div>
+                <div class="spec-value">1.8M Sq. Ft.</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Timeline</div>
+                <div class="spec-value">32 Months</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Valuation</div>
+                <div class="spec-value">₹520 Cr</div>
+              </div>
+            </div>
+
+            <a href="#cta" class="btn-cinematic btn-orange">Request Case Study</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project Screen 2 -->
+    <div class="project-screen-item" style="background-color: var(--bg-surface);">
+      <div class="container">
+        <div class="project-screen-grid reverse">
+          <div class="project-img-holder hover-grow">
+            <img src="https://images.unsplash.com/photo-1590496793929-36417d3117de?auto=format&fit=crop&q=80&w=1200" alt="Six Lane Expressway Bridge">
+          </div>
+          <div class="project-details-holder">
+            <span class="cinematic-tag">Civic Infrastructure</span>
+            <h2 style="font-size: 3.2rem; margin-bottom: 1rem;">6-Lane Elevated Corridor</h2>
+            <p style="color: var(--concrete-gray); font-size: 1.05rem;">
+              A 32-kilometer pre-stressed segmental box girder elevated highway designed to handle over 120,000 daily heavy transit vehicles.
+            </p>
+
+            <div class="project-spec-list">
+              <div class="spec-item">
+                <div class="spec-label">Corridor</div>
+                <div class="spec-value">Pune–Nashik Expressway</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Length</div>
+                <div class="spec-value">32 Kilometers</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Concrete Pour</div>
+                <div class="spec-value">450,000 m³</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Status</div>
+                <div class="spec-value">Operational</div>
+              </div>
+            </div>
+
+            <a href="#cta" class="btn-cinematic btn-orange">Request Case Study</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     SCENE 5: HEAVY EQUIPMENT HYDRAULIC INTERACTION
+     ========================================================================== -->
+  <section class="scene-equipment" id="machinery">
+    <div class="container text-center">
+      <span class="cinematic-tag">In-House Fleet</span>
+      <h2 class="cinematic-title">200-Ton Hydraulic Machinery</h2>
+      <p class="cinematic-desc" style="margin: 0 auto 3rem;">Hover over our flagship crawler excavator to trigger hydraulic arm telemetry systems.</p>
+
+      <div class="excavator-stage-box hover-grow">
+        <img src="https://images.unsplash.com/photo-1579412690850-bd41cd0af397?auto=format&fit=crop&q=80&w=1200" alt="CAT Heavy Hydraulic Excavator">
+
+        <div class="excavator-spec-overlay">
+          <div style="font-family: var(--font-heading); font-size: 1.4rem; color: var(--orange-fire); margin-bottom: 0.5rem;">CAT 349 Heavy Crawler</div>
+          <p style="font-size: 0.85rem; color: var(--concrete-gray);">Operating Weight: 49,000 kg <br> Max Digging Depth: 8.2 Meters <br> Telemetry: Real-time GPS Load Sensing</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     SCENE 6: CUMULATIVE COUNTER STATISTICS
+     ========================================================================== -->
+  <section class="scene-stats">
+    <div class="container">
+      <div class="stats-cinematic-grid">
+        <div class="stat-node">
+          <div class="counter-num" data-target="180">0</div>
+          <div class="counter-label">Landmark Towers Delivered</div>
+        </div>
+
+        <div class="stat-node">
+          <div class="counter-num" data-target="450">0</div>
+          <div class="counter-label">Km Highways Constructed</div>
+        </div>
+
+        <div class="stat-node">
+          <div class="counter-num" data-target="25">0</div>
+          <div class="counter-label">Indian Cities Transformed</div>
+        </div>
+
+        <div class="stat-node">
+          <div class="counter-num" data-target="1500">0</div>
+          <div class="counter-label">Certified Structural Engineers</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     SCENE 7: HORIZONTAL SCROLLING DRONE GALLERY
+     ========================================================================== -->
+  <section class="scene-drone-gallery" id="droneGallery">
+    <div class="container">
+      <span class="cinematic-tag">Aerial Perspective</span>
+      <h2 class="cinematic-title">Drone Process Timeline</h2>
+
+      <div class="drone-track-wrapper" id="droneTrack">
+        <div class="drone-frame hover-grow">
+          <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&q=80&w=800" alt="Night Aerial View">
+          <div class="drone-frame-caption">
+            <h4 style="font-size: 1.4rem; margin-bottom: 0.2rem;">Night Concrete Pour</h4>
+            <p style="color: var(--concrete-gray); font-size: 0.85rem;">Continuous 24-hour raft foundation curing in Bengaluru.</p>
+          </div>
+        </div>
+
+        <div class="drone-frame hover-grow">
+          <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=80&w=800" alt="Tower Crane At Sunset">
+          <div class="drone-frame-caption">
+            <h4 style="font-size: 1.4rem; margin-bottom: 0.2rem;">Sunset Crane Operations</h4>
+            <p style="color: var(--concrete-gray); font-size: 0.85rem;">Precision steel beam erection on 40th floor levels.</p>
+          </div>
+        </div>
+
+        <div class="drone-frame hover-grow">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800" alt="Completed Residential Enclave">
+          <div class="drone-frame-caption">
+            <h4 style="font-size: 1.4rem; margin-bottom: 0.2rem;">Completed Villa Sanctuary</h4>
+            <p style="color: var(--concrete-gray); font-size: 0.85rem;">Private gated residential township handed over in Gurugram.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     SCENE 8: MAGAZINE TESTIMONIALS
+     ========================================================================== -->
+  <section class="scene-magazine-reviews">
+    <div class="container">
+      <div class="text-center" style="margin-bottom: 4rem;">
+        <span class="cinematic-tag">Editorial Feature</span>
+        <h2 class="cinematic-title">Developer Perspectives</h2>
+      </div>
+
+      <div class="magazine-feature-card hover-grow">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800" alt="Developer Portrait" style="border-radius: var(--radius-md); height: 100%; min-height: 380px;">
+        
+        <div>
+          <div class="magazine-quote">
+            "Monolith delivered our 1.8M sq.ft commercial headquarters 60 days ahead of schedule without a single lost-time safety incident. Their structural precision is unmatched in India."
+          </div>
+          <div style="font-family: var(--font-heading); font-size: 1.3rem; color: var(--orange-fire); font-weight: 700;">Rajeshwar Singhania</div>
+          <div style="font-size: 0.85rem; color: var(--concrete-gray); text-transform: uppercase; letter-spacing: 1px;">Chairman, Singhania Realty Group</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     SCENE 9: LARGE CINEMATIC CTA & FOOTER
+     ========================================================================== -->
+  <section class="scene-cta-final" id="cta">
+    <div class="container">
+      <span class="cinematic-tag">Initiate Partnership</span>
+      <h2 class="cta-title-massive">
+        Let's Build Something <br><span style="color: var(--orange-fire);">Great Together.</span>
+      </h2>
+      <a href="mailto:build@monolithbuilders.in" class="btn-cinematic btn-orange">Schedule Structural Consultation <i class="fa-solid fa-paper-plane"></i></a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer-cinematic">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-title">MONOLITH BUILDERS</div>
+          <p style="color: var(--concrete-gray); font-size: 0.9rem; max-width: 320px;">
+            Engineering India's skyline with structural integrity, mega-pours, and zero-compromise site safety standards.
+          </p>
+        </div>
+
+        <div>
+          <h4 style="color: var(--steel-light); margin-bottom: 1.25rem;">Landmarks</h4>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.9rem; color: var(--concrete-gray);">
+            <li><a href="#projects">Sky Tower BKC</a></li>
+            <li><a href="#projects">Elevated Corridor</a></li>
+            <li><a href="#projects">Tech Park Campus</a></li>
+            <li><a href="#projects">Mega Warehousing</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 style="color: var(--steel-light); margin-bottom: 1.25rem;">Headquarters</h4>
+          <p style="color: var(--concrete-gray); font-size: 0.85rem; line-height: 1.7;">
+            Monolith House, Plot 88 <br>
+            Bandra-Kurla Complex, Mumbai <br>
+            +91 22 6900 1000
+          </p>
+        </div>
+
+        <div>
+          <h4 style="color: var(--steel-light); margin-bottom: 1.25rem;">Tender Inquiry</h4>
+          <form onsubmit="event.preventDefault(); alert('Tender request received!');" style="display: flex; gap: 0.5rem;">
+            <input type="email" placeholder="corporate@email.com" required style="padding: 0.8rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--dark-line); background: rgba(255,255,255,0.05); color: var(--steel-light); font-size: 0.85rem; width: 100%;">
+            <button type="submit" class="btn-cinematic btn-orange" style="padding: 0.8rem 1.2rem; font-size: 0.85rem;">Send</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>&copy; 2026 MONOLITH BUILDERS LTD. All Rights Reserved.</div>
+        <div>Crafted as a custom digital experience by ProstoLabs.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+     JAVASCRIPT, GSAP SCROLL STORYTELLING & PARTICLES
+     ========================================================================== -->
+  <script>
+    // 1. Initialize Lenis Smooth Scroll
+    const lenis = new Lenis({
+      duration: 1.4,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smooth: true,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // 2. Custom Follow Cursor
+    const cursor = document.getElementById('cursor');
+    window.addEventListener('mousemove', (e) => {
+      gsap.to(cursor, {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 0.15,
+        ease: 'power2.out'
+      });
+    });
+
+    document.querySelectorAll('.hover-grow, .btn-cinematic').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+    });
+
+    // 3. Ambient Dust Canvas
+    const canvas = document.getElementById('dustCanvas');
+    const ctx = canvas.getContext('2d');
+    let dustParticles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class DustParticle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedY = Math.random() * -0.3 - 0.1;
+        this.opacity = Math.random() * 0.5 + 0.1;
+      }
+      update() {
+        this.y += this.speedY;
+        if (this.y < 0) {
+          this.y = canvas.height;
+          this.x = Math.random() * canvas.width;
+        }
+      }
+      draw() {
+        ctx.fillStyle = '#FF5500';
+        ctx.globalAlpha = this.opacity;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 40; i++) dustParticles.push(new DustParticle());
+
+    function animateDust() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      dustParticles.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animateDust);
+    }
+    animateDust();
+
+    // 4. GSAP SCENE 1: BLUEPRINT TRANSFORMATION
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Fade out vector blueprint, reveal real glass building on scroll
+    gsap.to('#blueprintSvg', {
+      opacity: 0,
+      scrollTrigger: {
+        trigger: '#hero',
+        start: 'top top',
+        end: '50% top',
+        scrub: true
+      }
+    });
+
+    gsap.to('#realBuildingImg', {
+      opacity: 1,
+      scale: 1,
+      scrollTrigger: {
+        trigger: '#hero',
+        start: '20% top',
+        end: '80% top',
+        scrub: true
+      }
+    });
+
+    // 5. SCENE 6: CUMULATIVE COUNTER ANIMATION
+    const counterElements = document.querySelectorAll('.counter-num');
+    counterElements.forEach(counter => {
+      const target = parseInt(counter.getAttribute('data-target'));
+      ScrollTrigger.create({
+        trigger: counter,
+        start: 'top 85%',
+        onEnter: () => {
+          gsap.to(counter, {
+            innerText: target,
+            duration: 2,
+            snap: { innerText: 1 },
+            ease: 'power2.out',
+            onUpdate: function() {
+              counter.innerText = Math.ceil(this.targets()[0].innerText) + '+';
+            }
+          });
+        }
+      });
+    });
+
+    // 6. SCENE 7: HORIZONTAL DRONE GALLERY SCROLL
+    const droneTrack = document.getElementById('droneTrack');
+    gsap.to(droneTrack, {
+      x: () => -(droneTrack.scrollWidth - window.innerWidth + 120),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#droneGallery',
+        start: 'top 20%',
+        end: () => '+=' + droneTrack.scrollWidth,
+        pin: true,
+        scrub: 1,
+        invalidateOnRefresh: true
+      }
+    });
+  </script>
+</body>
+</html>

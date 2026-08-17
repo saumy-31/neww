@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProstoLabs | Building Digital Products That People Love</title>
+    <meta name="description" content="ProstoLabs designs and develops modern websites, AI products, SaaS platforms, and digital experiences for ambitious businesses.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1. CSS VARIABLES & RESET
+           ========================================================================== */
+        :root {
+            --primary: #2563EB;
+            --bg: #F8FAFC;
+            --card: rgba(255, 255, 255, 0.6);
+            --card-solid: #FFFFFF;
+            --accent: #60A5FA;
+            --text: #111827;
+            --text-secondary: #6B7280;
+            --border: rgba(0, 0, 0, 0.08);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
+            --glow: rgba(37, 99, 235, 0.15);
+            
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+            --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+            --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            
+            --nav-height: 80px;
+            --section-padding: clamp(80px, 10vw, 160px);
+            --container-width: 1400px;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: none !important; /* Custom Cursor */
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        ::selection {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        /* ==========================================================================
+           2. GLOBAL UTILITIES & EFFECTS
+           ========================================================================== */
+        .container {
+            width: 100%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .glass {
+            background: var(--card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: clamp(40px, 6vw, 80px);
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .subtitle {
+            font-size: clamp(1.125rem, 1.5vw, 1.25rem);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Noise Overlay */
+        .noise {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Animated Blobs */
+        .blobs {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+            filter: blur(100px);
+            opacity: 0.5;
+        }
+        
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            animation: morph 20s infinite alternate cubic-bezier(0.45, 0.05, 0.55, 0.95);
+        }
+
+        .blob-1 {
+            width: 60vw; height: 60vw;
+            background: rgba(37, 99, 235, 0.15);
+            top: -20%; left: -10%;
+        }
+
+        .blob-2 {
+            width: 50vw; height: 50vw;
+            background: rgba(96, 165, 250, 0.15);
+            bottom: -20%; right: -10%;
+            animation-delay: -10s;
+        }
+
+        @keyframes morph {
+            0% { transform: translate(0, 0) scale(1); border-radius: 50%; }
+            50% { transform: translate(10%, 10%) scale(1.1); border-radius: 40% 60% 60% 40% / 40% 50% 50% 60%; }
+            100% { transform: translate(-10%, 5%) scale(0.9); border-radius: 60% 40% 40% 60% / 60% 40% 60% 40%; }
+        }
+
+        canvas#particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Scroll Progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            background: var(--primary);
+            width: 0%;
+            z-index: 10000;
+            transition: width 0.1s linear;
+        }
+
+        /* ==========================================================================
+           3. UI COMPONENTS
+           ========================================================================== */
+        /* Custom Cursor */
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 10001;
+            pointer-events: none;
+            transition: width 0.3s, height 0.3s, background-color 0.3s, opacity 0.3s;
+        }
+
+        .cursor-dot {
+            width: 8px; height: 8px;
+            background-color: var(--primary);
+        }
+
+        .cursor-outline {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(37, 99, 235, 0.5);
+            transition: transform 0.1s var(--ease-out-expo), width 0.3s, height 0.3s;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.4s var(--ease-out-expo);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            outline: none;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: var(--text);
+            color: #fff;
+        }
+
+        .magnetic-wrap {
+            display: inline-block;
+        }
+
+        /* Ripple Effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: ripple-anim 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-anim {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        /* ==========================================================================
+           4. LAYOUT & SECTIONS
+           ========================================================================== */
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            height: var(--nav-height);
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.4s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        nav.scrolled {
+            background: rgba(248, 250, 252, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            width: 24px; height: 24px;
+            background: var(--primary);
+            border-radius: 6px;
+            display: inline-block;
+            transform: rotate(45deg);
+            transition: transform 0.5s var(--ease-spring);
+        }
+        
+        .logo:hover .logo-icon { transform: rotate(135deg); }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 8px 0;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--primary); }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 2px;
+            background: var(--primary);
+            transition: width 0.3s var(--ease-out-expo);
+        }
+
+        .nav-links a:hover::after { width: 100%; }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            background: none;
+            border: none;
+            z-index: 1001;
+        }
+        
+        .menu-toggle span {
+            width: 30px; height: 2px;
+            background: var(--text);
+            transition: all 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: var(--nav-height);
+            position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content p {
+            font-size: clamp(1.125rem, 1.5vw, 1.35rem);
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 540px;
+            line-height: 1.6;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Floating Dashboard */
+        .hero-visual {
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .dashboard {
+            width: 100%;
+            aspect-ratio: 4/3;
+            border-radius: 24px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            transform: rotateY(-10deg) rotateX(5deg);
+            transform-style: preserve-3d;
+            transition: transform 0.1s;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 16px;
+        }
+
+        .window-controls { display: flex; gap: 8px; }
+        .window-controls span {
+            width: 12px; height: 12px; border-radius: 50%;
+            background: #ff5f56;
+        }
+        .window-controls span:nth-child(2) { background: #ffbd2e; }
+        .window-controls span:nth-child(3) { background: #27c93f; }
+
+        .dash-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            transform: translateZ(30px);
+        }
+
+        .dash-card {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 16px;
+            padding: 16px;
+            height: 120px;
+            position: relative;
+            overflow: hidden;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .dash-card:nth-child(2) { animation-delay: -3s; }
+        
+        .dash-chart {
+            width: 100%; height: 60px;
+            margin-top: 10px;
+            background: linear-gradient(to top, rgba(37, 99, 235, 0.2), transparent);
+            border-bottom: 2px solid var(--primary);
+            position: relative;
+            border-radius: 4px;
+        }
+        
+        .dash-chart::after {
+            content: ''; position: absolute; top: -5px; right: 0;
+            width: 10px; height: 10px; background: var(--primary); border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Services Section */
+        .services { padding: var(--section-padding) 0; }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            padding: 40px;
+            border-radius: 24px;
+            transition: all 0.5s var(--ease-out-expo);
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.6), transparent 40%);
+            border-radius: inherit; z-index: -1; opacity: 0; transition: opacity 0.5s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            border-color: rgba(37, 99, 235, 0.2);
+        }
+
+        .service-card:hover::before { opacity: 1; }
+
+        .service-icon {
+            width: 64px; height: 64px;
+            background: #fff;
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            font-size: 24px; color: var(--primary);
+            border: 1px solid var(--border);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem; margin-bottom: 16px; font-weight: 700;
+        }
+
+        .service-card p {
+            color: var(--text-secondary); line-height: 1.6;
+        }
+
+        /* Projects Section */
+        .projects { padding: var(--section-padding) 0; }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+        }
+
+        .project-card {
+            border-radius: 24px; overflow: hidden;
+            position: relative; group; cursor: none;
+            background: #fff;
+            border: 1px solid var(--border);
+        }
+
+        .project-image-wrap {
+            width: 100%; aspect-ratio: 16/10;
+            overflow: hidden; position: relative;
+        }
+
+        .project-image {
+            width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            transition: transform 0.8s var(--ease-out-expo);
+        }
+
+        /* Procedural abstract backgrounds for projects to avoid external images */
+        .proj-1 { background: linear-gradient(45deg, #f3ec78, #af4261); }
+        .proj-2 { background: linear-gradient(135deg, #1f4037, #99f2c8); }
+        .proj-3 { background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%); }
+        .proj-4 { background: linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%); }
+        .proj-5 { background: linear-gradient(120deg, #f6d365 0%, #fda085 100%); }
+        .proj-6 { background: linear-gradient(to top, #09203f 0%, #537895 100%); }
+
+        .project-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(17, 24, 39, 0.4);
+            opacity: 0; transition: opacity 0.4s ease;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .project-card:hover .project-image { transform: scale(1.05); }
+        .project-card:hover .project-overlay { opacity: 1; }
+
+        .project-info { padding: 32px; }
+        .project-category {
+            font-size: 0.875rem; color: var(--primary); font-weight: 600;
+            margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .project-info h3 { font-size: 1.75rem; margin-bottom: 8px; font-weight: 700; }
+        .project-info p { color: var(--text-secondary); }
+
+        /* Process Section */
+        .process { padding: var(--section-padding) 0; }
+        
+        .process-timeline {
+            display: flex; justify-content: space-between;
+            position: relative; margin-top: 60px;
+        }
+
+        .process-line {
+            position: absolute; top: 40px; left: 0; width: 100%; height: 2px;
+            background: var(--border); z-index: 0;
+        }
+
+        .process-progress {
+            position: absolute; top: 40px; left: 0; width: 0%; height: 2px;
+            background: var(--primary); z-index: 1; transition: width 1s ease;
+        }
+
+        .process-step {
+            position: relative; z-index: 2; width: 25%; text-align: center;
+            padding: 0 20px;
+        }
+
+        .step-num {
+            width: 80px; height: 80px; margin: 0 auto 24px;
+            background: var(--bg); border: 2px solid var(--border);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; font-weight: 800; color: var(--text-secondary);
+            transition: all 0.4s;
+        }
+
+        .process-step:hover .step-num {
+            background: var(--primary); color: #fff; border-color: var(--primary);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+            transform: scale(1.1);
+        }
+
+        .process-step h4 { font-size: 1.25rem; margin-bottom: 12px; }
+        .process-step p { color: var(--text-secondary); font-size: 0.95rem; }
+
+        /* Stats Section */
+        .stats { padding: 80px 0; background: #fff; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; gap: 2rem; }
+        .stat-item h3 { font-size: 4rem; font-weight: 800; color: var(--primary); line-height: 1; margin-bottom: 8px; }
+        .stat-item p { font-size: 1.125rem; color: var(--text-secondary); font-weight: 500; }
+
+        /* Interactive Showcase */
+        .showcase { padding: var(--section-padding) 0; overflow: hidden;}
+        .browser-window {
+            background: #fff; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); border: 1px solid var(--border);
+            transform-origin: center;
+        }
+        .browser-header {
+            background: var(--bg); padding: 16px; border-bottom: 1px solid var(--border);
+            display: flex; gap: 8px;
+        }
+        .browser-dot { width: 12px; height: 12px; border-radius: 50%; background: #e5e7eb; }
+        .browser-dot:nth-child(1) { background: #ff5f56; }
+        .browser-dot:nth-child(2) { background: #ffbd2e; }
+        .browser-dot:nth-child(3) { background: #27c93f; }
+        .browser-body {
+            padding: 40px; display: grid; grid-template-columns: 1fr 2fr; gap: 40px;
+            background: linear-gradient(180deg, #fff 0%, #F8FAFC 100%);
+        }
+        .showcase-sidebar { display: flex; flex-direction: column; gap: 20px; }
+        .skeleton-line { height: 12px; background: #e2e8f0; border-radius: 6px; width: 100%; }
+        .skeleton-line.short { width: 60%; }
+        .showcase-content { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .showcase-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+        
+        .animated-bar {
+            height: 8px; background: #e2e8f0; border-radius: 4px; margin-top: 16px; overflow: hidden;
+        }
+        .animated-bar-fill {
+            height: 100%; background: var(--primary); width: 0%; border-radius: 4px;
+            transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* Testimonials */
+        .testimonials { padding: var(--section-padding) 0; overflow: hidden; }
+        .testimonial-slider {
+            display: flex; width: max-content;
+            animation: scroll-left 40s linear infinite;
+        }
+        .testimonial-slider:hover { animation-play-state: paused; }
+        .testimonial-card {
+            width: 400px; padding: 40px; margin-right: 32px;
+            border-radius: 24px; display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .quote { font-size: 1.125rem; font-style: italic; margin-bottom: 24px; color: var(--text); }
+        .client-info { display: flex; align-items: center; gap: 16px; }
+        .client-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; }
+        .client-details h5 { font-size: 1rem; font-weight: 700; }
+        .client-details p { font-size: 0.875rem; color: var(--text-secondary); }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Tech Marquee */
+        .tech { padding: 60px 0; background: #fff; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; }
+        .tech-track { display: flex; width: max-content; animation: scroll-right 30s linear infinite reverse; }
+        .tech-item {
+            padding: 16px 40px; margin-right: 24px; background: var(--bg);
+            border-radius: 100px; border: 1px solid var(--border);
+            font-size: 1.25rem; font-weight: 600; color: var(--text-secondary);
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: var(--section-padding) 0; text-align: center; position: relative;
+            background: linear-gradient(135deg, var(--text) 0%, #1e293b 100%); color: #fff;
+            overflow: hidden;
+        }
+        .cta::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.4), transparent 60%);
+        }
+        .cta h2 { color: #fff; }
+        .cta p { color: #94a3b8; }
+        .cta .btn-secondary { color: #fff; border-color: rgba(255,255,255,0.2); }
+        .cta .btn-secondary:hover { background: #fff; color: var(--text); }
+
+        /* Footer */
+        footer { padding: 80px 0 40px; background: #fff; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 60px; }
+        .footer-col h4 { font-size: 1.125rem; margin-bottom: 24px; font-weight: 700; }
+        .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--primary); }
+        .footer-bottom {
+            padding-top: 32px; border-top: 1px solid var(--border);
+            display: flex; justify-content: space-between; color: var(--text-secondary); font-size: 0.875rem;
+        }
+
+        /* Back to top */
+        .back-to-top {
+            position: fixed; bottom: 40px; right: 40px;
+            width: 50px; height: 50px; border-radius: 50%;
+            background: var(--primary); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 20px rgba(37,99,235,0.3);
+            opacity: 0; visibility: hidden; transition: all 0.3s;
+            border: none; z-index: 1000;
+        }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .back-to-top:hover { transform: translateY(-5px); }
+
+        /* Loading Screen */
+        .loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff; z-index: 99999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: transform 0.8s var(--ease-out-expo);
+        }
+        .loader-logo { font-size: 2rem; font-weight: 800; margin-bottom: 20px; }
+        .loader-bar { width: 200px; height: 2px; background: var(--border); position: relative; overflow: hidden; }
+        .loader-progress { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: var(--primary); }
+
+        /* ==========================================================================
+           5. ANIMATIONS & REVEAL CLASSES
+           ========================================================================== */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s var(--ease-out-expo); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* ==========================================================================
+           6. RESPONSIVE DESIGN
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero-content p { margin: 0 auto 2.5rem; }
+            .hero-btns { justify-content: center; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 4rem; }
+            .browser-body { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links, .hero-visual { display: none; }
+            .menu-toggle { display: flex; }
+            .process-timeline { flex-direction: column; gap: 40px; margin-top: 40px; }
+            .process-line, .process-progress { display: none; }
+            .process-step { width: 100%; }
+            .stats-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+            .btn { width: 100%; }
+            .hero-btns { flex-direction: column; }
+            
+            /* Enable normal cursor on mobile */
+            *, *::before, *::after { cursor: auto !important; }
+            .cursor-dot, .cursor-outline { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Noise Texture Overlay -->
+    <div class="noise"></div>
+
+    <!-- Animated Blobs Background -->
+    <div class="blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <!-- HTML5 Canvas Particles -->
+    <canvas id="particles"></canvas>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-outline" id="cursorOutline"></div>
+
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-logo">
+            <span class="logo-icon"></span> ProstoLabs
+        </div>
+        <div class="loader-bar">
+            <div class="loader-progress" id="loaderProgress"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon"></span> ProstoLabs
+            </a>
+            <ul class="nav-links">
+                <li><a href="#services" class="magnetic-wrap">Services</a></li>
+                <li><a href="#projects" class="magnetic-wrap">Projects</a></li>
+                <li><a href="#process" class="magnetic-wrap">Process</a></li>
+                <li><a href="#about" class="magnetic-wrap">About</a></li>
+            </ul>
+            <button class="menu-toggle">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <h1 class="reveal">Building Digital Products That <span class="gradient-text">People Love.</span></h1>
+                <p class="reveal delay-100">ProstoLabs designs and develops modern websites, AI products, SaaS platforms, and digital experiences for ambitious businesses.</p>
+                <div class="hero-btns reveal delay-200">
+                    <div class="magnetic-wrap"><a href="#contact" class="btn btn-primary ripple-btn">Start Your Project</a></div>
+                    <div class="magnetic-wrap"><a href="#projects" class="btn btn-secondary ripple-btn">View Our Work</a></div>
+                </div>
+            </div>
+            
+            <div class="hero-visual reveal delay-300 tilt-card">
+                <div class="dashboard glass">
+                    <div class="dashboard-header">
+                        <div class="window-controls">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <div style="width: 100px; height: 8px; background: #e2e8f0; border-radius: 4px;"></div>
+                    </div>
+                    <div class="dash-cards">
+                        <div class="dash-card">
+                            <div style="width: 40px; height: 8px; background: var(--text-secondary); border-radius: 4px; margin-bottom: 8px;"></div>
+                            <div style="width: 80px; height: 16px; background: var(--text); border-radius: 4px;"></div>
+                            <div class="dash-chart"></div>
+                        </div>
+                        <div class="dash-card">
+                            <div style="width: 40px; height: 8px; background: var(--text-secondary); border-radius: 4px; margin-bottom: 8px;"></div>
+                            <div style="width: 80px; height: 16px; background: var(--text); border-radius: 4px;"></div>
+                            <div class="dash-chart" style="border-bottom-color: var(--accent);"></div>
+                        </div>
+                    </div>
+                    <div style="flex: 1; background: rgba(255,255,255,0.5); border-radius: 12px; margin-top: 10px;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services container" id="services">
+        <div class="section-header reveal">
+            <span class="section-tag">Our Expertise</span>
+            <h2>Premium Solutions</h2>
+            <p class="subtitle">We combine design engineering with cutting-edge technology to deliver unparalleled digital experiences.</p>
+        </div>
+        
+        <div class="services-grid">
+            <!-- Service 1 -->
+            <div class="service-card glass reveal tilt-card hover-glow">
+                <div class="service-icon">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <h3>Website Development</h3>
+                <p>Custom, high-performance websites built with modern technologies for optimal speed, scale, and SEO.</p>
+            </div>
+            <!-- Service 2 -->
+            <div class="service-card glass reveal delay-100 tilt-card hover-glow">
+                <div class="service-icon">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <h3>AI Solutions</h3>
+                <p>Integrating advanced machine learning and generative AI capabilities to automate and elevate your business operations.</p>
+            </div>
+            <!-- Service 3 -->
+            <div class="service-card glass reveal delay-200 tilt-card hover-glow">
+                <div class="service-icon">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <h3>UI/UX Design</h3>
+                <p>Crafting intuitive, user-centric interfaces with perfect typography and spacing that engage and convert.</p>
+            </div>
+            <!-- Service 4 -->
+            <div class="service-card glass reveal tilt-card hover-glow">
+                <div class="service-icon">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <h3>SEO & Growth</h3>
+                <p>Data-driven search strategies and technical optimization to improve visibility and drive high-quality organic traffic.</p>
+            </div>
+            <!-- Service 5 -->
+            <div class="service-card glass reveal delay-100 tilt-card hover-glow">
+                <div class="service-icon">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <h3>Digital Strategy</h3>
+                <p>Comprehensive roadmaps tailored to position your brand for sustainable digital growth and market dominance.</p>
+            </div>
+            <!-- Service 6 -->
+            <div class="service-card glass reveal delay-200 tilt-card hover-glow">
+                <div class="service-icon">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <h3>Automation</h3>
+                <p>Streamlining complex workflows with intelligent automation tools to save time, reduce errors, and preserve resources.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects container" id="projects">
+        <div class="section-header reveal">
+            <span class="section-tag">Featured Work</span>
+            <h2>Selected Projects</h2>
+            <p class="subtitle">A showcase of our finest digital products, designed to push the boundaries of what's possible.</p>
+        </div>
+
+        <div class="projects-grid">
+            <!-- Project 1 -->
+            <div class="project-card reveal">
+                <div class="project-image-wrap">
+                    <div class="project-image proj-1"></div>
+                    <div class="project-overlay">
+                        <div class="magnetic-wrap"><span class="btn btn-primary ripple-btn" style="pointer-events:none;">View Case Study</span></div>
+                    </div>
+                </div>
+                <div class="project-info glass">
+                    <div class="project-category">Luxury & Hospitality</div>
+                    <h3>Lumina Restaurant</h3>
+                    <p>A multi-award winning booking platform and immersive web experience.</p>
+                </div>
+            </div>
+            <!-- Project 2 -->
+            <div class="project-card reveal delay-100">
+                <div class="project-image-wrap">
+                    <div class="project-image proj-2"></div>
+                    <div class="project-overlay">
+                        <div class="magnetic-wrap"><span class="btn btn-primary ripple-btn" style="pointer-events:none;">View Case Study</span></div>
+                    </div>
+                </div>
+                <div class="project-info glass">
+                    <div class="project-category">Travel & Lifestyle</div>
+                    <h3>Nomad Platform</h3>
+                    <p>Global discovery engine connecting remote workers with curated stays.</p>
+                </div>
+            </div>
+            <!-- Project 3 -->
+            <div class="project-card reveal">
+                <div class="project-image-wrap">
+                    <div class="project-image proj-3"></div>
+                    <div class="project-overlay">
+                        <div class="magnetic-wrap"><span class="btn btn-primary ripple-btn" style="pointer-events:none;">View Case Study</span></div>
+                    </div>
+                </div>
+                <div class="project-info glass">
+                    <div class="project-category">Healthcare SaaS</div>
+                    <h3>Vitalis System</h3>
+                    <p>Secure, HIPAA-compliant patient management dashboard.</p>
+                </div>
+            </div>
+            <!-- Project 4 -->
+            <div class="project-card reveal delay-100">
+                <div class="project-image-wrap">
+                    <div class="project-image proj-4"></div>
+                    <div class="project-overlay">
+                        <div class="magnetic-wrap"><span class="btn btn-primary ripple-btn" style="pointer-events:none;">View Case Study</span></div>
+                    </div>
+                </div>
+                <div class="project-info glass">
+                    <div class="project-category">Artificial Intelligence</div>
+                    <h3>Cortex Analytics</h3>
+                    <p>Predictive data modeling interface for enterprise finance.</p>
+                </div>
+            </div>
+            <!-- Project 5 -->
+            <div class="project-card reveal">
+                <div class="project-image-wrap">
+                    <div class="project-image proj-5"></div>
+                    <div class="project-overlay">
+                        <div class="magnetic-wrap"><span class="btn btn-primary ripple-btn" style="pointer-events:none;">View Case Study</span></div>
+                    </div>
+                </div>
+                <div class="project-info glass">
+                    <div class="project-category">Real Estate</div>
+                    <h3>Elevate Properties</h3>
+                    <p>3D virtual property tours integrated into a seamless web app.</p>
+                </div>
+            </div>
+            <!-- Project 6 -->
+            <div class="project-card reveal delay-100">
+                <div class="project-image-wrap">
+                    <div class="project-image proj-6"></div>
+                    <div class="project-overlay">
+                        <div class="magnetic-wrap"><span class="btn btn-primary ripple-btn" style="pointer-events:none;">View Case Study</span></div>
+                    </div>
+                </div>
+                <div class="project-info glass">
+                    <div class="project-category">Fintech</div>
+                    <h3>Nova Banking</h3>
+                    <p>Frictionless mobile banking experience for the modern generation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process container" id="process">
+        <div class="section-header reveal">
+            <span class="section-tag">How We Work</span>
+            <h2>Our Process</h2>
+            <p class="subtitle">A streamlined, transparent workflow designed to turn complex problems into elegant solutions.</p>
+        </div>
+
+        <div class="process-timeline reveal delay-100">
+            <div class="process-line"></div>
+            <div class="process-progress" id="processProgress"></div>
+            
+            <div class="process-step">
+                <div class="step-num">01</div>
+                <h4>Discover</h4>
+                <p>In-depth research and strategy to align with your business goals.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">02</div>
+                <h4>Design</h4>
+                <p>Crafting pixel-perfect prototypes and comprehensive design systems.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">03</div>
+                <h4>Develop</h4>
+                <p>Writing clean, scalable, and highly optimized code.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">04</div>
+                <h4>Launch</h4>
+                <p>Rigorous QA testing, deployment, and ongoing support.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Showcase Section -->
+    <section class="showcase container">
+        <div class="section-header reveal">
+            <span class="section-tag">Interactive Preview</span>
+            <h2>Built for Performance</h2>
+        </div>
+        
+        <div class="browser-window reveal delay-100 tilt-card">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            <div class="browser-body">
+                <div class="showcase-sidebar glass">
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line short"></div>
+                    <div style="height:20px;"></div>
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line short"></div>
+                    <div style="height:20px;"></div>
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line"></div>
+                </div>
+                <div class="showcase-content">
+                    <div class="showcase-card glass">
+                        <h4 style="margin-bottom: 8px;">Traffic Growth</h4>
+                        <h3 class="counter" data-target="34500" style="font-size: 2rem; color: var(--primary);">0</h3>
+                        <div class="animated-bar"><div class="animated-bar-fill target-bar" data-width="85%"></div></div>
+                    </div>
+                    <div class="showcase-card glass">
+                        <h4 style="margin-bottom: 8px;">Conversion Rate</h4>
+                        <h3 class="counter" data-target="12.4" data-suffix="%" style="font-size: 2rem; color: var(--accent);">0</h3>
+                        <div class="animated-bar"><div class="animated-bar-fill target-bar" data-width="62%"></div></div>
+                    </div>
+                    <div class="showcase-card glass" style="grid-column: span 2;">
+                        <h4 style="margin-bottom: 16px;">Revenue Analytics</h4>
+                        <svg width="100%" height="100" viewBox="0 0 500 100" preserveAspectRatio="none">
+                            <path class="chart-path" d="M0 100 Q 50 80, 100 90 T 200 60 T 300 40 T 400 50 T 500 10" fill="none" stroke="var(--primary)" stroke-width="4" stroke-linecap="round"/>
+                            <path d="M0 100 Q 50 80, 100 90 T 200 60 T 300 40 T 400 50 T 500 10 L 500 100 L 0 100 Z" fill="rgba(37, 99, 235, 0.1)"/>
+                        </svg>
+                        <style>
+                            .chart-path { stroke-dasharray: 1000; stroke-dashoffset: 1000; transition: stroke-dashoffset 2s ease; }
+                            .browser-window.is-visible .chart-path { stroke-dashoffset: 0; }
+                            .browser-window.is-visible .target-bar { width: var(--data-width); }
+                        </style>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats" id="about">
+        <div class="container stats-grid">
+            <div class="stat-item reveal">
+                <h3 class="counter" data-target="50" data-suffix="+">0</h3>
+                <p>Projects Delivered</p>
+            </div>
+            <div class="stat-item reveal delay-100">
+                <h3 class="counter" data-target="98" data-suffix="%">0</h3>
+                <p>Client Satisfaction</p>
+            </div>
+            <div class="stat-item reveal delay-200">
+                <h3 class="counter" data-target="5" data-suffix="+">0</h3>
+                <p>Countries Served</p>
+            </div>
+            <div class="stat-item reveal delay-300">
+                <h3 class="counter" data-target="24" data-suffix="/7">0</h3>
+                <p>Premium Support</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container section-header reveal">
+            <span class="section-tag">Client Feedback</span>
+            <h2>Don't just take our word for it</h2>
+        </div>
+        
+        <div class="testimonial-slider">
+            <!-- Double elements for infinite loop effect -->
+            <div class="testimonial-card glass">
+                <p class="quote">"ProstoLabs completely transformed our digital presence. The attention to detail, motion design, and technical robustess is unmatched. Truly a $50k experience."</p>
+                <div class="client-info">
+                    <div class="client-avatar">S</div>
+                    <div class="client-details">
+                        <h5>Sarah Jenkins</h5>
+                        <p>CEO, TechFlow</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card glass">
+                <p class="quote">"An absolute pleasure to work with. They delivered a complex AI dashboard ahead of schedule and the UI is breathtakingly beautiful."</p>
+                <div class="client-info">
+                    <div class="client-avatar">M</div>
+                    <div class="client-details">
+                        <h5>Marcus Chen</h5>
+                        <p>CTO, Cortex AI</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card glass">
+                <p class="quote">"The design quality and fluid animations made our website stand out in a crowded market. Our conversion rate doubled in a month."</p>
+                <div class="client-info">
+                    <div class="client-avatar">E</div>
+                    <div class="client-details">
+                        <h5>Emma Roberts</h5>
+                        <p>Founder, Lumina</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Duplicates -->
+            <div class="testimonial-card glass">
+                <p class="quote">"ProstoLabs completely transformed our digital presence. The attention to detail, motion design, and technical robustess is unmatched. Truly a $50k experience."</p>
+                <div class="client-info">
+                    <div class="client-avatar">S</div>
+                    <div class="client-details">
+                        <h5>Sarah Jenkins</h5>
+                        <p>CEO, TechFlow</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card glass">
+                <p class="quote">"An absolute pleasure to work with. They delivered a complex AI dashboard ahead of schedule and the UI is breathtakingly beautiful."</p>
+                <div class="client-info">
+                    <div class="client-avatar">M</div>
+                    <div class="client-details">
+                        <h5>Marcus Chen</h5>
+                        <p>CTO, Cortex AI</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card glass">
+                <p class="quote">"The design quality and fluid animations made our website stand out in a crowded market. Our conversion rate doubled in a month."</p>
+                <div class="client-info">
+                    <div class="client-avatar">E</div>
+                    <div class="client-details">
+                        <h5>Emma Roberts</h5>
+                        <p>Founder, Lumina</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technologies -->
+    <section class="tech">
+        <div class="tech-track">
+            <div class="tech-item">HTML5</div>
+            <div class="tech-item">CSS3</div>
+            <div class="tech-item">JavaScript</div>
+            <div class="tech-item">React</div>
+            <div class="tech-item">Node.js</div>
+            <div class="tech-item">Python</div>
+            <div class="tech-item">Figma</div>
+            <div class="tech-item">Firebase</div>
+            <div class="tech-item">OpenAI</div>
+            <div class="tech-item">Framer Motion</div>
+            <div class="tech-item">WebGL</div>
+            <div class="tech-item">Tailwind</div>
+            
+            <!-- Duplicates for loop -->
+            <div class="tech-item">HTML5</div>
+            <div class="tech-item">CSS3</div>
+            <div class="tech-item">JavaScript</div>
+            <div class="tech-item">React</div>
+            <div class="tech-item">Node.js</div>
+            <div class="tech-item">Python</div>
+            <div class="tech-item">Figma</div>
+            <div class="tech-item">Firebase</div>
+            <div class="tech-item">OpenAI</div>
+            <div class="tech-item">Framer Motion</div>
+            <div class="tech-item">WebGL</div>
+            <div class="tech-item">Tailwind</div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="contact">
+        <div class="container reveal">
+            <h2>Let's Build Something <span class="gradient-text">Extraordinary</span></h2>
+            <p class="subtitle" style="margin-top: 24px; margin-bottom: 40px; color: #cbd5e1;">Ready to transform your ideas into reality? Partner with ProstoLabs to create digital experiences that leave a lasting impact.</p>
+            <div class="magnetic-wrap"><a href="mailto:hello@prostolabs.com" class="btn btn-primary ripple-btn" style="background: #fff; color: var(--text);">Book a Free Consultation</a></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col reveal">
+                    <a href="#" class="logo" style="margin-bottom: 24px;">
+                        <span class="logo-icon"></span> ProstoLabs
+                    </a>
+                    <p style="color: var(--text-secondary); max-width: 300px;">Designing and developing modern digital products for ambitious businesses worldwide.</p>
+                </div>
+                <div class="footer-col reveal delay-100">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#projects">Work</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col reveal delay-200">
+                    <h4>Connect</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:hello@prostolabs.com">hello@prostolabs.com</a></li>
+                        <li><a href="#">Twitter (X)</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Dribbble</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom reveal delay-300">
+                <p>&copy; 2026 ProstoLabs. All rights reserved.</p>
+                <p>Designed with absolute precision.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 15l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <!-- ==========================================================================
+         JAVASCRIPT
+         ========================================================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Loading Screen
+            const loader = document.getElementById('loader');
+            const loaderProgress = document.getElementById('loaderProgress');
+            let progress = 0;
+            
+            const initLoader = setInterval(() => {
+                progress += Math.random() * 15;
+                if(progress > 100) progress = 100;
+                loaderProgress.style.width = `${progress}%`;
+                
+                if(progress === 100) {
+                    clearInterval(initLoader);
+                    setTimeout(() => {
+                        loader.style.transform = 'translateY(-100%)';
+                        setTimeout(() => loader.remove(), 1000);
+                        // Trigger initial reveals
+                        handleReveals();
+                    }, 400);
+                }
+            }, 100);
+
+            // 2. Custom Cursor
+            const cursorDot = document.getElementById('cursorDot');
+            const cursorOutline = document.getElementById('cursorOutline');
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            let outlineX = mouseX;
+            let outlineY = mouseY;
+            
+            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+            if (!isTouchDevice) {
+                window.addEventListener('mousemove', (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                    
+                    // Update hover glow vars for service cards
+                    document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+                    document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+                });
+
+                const animateCursor = () => {
+                    // Dot follows instantly
+                    cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+                    // Outline lerps
+                    outlineX += (mouseX - outlineX) * 0.15;
+                    outlineY += (mouseY - outlineY) * 0.15;
+                    cursorOutline.style.transform = `translate(${outlineX}px, ${outlineY}px) translate(-50%, -50%)`;
+                    
+                    requestAnimationFrame(animateCursor);
+                };
+                animateCursor();
+
+                // Cursor Hover States
+                const interactables = document.querySelectorAll('a, button, .tilt-card, .project-card');
+                interactables.forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        cursorOutline.style.width = '60px';
+                        cursorOutline.style.height = '60px';
+                        cursorOutline.style.backgroundColor = 'rgba(37, 99, 235, 0.1)';
+                        cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%) scale(1.5)`;
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        cursorOutline.style.width = '40px';
+                        cursorOutline.style.height = '40px';
+                        cursorOutline.style.backgroundColor = 'transparent';
+                        cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%) scale(1)`;
+                    });
+                });
+            }
+
+            // 3. Scroll Interactions (Navbar, Progress, Back to Top, Timeline)
+            const navbar = document.getElementById('navbar');
+            const scrollProgress = document.getElementById('scrollProgress');
+            const backToTop = document.getElementById('backToTop');
+            const processProgress = document.getElementById('processProgress');
+
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollY / docHeight) * 100;
+                
+                scrollProgress.style.width = `${scrollPercent}%`;
+
+                if (scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+
+                if (scrollY > 500) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
+                }
+
+                // Process timeline fill logic
+                const processSection = document.getElementById('process');
+                if (processSection) {
+                    const rect = processSection.getBoundingClientRect();
+                    if(rect.top < window.innerHeight && rect.bottom > 0) {
+                        let procPercent = 100 - ((rect.bottom - window.innerHeight / 2) / rect.height) * 100;
+                        if(procPercent < 0) procPercent = 0;
+                        if(procPercent > 100) procPercent = 100;
+                        processProgress.style.width = `${procPercent}%`;
+                    }
+                }
+            });
+
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // 4. Intersection Observer (Reveals & Counters & Showcase Bars)
+            const revealElements = document.querySelectorAll('.reveal');
+            const counterElements = document.querySelectorAll('.counter');
+            const showcaseWindow = document.querySelector('.browser-window');
+            const targetBars = document.querySelectorAll('.target-bar');
+
+            const revealOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+            
+            const handleReveals = () => {
+                revealElements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if(rect.top < window.innerHeight - 50) {
+                        el.classList.add('active');
+                    }
+                });
+            }
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        
+                        // If it's the showcase window, trigger internal animations
+                        if(entry.target.classList.contains('browser-window')) {
+                            entry.target.classList.add('is-visible');
+                            targetBars.forEach(bar => {
+                                bar.style.setProperty('--data-width', bar.getAttribute('data-width'));
+                            });
+                        }
+                        
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // Counters Observer
+            const animateCounter = (el) => {
+                const target = parseFloat(el.getAttribute('data-target'));
+                const suffix = el.getAttribute('data-suffix') || '';
+                const duration = 2000;
+                const start = performance.now();
+                
+                const updateCounter = (currentTime) => {
+                    const elapsed = currentTime - start;
+                    const progress = Math.min(elapsed / duration, 1);
+                    // Easing out expo
+                    const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+                    
+                    const currentVal = target * ease;
+                    
+                    if(Number.isInteger(target)) {
+                        el.innerText = Math.floor(currentVal) + suffix;
+                    } else {
+                        el.innerText = currentVal.toFixed(1) + suffix;
+                    }
+
+                    if (progress < 1) {
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        el.innerText = target + suffix;
+                    }
+                };
+                requestAnimationFrame(updateCounter);
+            };
+
+            const counterObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounter(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+
+            counterElements.forEach(el => counterObserver.observe(el));
+
+            // 5. 3D Tilt Effect
+            if (!isTouchDevice) {
+                const tiltCards = document.querySelectorAll('.tilt-card, .project-card, .dashboard');
+                
+                tiltCards.forEach(card => {
+                    card.addEventListener('mousemove', (e) => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        
+                        // Calculate rotation based on cursor position relative to center
+                        const rotateX = ((y - centerY) / centerY) * -8; // Max 8 deg
+                        const rotateY = ((x - centerX) / centerX) * 8;
+                        
+                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                    });
+                    
+                    card.addEventListener('mouseleave', () => {
+                        // Inherit or reset logic based on class (dashboard needs specific reset)
+                        if (card.classList.contains('dashboard')) {
+                            card.style.transform = 'rotateY(-10deg) rotateX(5deg)';
+                        } else {
+                            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+                        }
+                    });
+                });
+            }
+
+            // 6. Magnetic Buttons
+            if (!isTouchDevice) {
+                const magneticWraps = document.querySelectorAll('.magnetic-wrap');
+                
+                magneticWraps.forEach(wrap => {
+                    const btn = wrap.querySelector('a, button, span');
+                    if(!btn) return;
+
+                    wrap.addEventListener('mousemove', (e) => {
+                        const rect = wrap.getBoundingClientRect();
+                        const x = e.clientX - rect.left - rect.width / 2;
+                        const y = e.clientY - rect.top - rect.height / 2;
+                        
+                        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+                    });
+                    
+                    wrap.addEventListener('mouseleave', () => {
+                        btn.style.transform = 'translate(0px, 0px)';
+                    });
+                });
+            }
+
+            // 7. Ripple Effect on Buttons
+            const rippleBtns = document.querySelectorAll('.ripple-btn');
+            rippleBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    let rect = btn.getBoundingClientRect();
+                    let x = e.clientX - rect.left;
+                    let y = e.clientY - rect.top;
+                    
+                    let ripple = document.createElement('span');
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    ripple.classList.add('ripple');
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+
+            // 8. Background Canvas Particles (Subtle floating orbs)
+            const canvas = document.getElementById('particles');
+            const ctx = canvas.getContext('2d');
+            let particlesArray = [];
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                initParticles();
+            });
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 3 + 1;
+                    this.speedX = Math.random() * 0.5 - 0.25;
+                    this.speedY = Math.random() * -0.5 - 0.1; // Move up slowly
+                    this.opacity = Math.random() * 0.5 + 0.1;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    
+                    // Reset if out of bounds
+                    if (this.y < 0) this.y = canvas.height;
+                    if (this.x < 0) this.x = canvas.width;
+                    if (this.x > canvas.width) this.x = 0;
+                }
+                draw() {
+                    ctx.fillStyle = `rgba(37, 99, 235, ${this.opacity * 0.3})`; // primary color but very faint
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            function initParticles() {
+                particlesArray = [];
+                const numParticles = Math.min(window.innerWidth / 15, 100);
+                for (let i = 0; i < numParticles; i++) {
+                    particlesArray.push(new Particle());
+                }
+            }
+
+            function animateCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray[i].update();
+                    particlesArray[i].draw();
+                }
+                requestAnimationFrame(animateCanvas);
+            }
+
+            initParticles();
+            animateCanvas();
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,2270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS ACADEMY | Preparing Today's Students for Tomorrow's Success</title>
+  <meta name="description" content="NEXUS ACADEMY - Premier Coaching Institute for JEE, NEET, UPSC, SSC, Banking & Foundation courses. Empowering students with top faculty, small batches, and proven results.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* ==========================================================================
+       CSS VARIABLES & BASE SYSTEM
+       ========================================================================== */
+    :root {
+      --primary: #2563EB;
+      --primary-dark: #1D4ED8;
+      --primary-light: #EFF6FF;
+      --accent: #F97316;
+      --accent-hover: #EA580C;
+      --success: #10B981;
+      --success-light: #ECFDF5;
+      --bg-main: #F8FAFC;
+      --surface: #FFFFFF;
+      --dark: #1E293B;
+      --light-text: #64748B;
+      --border-subtle: #E2E8F0;
+      
+      --font-heading: 'Poppins', sans-serif;
+      --font-body: 'Inter', sans-serif;
+
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 10px 25px -5px rgba(37, 99, 235, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+      --shadow-lg: 0 20px 30px -10px rgba(37, 99, 235, 0.12), 0 10px 15px -5px rgba(0, 0, 0, 0.04);
+      --shadow-glow: 0 0 25px rgba(249, 115, 22, 0.35);
+
+      --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: initial; /* Managed by Lenis */
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--dark);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      color: var(--dark);
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      outline: none;
+      border: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-padding {
+      padding: 100px 0;
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, var(--primary) 0%, #3B82F6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .text-gradient-accent {
+      background: linear-gradient(135deg, var(--accent) 0%, #FBBF24 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 60px auto;
+    }
+
+    .badge-sub {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background-color: var(--primary-light);
+      color: var(--primary);
+      border-radius: var(--radius-full);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+      border: 1px solid rgba(37, 99, 235, 0.15);
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-desc {
+      color: var(--light-text);
+      font-size: 1.125rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 32px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s var(--ease-smooth);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.45);
+    }
+
+    .btn-accent {
+      background-color: var(--accent);
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
+    }
+
+    .btn-accent:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .btn-secondary {
+      background-color: var(--surface);
+      color: var(--dark);
+      border: 2px solid var(--border-subtle);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ==========================================================================
+       PRELOADER
+       ========================================================================== */
+    #preloader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: var(--dark);
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+    }
+
+    .preloader-cap {
+      font-size: 4rem;
+      color: var(--accent);
+      margin-bottom: 24px;
+      animation: pulseCap 1.5s infinite ease-in-out;
+    }
+
+    @keyframes pulseCap {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.15) rotate(-5deg); }
+    }
+
+    .loader-title {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+    }
+
+    .loader-bar-bg {
+      width: 240px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+
+    .loader-bar-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width 0.1s ease;
+    }
+
+    /* ==========================================================================
+       NAVIGATION BAR
+       ========================================================================== */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      z-index: 1000;
+      padding: 20px 0;
+      transition: all 0.4s var(--ease-smooth);
+    }
+
+    .navbar.scrolled {
+      padding: 12px 0;
+      background-color: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow-sm);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--dark);
+    }
+
+    .logo-badge {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #FFFFFF;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--dark);
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0%; height: 2px;
+      background: var(--primary);
+      border-radius: 2px;
+      transition: width 0.3s var(--ease-smooth);
+    }
+
+    .nav-link:hover {
+      color: var(--primary);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      font-size: 1.5rem;
+      color: var(--dark);
+      cursor: pointer;
+    }
+
+    .mobile-drawer {
+      position: fixed;
+      top: 0; right: -100%;
+      width: 80%; max-width: 360px;
+      height: 100vh;
+      background: var(--surface);
+      z-index: 1001;
+      padding: 40px 28px;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+      transition: right 0.4s var(--ease-smooth);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .mobile-drawer.active {
+      right: 0;
+    }
+
+    .mobile-close-btn {
+      align-self: flex-end;
+      font-size: 1.8rem;
+      color: var(--dark);
+      cursor: pointer;
+    }
+
+    .mobile-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .mobile-links a {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    /* ==========================================================================
+       HERO SECTION
+       ========================================================================== */
+    .hero {
+      position: relative;
+      padding-top: 160px;
+      padding-bottom: 100px;
+      background: radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.05) 0%, transparent 50%),
+                  radial-gradient(circle at 90% 80%, rgba(249, 115, 22, 0.05) 0%, transparent 50%);
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-headline {
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: var(--light-text);
+      margin-bottom: 36px;
+      max-width: 540px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 50px;
+    }
+
+    .hero-visual {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-img-container {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      border: 8px solid var(--surface);
+    }
+
+    .hero-img-container img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+    }
+
+    /* Floating Animated Icons */
+    .floating-icon {
+      position: absolute;
+      width: 60px; height: 60px;
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      z-index: 4;
+      animation: floatMotion 4s ease-in-out infinite;
+    }
+
+    .float-icon-1 { top: 10%; left: -25px; color: var(--primary); }
+    .float-icon-2 { top: 45%; right: -25px; color: var(--accent); animation-delay: 1s; }
+    .float-icon-3 { bottom: 15%; left: -20px; color: var(--success); animation-delay: 2s; }
+
+    @keyframes floatMotion {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(6deg); }
+    }
+
+    /* Counter Bar */
+    .hero-stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      background: var(--surface);
+      padding: 30px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-subtle);
+      margin-top: 40px;
+    }
+
+    .stat-box {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--light-text);
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       WHY CHOOSE US
+       ========================================================================== */
+    .why-us-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 30px;
+    }
+
+    .why-card {
+      background: var(--surface);
+      padding: 36px 28px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.4s var(--ease-smooth);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .why-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .why-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .why-card:hover::before {
+      opacity: 1;
+    }
+
+    .why-icon-box {
+      width: 64px; height: 64px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 24px;
+      transition: transform 0.3s ease;
+    }
+
+    .why-card:hover .why-icon-box {
+      transform: scale(1.1) rotate(5deg);
+      background: var(--primary);
+      color: #FFFFFF;
+    }
+
+    .why-title {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+    }
+
+    .why-desc {
+      color: var(--light-text);
+      font-size: 0.95rem;
+    }
+
+    /* ==========================================================================
+       COURSES SECTION
+       ========================================================================== */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 32px;
+    }
+
+    .course-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.4s var(--ease-smooth);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .course-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(37, 99, 235, 0.3);
+    }
+
+    .course-badge {
+      position: absolute;
+      top: 24px; right: 24px;
+      padding: 4px 12px;
+      background: var(--success-light);
+      color: var(--success);
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .course-icon-header {
+      width: 56px; height: 56px;
+      border-radius: var(--radius-md);
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
+    .course-title {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .course-desc {
+      color: var(--light-text);
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+      flex-grow: 1;
+    }
+
+    .course-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 20px;
+      border-top: 1px dashed var(--border-subtle);
+      margin-bottom: 24px;
+      font-size: 0.875rem;
+      color: var(--light-text);
+    }
+
+    .course-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .course-meta-item i {
+      color: var(--primary);
+    }
+
+    /* ==========================================================================
+       FACULTY SECTION
+       ========================================================================== */
+    .faculty-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .faculty-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.4s var(--ease-smooth);
+    }
+
+    .faculty-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .faculty-img-wrapper {
+      position: relative;
+      height: 280px;
+      overflow: hidden;
+    }
+
+    .faculty-img-wrapper img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s var(--ease-smooth);
+    }
+
+    .faculty-card:hover .faculty-img-wrapper img {
+      transform: scale(1.08);
+    }
+
+    .faculty-rating {
+      position: absolute;
+      bottom: 12px; right: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .faculty-rating i {
+      color: #F59E0B;
+    }
+
+    .faculty-info {
+      padding: 24px;
+    }
+
+    .faculty-name {
+      font-size: 1.25rem;
+      margin-bottom: 4px;
+    }
+
+    .faculty-subject {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin-bottom: 12px;
+    }
+
+    .faculty-details {
+      list-style: none;
+      font-size: 0.85rem;
+      color: var(--light-text);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+
+    .faculty-details li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .faculty-details i {
+      color: var(--accent);
+      width: 14px;
+    }
+
+    /* ==========================================================================
+       SUCCESS STORIES & RESULTS
+       ========================================================================== */
+    .results-section {
+      background: var(--dark);
+      color: #FFFFFF;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .results-section .section-title,
+    .results-section .section-desc {
+      color: #FFFFFF;
+    }
+
+    .results-section .section-desc {
+      opacity: 0.8;
+    }
+
+    .toppers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+
+    .topper-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-align: center;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .topper-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .air-rank-badge {
+      position: absolute;
+      top: -12px; left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--accent), #FBBF24);
+      color: #FFFFFF;
+      padding: 4px 16px;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      box-shadow: 0 4px 10px rgba(249, 115, 22, 0.4);
+    }
+
+    .topper-img {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 10px auto 16px auto;
+      border: 3px solid var(--accent);
+    }
+
+    .topper-name {
+      font-size: 1.2rem;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+
+    .topper-exam {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 12px;
+    }
+
+    .college-logos {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 30px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      opacity: 0.7;
+    }
+
+    .college-item {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: #FFFFFF;
+      letter-spacing: 0.05em;
+    }
+
+    /* ==========================================================================
+       FEATURES / DIGITAL ECOSYSTEM
+       ========================================================================== */
+    .features-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .feature-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .feature-icon {
+      width: 48px; height: 48px;
+      border-radius: var(--radius-md);
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .feature-text h4 {
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+    }
+
+    .feature-text p {
+      color: var(--light-text);
+      font-size: 0.95rem;
+    }
+
+    /* ==========================================================================
+       MAMSONRY GALLERY
+       ========================================================================== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 240px;
+      gap: 20px;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .gallery-item.tall { grid-row: span 2; }
+    .gallery-item.wide { grid-column: span 2; }
+
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s var(--ease-smooth);
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(30, 41, 59, 0.8), transparent);
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+      color: #FFFFFF;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.08);
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    /* ==========================================================================
+       TESTIMONIALS SLIDER
+       ========================================================================== */
+    .testimonials-container {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .testimonial-card {
+      background: var(--surface);
+      padding: 40px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-subtle);
+      text-align: center;
+    }
+
+    .quote-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      opacity: 0.2;
+      margin-bottom: 20px;
+    }
+
+    .testimonial-text {
+      font-size: 1.2rem;
+      color: var(--dark);
+      line-height: 1.6;
+      margin-bottom: 28px;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .author-img {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .author-info h5 {
+      font-size: 1.1rem;
+      text-align: left;
+    }
+
+    .author-info p {
+      font-size: 0.85rem;
+      color: var(--light-text);
+      text-align: left;
+    }
+
+    .stars-row {
+      color: #F59E0B;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+
+    /* ==========================================================================
+       ADMISSION PROCESS TIMELINE
+       ========================================================================== */
+    .timeline {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0; left: 50%;
+      width: 2px;
+      background: var(--border-subtle);
+      transform: translateX(-50%);
+    }
+
+    .timeline-step {
+      display: flex;
+      justify-content: flex-between;
+      align-items: center;
+      margin-bottom: 50px;
+      position: relative;
+    }
+
+    .timeline-step:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .timeline-content {
+      width: 44%;
+      background: var(--surface);
+      padding: 28px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-subtle);
+      position: relative;
+    }
+
+    .timeline-badge {
+      position: absolute;
+      left: 50%; transform: translateX(-50%);
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+      box-shadow: 0 0 0 6px var(--bg-main);
+      z-index: 2;
+    }
+
+    .timeline-title {
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+    }
+
+    .timeline-desc {
+      font-size: 0.9rem;
+      color: var(--light-text);
+    }
+
+    /* ==========================================================================
+       FAQ ACCORDION
+       ========================================================================== */
+    .faq-container {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .faq-item {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .faq-header {
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    .faq-icon {
+      color: var(--primary);
+      transition: transform 0.3s ease;
+    }
+
+    .faq-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s var(--ease-smooth), padding 0.4s ease;
+      padding: 0 24px;
+      color: var(--light-text);
+      font-size: 0.95rem;
+    }
+
+    .faq-item.active .faq-body {
+      max-height: 200px;
+      padding: 0 24px 20px 24px;
+    }
+
+    .faq-item.active .faq-icon {
+      transform: rotate(180deg);
+    }
+
+    /* ==========================================================================
+       CONTACT SECTION
+       ========================================================================== */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 50px;
+      align-items: start;
+    }
+
+    .contact-form-box {
+      background: var(--surface);
+      padding: 40px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-main);
+      font-size: 0.95rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-input:focus {
+      border-color: var(--primary);
+      background: #FFFFFF;
+    }
+
+    .contact-info-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+
+    .info-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--surface);
+      padding: 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .info-card-icon {
+      width: 48px; height: 48px;
+      border-radius: var(--radius-sm);
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    /* WhatsApp Floating Button */
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 30px; right: 30px;
+      width: 60px; height: 60px;
+      background-color: #25D366;
+      color: #FFFFFF;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+      z-index: 999;
+      transition: transform 0.3s ease;
+    }
+
+    .whatsapp-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    .footer {
+      background: var(--dark);
+      color: #FFFFFF;
+      padding-top: 80px;
+      padding-bottom: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 50px;
+      margin-bottom: 60px;
+    }
+
+    .footer-brand .logo {
+      color: #FFFFFF;
+      margin-bottom: 16px;
+    }
+
+    .footer-brand p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+      max-width: 300px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 12px;
+    }
+
+    .social-icon {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+      background: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    .footer-col h5 {
+      color: #FFFFFF;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* ==========================================================================
+       RESPONSIVE MEDIA QUERIES
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .hero-subtitle { margin-left: auto; margin-right: auto; }
+      .hero-actions { justify-content: center; }
+      .hero-visual { max-width: 550px; margin: 0 auto; }
+      .features-split { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .hero-stats-bar { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-menu-btn { display: block; }
+      .section-padding { padding: 60px 0; }
+      .timeline::before { left: 20px; }
+      .timeline-step, .timeline-step:nth-child(even) { flex-direction: column; align-items: flex-start; padding-left: 50px; }
+      .timeline-content { width: 100%; }
+      .timeline-badge { left: 20px; }
+      .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 200px; }
+      .gallery-item.tall, .gallery-item.wide { grid-row: span 1; grid-column: span 1; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div id="preloader">
+    <i class="fa-solid fa-graduation-cap preloader-cap"></i>
+    <div class="loader-title">NEXUS ACADEMY</div>
+    <div class="loader-bar-bg">
+      <div class="loader-bar-fill" id="loader-bar"></div>
+    </div>
+  </div>
+
+  <!-- Sticky Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#" class="logo">
+        <div class="logo-badge"><i class="fa-solid fa-atom"></i></div>
+        NEXUS ACADEMY
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#home" class="nav-link">Home</a></li>
+        <li><a href="#courses" class="nav-link">Courses</a></li>
+        <li><a href="#faculty" class="nav-link">Faculty</a></li>
+        <li><a href="#results" class="nav-link">Results</a></li>
+        <li><a href="#gallery" class="nav-link">Campus</a></li>
+        <li><a href="#faq" class="nav-link">FAQ</a></li>
+      </ul>
+
+      <a href="#contact" class="btn btn-accent" style="padding: 12px 24px; font-size: 0.9rem;">
+        Enroll Now
+      </a>
+
+      <div class="mobile-menu-btn" id="mobile-toggle">
+        <i class="fa-solid fa-bars-staggered"></i>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-close-btn" id="mobile-close"><i class="fa-solid fa-xmark"></i></div>
+    <ul class="mobile-links">
+      <li><a href="#home" class="mobile-link">Home</a></li>
+      <li><a href="#courses" class="mobile-link">Courses</a></li>
+      <li><a href="#faculty" class="mobile-link">Faculty</a></li>
+      <li><a href="#results" class="mobile-link">Results</a></li>
+      <li><a href="#gallery" class="mobile-link">Campus Gallery</a></li>
+      <li><a href="#contact" class="mobile-link">Contact Us</a></li>
+    </ul>
+    <a href="#contact" class="btn btn-accent mobile-link" style="text-align:center;">Enroll Now</a>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="badge-sub">
+            <i class="fa-solid fa-certificate"></i> India's Premier Coaching Institute
+          </div>
+          <h1 class="hero-headline">
+            Build Your Future With <span class="text-gradient">Confidence</span>
+          </h1>
+          <p class="hero-subtitle">
+            Empowering competitive exam aspirants with top-tier faculty, personalized mentorship, and a proven track record of top rankers in JEE, NEET, & UPSC.
+          </p>
+          <div class="hero-actions">
+            <a href="#courses" class="btn btn-primary">
+              <span>Explore Courses</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <a href="#contact" class="btn btn-secondary">
+              <i class="fa-solid fa-play" style="color:var(--accent);"></i>
+              <span>Book Free Demo</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="floating-icon float-icon-1"><i class="fa-solid fa-book-open"></i></div>
+          <div class="floating-icon float-icon-2"><i class="fa-solid fa-graduation-cap"></i></div>
+          <div class="floating-icon float-icon-3"><i class="fa-solid fa-chart-line"></i></div>
+
+          <div class="hero-img-container">
+            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=80" alt="Students studying together happily">
+          </div>
+        </div>
+      </div>
+
+      <!-- Animated Stats Bar -->
+      <div class="hero-stats-bar">
+        <div class="stat-box">
+          <div class="stat-number" data-target="10000">0</div>
+          <div class="stat-label">Students Mentored</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" data-target="98">0</div>
+          <div class="stat-label">% Success Rate</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" data-target="150">0</div>
+          <div class="stat-label">Expert Faculty</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" data-target="25">0</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Why Choose Us -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge-sub">The Nexus Advantage</div>
+        <h2 class="section-title">Why Top Rankers Choose Us</h2>
+        <p class="section-desc">We combine structured methodology with compassionate mentorship to unlock every student's full potential.</p>
+      </div>
+
+      <div class="why-us-grid">
+        <div class="why-card">
+          <div class="why-icon-box"><i class="fa-solid fa-chalkboard-user"></i></div>
+          <h3 class="why-title">Experienced Teachers</h3>
+          <p class="why-desc">Learn directly from IITians, Doctors, and former Senior Bureaucrats with over 15+ years of teaching excellence.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon-box"><i class="fa-solid fa-users"></i></div>
+          <h3 class="why-title">Small Batch Size</h3>
+          <p class="why-desc">Limited 30 students per batch ensures individual focus, active interaction, and zero unattended doubts.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon-box"><i class="fa-solid fa-user-check"></i></div>
+          <h3 class="why-title">Personal Mentorship</h3>
+          <p class="why-desc">Dedicated academic mentors assigned to track mental well-being, study schedules, and exam preparation stress.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon-box"><i class="fa-solid fa-laptop-code"></i></div>
+          <h3 class="why-title">Digital Classrooms</h3>
+          <p class="why-desc">State-of-the-art interactive smart boards, animated 3D visual modules, and AI-enabled practice portals.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon-box"><i class="fa-solid fa-file-pen"></i></div>
+          <h3 class="why-title">Weekly Tests & Analytics</h3>
+          <p class="why-desc">Regular All-India Mock Tests with deep AI report cards identifying accuracy rate, speed, and weak areas.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon-box"><i class="fa-solid fa-compass"></i></div>
+          <h3 class="why-title">Career Guidance</h3>
+          <p class="why-desc">Comprehensive counselling sessions for college selection, branch preference, and long-term career planning.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Courses Offered -->
+  <section class="section-padding" id="courses" style="background-color: var(--surface);">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge-sub">Curriculum Programs</div>
+        <h2 class="section-title">Courses Engineered for Success</h2>
+        <p class="section-desc">Tailored competitive coaching programs designed specifically for current exam patterns and syllabi.</p>
+      </div>
+
+      <div class="courses-grid">
+        <!-- Course 1 -->
+        <div class="course-card">
+          <span class="course-badge">Most Popular</span>
+          <div class="course-icon-header"><i class="fa-solid fa-atom"></i></div>
+          <h3 class="course-title">IIT-JEE (Main & Advanced)</h3>
+          <p class="course-desc">Rigorous 2-year & 1-year intensive programs covering Physics, Chemistry, and Mathematics with problem-solving drills.</p>
+          <div class="course-meta">
+            <div class="course-meta-item"><i class="fa-regular fa-clock"></i> 1 - 2 Years</div>
+            <div class="course-meta-item"><i class="fa-solid fa-video"></i> Offline / Hybrid</div>
+          </div>
+          <a href="#contact" class="btn btn-secondary" style="width: 100%;">Enroll Now</a>
+        </div>
+
+        <!-- Course 2 -->
+        <div class="course-card">
+          <span class="course-badge">High Demand</span>
+          <div class="course-icon-header"><i class="fa-solid fa-stethoscope"></i></div>
+          <h3 class="course-title">NEET-UG (Medical)</h3>
+          <p class="course-desc">In-depth coverage of NCERT Biology, Physics, & Chemistry accompanied by daily practice papers (DPPs) and lab sessions.</p>
+          <div class="course-meta">
+            <div class="course-meta-item"><i class="fa-regular fa-clock"></i> 1 - 2 Years</div>
+            <div class="course-meta-item"><i class="fa-solid fa-video"></i> Offline / Hybrid</div>
+          </div>
+          <a href="#contact" class="btn btn-secondary" style="width: 100%;">Enroll Now</a>
+        </div>
+
+        <!-- Course 3 -->
+        <div class="course-card">
+          <div class="course-icon-header"><i class="fa-solid fa-building-columns"></i></div>
+          <h3 class="course-title">UPSC Civil Services</h3>
+          <p class="course-desc">Comprehensive prelims, mains & interview guidance with daily answer writing practice and current affairs modules.</p>
+          <div class="course-meta">
+            <div class="course-meta-item"><i class="fa-regular fa-clock"></i> 1 Year</div>
+            <div class="course-meta-item"><i class="fa-solid fa-video"></i> Online / Offline</div>
+          </div>
+          <a href="#contact" class="btn btn-secondary" style="width: 100%;">Enroll Now</a>
+        </div>
+
+        <!-- Course 4 -->
+        <div class="course-card">
+          <div class="course-icon-header"><i class="fa-solid fa-briefcase"></i></div>
+          <h3 class="course-title">SSC & Banking Exams</h3>
+          <p class="course-desc">Speed-building shortcuts in Quantitative Aptitude, Logical Reasoning, English, and General Awareness.</p>
+          <div class="course-meta">
+            <div class="course-meta-item"><i class="fa-regular fa-clock"></i> 6 Months</div>
+            <div class="course-meta-item"><i class="fa-solid fa-video"></i> Online / Offline</div>
+          </div>
+          <a href="#contact" class="btn btn-secondary" style="width: 100%;">Enroll Now</a>
+        </div>
+
+        <!-- Course 5 -->
+        <div class="course-card">
+          <div class="course-icon-header"><i class="fa-solid fa-university"></i></div>
+          <h3 class="course-title">CUET (UG Entrance)</h3>
+          <p class="course-desc">Focused preparation for Central University Entrance Test covering domain subjects, language tests, & general test.</p>
+          <div class="course-meta">
+            <div class="course-meta-item"><i class="fa-regular fa-clock"></i> 4 Months</div>
+            <div class="course-meta-item"><i class="fa-solid fa-video"></i> Hybrid</div>
+          </div>
+          <a href="#contact" class="btn btn-secondary" style="width: 100%;">Enroll Now</a>
+        </div>
+
+        <!-- Course 6 -->
+        <div class="course-card">
+          <div class="course-icon-header"><i class="fa-solid fa-shapes"></i></div>
+          <h3 class="course-title">Class 8th - 10th Foundation</h3>
+          <p class="course-desc">Building strong core fundamentals in Science & Mathematics, preparing students for Olympiads and future competitive exams.</p>
+          <div class="course-meta">
+            <div class="course-meta-item"><i class="fa-regular fa-clock"></i> 1 - 3 Years</div>
+            <div class="course-meta-item"><i class="fa-solid fa-video"></i> Offline</div>
+          </div>
+          <a href="#contact" class="btn btn-secondary" style="width: 100%;">Enroll Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Top Faculty -->
+  <section class="section-padding" id="faculty">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge-sub">Mentors of Rankers</div>
+        <h2 class="section-title">Learn From The Very Best</h2>
+        <p class="section-desc">Our educators aren't just teachers; they are visionary mentors dedicated to inspiring success.</p>
+      </div>
+
+      <div class="faculty-grid">
+        <!-- Faculty 1 -->
+        <div class="faculty-card">
+          <div class="faculty-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" alt="Dr. Ananya Sharma">
+            <div class="faculty-rating"><i class="fa-solid fa-star"></i> 4.9 (480)</div>
+          </div>
+          <div class="faculty-info">
+            <h3 class="faculty-name">Dr. Ananya Sharma</h3>
+            <div class="faculty-subject">Senior Organic Chemistry Faculty</div>
+            <ul class="faculty-details">
+              <li><i class="fa-solid fa-graduation-cap"></i> Ph.D. Chemistry, IIT Delhi</li>
+              <li><i class="fa-solid fa-briefcase"></i> 14+ Years Experience</li>
+              <li><i class="fa-solid fa-language"></i> English, Hindi</li>
+            </ul>
+            <a href="#contact" class="btn btn-secondary" style="width: 100%; padding: 10px 18px; font-size: 0.85rem;">Book Counselling</a>
+          </div>
+        </div>
+
+        <!-- Faculty 2 -->
+        <div class="faculty-card">
+          <div class="faculty-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" alt="Prof. Rajesh Verma">
+            <div class="faculty-rating"><i class="fa-solid fa-star"></i> 5.0 (620)</div>
+          </div>
+          <div class="faculty-info">
+            <h3 class="faculty-name">Prof. Rajesh Verma</h3>
+            <div class="faculty-subject">Head of Physics Department</div>
+            <ul class="faculty-details">
+              <li><i class="fa-solid fa-graduation-cap"></i> B.Tech, IIT Bombay</li>
+              <li><i class="fa-solid fa-briefcase"></i> 18+ Years Experience</li>
+              <li><i class="fa-solid fa-language"></i> English, Hindi</li>
+            </ul>
+            <a href="#contact" class="btn btn-secondary" style="width: 100%; padding: 10px 18px; font-size: 0.85rem;">Book Counselling</a>
+          </div>
+        </div>
+
+        <!-- Faculty 3 -->
+        <div class="faculty-card">
+          <div class="faculty-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80" alt="Dr. Meenakshi Sundaram">
+            <div class="faculty-rating"><i class="fa-solid fa-star"></i> 4.9 (510)</div>
+          </div>
+          <div class="faculty-info">
+            <h3 class="faculty-name">Dr. Meenakshi S.</h3>
+            <div class="faculty-subject">NEET Botany & Zoology Specialist</div>
+            <ul class="faculty-details">
+              <li><i class="fa-solid fa-graduation-cap"></i> MBBS, AIIMS New Delhi</li>
+              <li><i class="fa-solid fa-briefcase"></i> 12+ Years Experience</li>
+              <li><i class="fa-solid fa-language"></i> English, Tamil</li>
+            </ul>
+            <a href="#contact" class="btn btn-secondary" style="width: 100%; padding: 10px 18px; font-size: 0.85rem;">Book Counselling</a>
+          </div>
+        </div>
+
+        <!-- Faculty 4 -->
+        <div class="faculty-card">
+          <div class="faculty-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80" alt="Vikramaditya Singh">
+            <div class="faculty-rating"><i class="fa-solid fa-star"></i> 4.9 (390)</div>
+          </div>
+          <div class="faculty-info">
+            <h3 class="faculty-name">Vikramaditya Singh</h3>
+            <div class="faculty-subject">Mathematics Master Educator</div>
+            <ul class="faculty-details">
+              <li><i class="fa-solid fa-graduation-cap"></i> M.Sc. Math, ISI Kolkata</li>
+              <li><i class="fa-solid fa-briefcase"></i> 15+ Years Experience</li>
+              <li><i class="fa-solid fa-language"></i> English, Hindi</li>
+            </ul>
+            <a href="#contact" class="btn btn-secondary" style="width: 100%; padding: 10px 18px; font-size: 0.85rem;">Book Counselling</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Success Stories / Hall of Fame -->
+  <section class="section-padding results-section" id="results">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge-sub" style="background: rgba(255,255,255,0.1); color: var(--accent);">Hall of Fame</div>
+        <h2 class="section-title">Our Recent Top Rankers</h2>
+        <p class="section-desc">Consistently producing All India Ranks year after year through pure commitment and strategy.</p>
+      </div>
+
+      <div class="toppers-grid">
+        <!-- Topper 1 -->
+        <div class="topper-card">
+          <span class="air-rank-badge">AIR 04</span>
+          <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=300&q=80" alt="Arjun Kapoor" class="topper-img">
+          <h3 class="topper-name">Arjun Kapoor</h3>
+          <p class="topper-exam">JEE Advanced 2025</p>
+          <div style="font-size: 0.85rem; color: var(--success); font-weight: 600;">Selected: IIT Bombay (CS)</div>
+        </div>
+
+        <!-- Topper 2 -->
+        <div class="topper-card">
+          <span class="air-rank-badge">AIR 12</span>
+          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=300&q=80" alt="Priya Nair" class="topper-img">
+          <h3 class="topper-name">Priya Nair</h3>
+          <p class="topper-exam">NEET-UG 2025 (715/720)</p>
+          <div style="font-size: 0.85rem; color: var(--success); font-weight: 600;">Selected: AIIMS Delhi</div>
+        </div>
+
+        <!-- Topper 3 -->
+        <div class="topper-card">
+          <span class="air-rank-badge">AIR 28</span>
+          <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=300&q=80" alt="Rohan Deshmukh" class="topper-img">
+          <h3 class="topper-name">Rohan Deshmukh</h3>
+          <p class="topper-exam">UPSC CSE 2025</p>
+          <div style="font-size: 0.85rem; color: var(--success); font-weight: 600;">Allocated: IAS Officer</div>
+        </div>
+
+        <!-- Topper 4 -->
+        <div class="topper-card">
+          <span class="air-rank-badge">AIR 45</span>
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=300&q=80" alt="Sanya Verma" class="topper-img">
+          <h3 class="topper-name">Sanya Verma</h3>
+          <p class="topper-exam">JEE Main 2025 (99.98%ile)</p>
+          <div style="font-size: 0.85rem; color: var(--success); font-weight: 600;">Selected: NIT Trichy</div>
+        </div>
+      </div>
+
+      <!-- College Placement Logos -->
+      <div class="college-logos">
+        <div class="college-item">IIT BOMBAY</div>
+        <div class="college-item">AIIMS DELHI</div>
+        <div class="college-item">IIT DELHI</div>
+        <div class="college-item">NIT TRICHY</div>
+        <div class="college-item">BITS PILANI</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: Features & Digital Ecosystem -->
+  <section class="section-padding" style="background-color: var(--surface);">
+    <div class="container">
+      <div class="features-split">
+        <div>
+          <div class="badge-sub">Digital Ecosystem</div>
+          <h2 class="section-title" style="text-align: left;">Technology-Driven Learning Beyond Boundaries</h2>
+          <p class="section-desc" style="text-align: left; margin-bottom: 32px;">
+            We blend physical classroom intensity with smart digital learning tools to provide 24/7 learning continuity.
+          </p>
+
+          <ul class="feature-list">
+            <li class="feature-item">
+              <div class="feature-icon"><i class="fa-solid fa-laptop"></i></div>
+              <div class="feature-text">
+                <h4>Interactive Live & Recorded Classes</h4>
+                <p>Never miss a topic with HD recorded backups of every lecture accessible via our mobile app.</p>
+              </div>
+            </li>
+
+            <li class="feature-item">
+              <div class="feature-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+              <div class="feature-text">
+                <h4>Smart Comprehensive Study Material</h4>
+                <p>Curated exercise modules with multi-level difficulty questions, previous year trends, and formula handbooks.</p>
+              </div>
+            </li>
+
+            <li class="feature-item">
+              <div class="feature-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+              <div class="feature-text">
+                <h4>NEXUS Student Mobile App</h4>
+                <p>Track attendance, attempt online quizzes, raise instant doubt tickets, and access performance analytics.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <div style="position: relative; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg);">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" alt="Student using digital learning app">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 7: Campus Gallery -->
+  <section class="section-padding" id="gallery">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge-sub">Campus Life</div>
+        <h2 class="section-title">State-of-the-Art Infrastructure</h2>
+        <p class="section-desc">A glimpse inside our modern classrooms, labs, libraries, and vibrant student events.</p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item wide">
+          <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=800&q=80" alt="Hi-tech digital classroom">
+          <div class="gallery-overlay">
+            <div>
+              <h4 style="font-size:1.2rem;">Smart Digital Classrooms</h4>
+              <p style="font-size:0.85rem; opacity:0.8;">Equipped with interactive visual boards</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=600&q=80" alt="Silent Library">
+          <div class="gallery-overlay">
+            <div>
+              <h4 style="font-size:1.2rem;">24/7 Silent Library</h4>
+              <p style="font-size:0.85rem; opacity:0.8;">Over 15,000+ reference books</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item tall">
+          <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=600&q=80" alt="Physics Lab">
+          <div class="gallery-overlay">
+            <div>
+              <h4 style="font-size:1.2rem;">Advanced Science Labs</h4>
+              <p style="font-size:0.85rem; opacity:0.8;">Hands-on practical experiments</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=600&q=80" alt="Annual Seminar">
+          <div class="gallery-overlay">
+            <div>
+              <h4 style="font-size:1.2rem;">Motivational Seminars</h4>
+              <p style="font-size:0.85rem; opacity:0.8;">Sessions by IAS officers & Rankers</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80" alt="Doubt Solving Session">
+          <div class="gallery-overlay">
+            <div>
+              <h4 style="font-size:1.2rem;">Group Doubt Sessions</h4>
+              <p style="font-size:0.85rem; opacity:0.8;">One-on-one mentor discussions</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 8: Testimonials Slider -->
+  <section class="section-padding" style="background-color: var(--surface);">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge-sub">Student & Parent Reviews</div>
+        <h2 class="section-title">Loved by Thousands</h2>
+        <p class="section-desc">Hear what parents and toppers have to say about their journey with NEXUS ACADEMY.</p>
+      </div>
+
+      <div class="testimonials-container">
+        <div class="testimonial-card">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <div class="stars-row">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testimonial-text" id="testi-text">
+            "The personal guidance and small batch size made all the difference in my JEE preparation. The teachers never hesitated to stay late after hours to clear my doubts!"
+          </p>
+          <div class="testimonial-author">
+            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=200&q=80" alt="Student Testimonial" class="author-img" id="testi-img">
+            <div class="author-info">
+              <h5 id="testi-name">Arjun Kapoor</h5>
+              <p id="testi-role">AIR 04, JEE Advanced 2025</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 9: Admission Process Timeline -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge-sub">4-Step Enrollment</div>
+        <h2 class="section-title">How To Join NEXUS ACADEMY</h2>
+        <p class="section-desc">A straightforward, transparent pathway towards securing your dream career.</p>
+      </div>
+
+      <div class="timeline">
+        <!-- Step 1 -->
+        <div class="timeline-step">
+          <div class="timeline-badge">01</div>
+          <div class="timeline-content">
+            <h3 class="timeline-title">Online / Offline Registration</h3>
+            <p class="timeline-desc">Fill out the basic inquiry form or visit our campus counter to register for the NEXUS Scholarship Test (NAT).</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="timeline-step">
+          <div class="timeline-badge">02</div>
+          <div class="timeline-content">
+            <h3 class="timeline-title">Free Expert Counselling</h3>
+            <p class="timeline-desc">Attend an in-person counselling session with senior faculty to assess strengths, goals, and course suitabilities.</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="timeline-step">
+          <div class="timeline-badge">03</div>
+          <div class="timeline-content">
+            <h3 class="timeline-title">Choose Course & Batch</h3>
+            <p class="timeline-desc">Select your desired batch schedule (Morning/Evening) and complete fee formalities with flexible installment plans.</p>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="timeline-step">
+          <div class="timeline-badge">04</div>
+          <div class="timeline-content">
+            <h3 class="timeline-title">Start Your Learning Journey</h3>
+            <p class="timeline-desc">Receive your study kit, mobile app login credentials, timetable, and begin attending classes!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 10: FAQ Accordion -->
+  <section class="section-padding" id="faq" style="background-color: var(--surface);">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge-sub">Have Questions?</div>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-desc">Get quick answers regarding admissions, scholarships, and batch timings.</p>
+      </div>
+
+      <div class="faq-container">
+        <div class="faq-item">
+          <div class="faq-header">
+            <span>What is the batch size at NEXUS ACADEMY?</span>
+            <i class="fa-solid fa-chevron-down faq-icon"></i>
+          </div>
+          <div class="faq-body">
+            We strictly limit our regular classroom batches to a maximum of 30-35 students to ensure individual personal attention and active interactive learning.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-header">
+            <span>Do you offer scholarships for meritorious students?</span>
+            <i class="fa-solid fa-chevron-down faq-icon"></i>
+          </div>
+          <div class="faq-body">
+            Yes! Through our NEXUS Admission Test (NAT), deserving students can win up to 100% fee waivers based on their performance in Mathematics and Science.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-header">
+            <span>What happens if a student misses a lecture?</span>
+            <i class="fa-solid fa-chevron-down faq-icon"></i>
+          </div>
+          <div class="faq-body">
+            Every lecture is recorded in high definition and uploaded to the NEXUS Student Mobile App within 24 hours for easy backup viewing and revision.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-header">
+            <span>Are there separate doubt-clearing sessions?</span>
+            <i class="fa-solid fa-chevron-down faq-icon"></i>
+          </div>
+          <div class="faq-body">
+            Yes, dedicated 2-hour doubt counters are operated every daily after regular class hours where students can interact 1-on-1 with subject faculty.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 11: Contact & Inquiry Form -->
+  <section class="section-padding" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-form-box">
+          <div class="badge-sub">Book Demo / Enquiry</div>
+          <h2 style="font-size: 2rem; margin-bottom: 24px;">Start Your Journey Today</h2>
+          <form onsubmit="event.preventDefault(); alert('Thank you! Our admission counsellor will contact you within 2 hours.');">
+            <div class="form-group">
+              <label class="form-label">Student Name *</label>
+              <input type="text" class="form-input" placeholder="Enter student's full name" required>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="form-group">
+                <label class="form-label">Mobile Number *</label>
+                <input type="tel" class="form-input" placeholder="10-digit number" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Target Exam *</label>
+                <select class="form-input">
+                  <option>IIT-JEE</option>
+                  <option>NEET-UG</option>
+                  <option>UPSC CSE</option>
+                  <option>Class 8-10 Foundation</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-input" placeholder="name@example.com">
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
+              Request Callback & Free Demo
+            </button>
+          </form>
+        </div>
+
+        <div>
+          <div class="contact-info-list">
+            <div class="info-card">
+              <div class="info-card-icon"><i class="fa-solid fa-location-dot"></i></div>
+              <div>
+                <h5 style="font-size: 1.1rem; margin-bottom: 2px;">Campus Address</h5>
+                <p style="font-size: 0.9rem; color: var(--light-text);">Nexus Tower, Knowledge Park II, Metro Pillar 42, New Delhi</p>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <div class="info-card-icon"><i class="fa-solid fa-phone"></i></div>
+              <div>
+                <h5 style="font-size: 1.1rem; margin-bottom: 2px;">Admission Helpline</h5>
+                <p style="font-size: 0.9rem; color: var(--light-text);">+91 98765 43210 / +91 11 2345 6789</p>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <div class="info-card-icon"><i class="fa-solid fa-clock"></i></div>
+              <div>
+                <h5 style="font-size: 1.1rem; margin-bottom: 2px;">Office & Visitor Hours</h5>
+                <p style="font-size: 0.9rem; color: var(--light-text);">Monday – Sunday: 8:00 AM – 8:00 PM</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stylized Map Frame -->
+          <div style="border-radius: var(--radius-lg); overflow: hidden; height: 220px; box-shadow: var(--shadow-sm);">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14008.114827184248!2d77.2090212!3d28.6273928!2m3!1f0!1f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd37b741d057%3A0xcfe88719875f28f4!2sConnaught%20Place%2C%20New%20Delhi!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/919876543210" target="_blank" class="whatsapp-btn" aria-label="Chat on WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <div class="logo-badge"><i class="fa-solid fa-atom"></i></div>
+            NEXUS ACADEMY
+          </a>
+          <p>Preparing Today's Students for Tomorrow's Success with world-class faculty, ethical values, and technological innovation.</p>
+          <div class="social-links">
+            <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
+            <a href="#" class="social-icon"><i class="fa-brands fa-linkedin-in"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h5>Quick Links</h5>
+          <ul class="footer-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#courses">Courses</a></li>
+            <li><a href="#faculty">Our Faculty</a></li>
+            <li><a href="#results">Results 2025</a></li>
+            <li><a href="#contact">Admissions</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Top Courses</h5>
+          <ul class="footer-links">
+            <li><a href="#courses">IIT-JEE Main & Advanced</a></li>
+            <li><a href="#courses">NEET-UG Medical</a></li>
+            <li><a href="#courses">UPSC Civil Services</a></li>
+            <li><a href="#courses">Foundation (8th-10th)</a></li>
+            <li><a href="#courses">CUET Entrance</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Stay Updated</h5>
+          <p style="font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-bottom: 12px;">Subscribe for exam alerts & study tips.</p>
+          <form onsubmit="event.preventDefault(); alert('Subscribed successfully!');" style="display:flex; gap:8px;">
+            <input type="email" placeholder="Your email" required style="padding:10px 14px; border-radius:var(--radius-sm); font-size:0.85rem; flex-grow:1;">
+            <button type="submit" class="btn btn-primary" style="padding:10px 16px; font-size:0.85rem;">Join</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 NEXUS ACADEMY. All rights reserved.</p>
+        <p>Crafted with excellence for future leaders.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CDN Scripts: GSAP, ScrollTrigger, Lenis -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+
+  <!-- JavaScript Logic -->
+  <script>
+    // Initialize Lenis Smooth Scroll
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smooth: true
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Register GSAP ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Preloader Animation
+    let progress = 0;
+    const loaderBar = document.getElementById('loader-bar');
+    const preloader = document.getElementById('preloader');
+
+    const loaderInterval = setInterval(() => {
+      progress += Math.floor(Math.random() * 15) + 5;
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(loaderInterval);
+        gsap.to(preloader, {
+          opacity: 0,
+          duration: 0.8,
+          delay: 0.2,
+          onComplete: () => {
+            preloader.style.display = 'none';
+            initHeroAnimations();
+          }
+        });
+      }
+      loaderBar.style.width = progress + '%';
+    }, 80);
+
+    // Navbar Scroll Behavior
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 40) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile Drawer Logic
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const mobileDrawer = document.getElementById('mobile-drawer');
+    const mobileClose = document.getElementById('mobile-close');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    mobileToggle.addEventListener('click', () => mobileDrawer.classList.add('active'));
+    mobileClose.addEventListener('click', () => mobileDrawer.classList.remove('active'));
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => mobileDrawer.classList.remove('active'));
+    });
+
+    // Hero Reveal Sequence
+    function initHeroAnimations() {
+      gsap.from('.hero-headline', { y: 30, opacity: 0, duration: 0.8 });
+      gsap.from('.hero-subtitle', { y: 20, opacity: 0, duration: 0.8, delay: 0.2 });
+      gsap.from('.hero-actions', { y: 20, opacity: 0, duration: 0.8, delay: 0.4 });
+      gsap.from('.hero-visual', { scale: 0.95, opacity: 0, duration: 1, delay: 0.3 });
+    }
+
+    // Animated Counters with GSAP
+    const statNumbers = document.querySelectorAll('.stat-number');
+    statNumbers.forEach(num => {
+      const target = parseInt(num.getAttribute('data-target'));
+      gsap.to(num, {
+        scrollTrigger: {
+          trigger: num,
+          start: "top 85%",
+        },
+        innerText: target,
+        duration: 2,
+        snap: { innerText: 1 },
+        onUpdate: function() {
+          if (target >= 1000) {
+            num.innerText = Math.floor(num.innerText).toLocaleString() + '+';
+          } else if (target === 98) {
+            num.innerText = Math.floor(num.innerText) + '%';
+          } else {
+            num.innerText = Math.floor(num.innerText) + '+';
+          }
+        }
+      });
+    });
+
+    // FAQ Accordion Logic
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      const header = item.querySelector('.faq-header');
+      header.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        faqItems.forEach(i => i.classList.remove('active'));
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      });
+    });
+
+    // Testimonials Auto Slider
+    const reviews = [
+      {
+        quote: "The personal guidance and small batch size made all the difference in my JEE preparation. The teachers never hesitated to stay late after hours to clear my doubts!",
+        name: "Arjun Kapoor",
+        role: "AIR 04, JEE Advanced 2025",
+        img: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=200&q=80"
+      },
+      {
+        quote: "NEXUS provided me with structured NCERT-focused Biology modules and constant full-length mock test series that boosted my confidence for NEET.",
+        name: "Priya Nair",
+        role: "AIR 12, NEET-UG (715/720)",
+        img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80"
+      },
+      {
+        quote: "As a parent, I was amazed by the regular progress reports and weekly mentor feedback. NEXUS ACADEMY truly cares for every child's future.",
+        name: "Sanjay Deshmukh",
+        role: "Parent of Rohan Deshmukh (IAS)",
+        img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&q=80"
+      }
+    ];
+
+    let currentReview = 0;
+    const reviewText = document.getElementById('testi-text');
+    const reviewName = document.getElementById('testi-name');
+    const reviewRole = document.getElementById('testi-role');
+    const reviewImg = document.getElementById('testi-img');
+
+    setInterval(() => {
+      currentReview = (currentReview + 1) % reviews.length;
+      gsap.to('.testimonial-card', {
+        opacity: 0,
+        y: 10,
+        duration: 0.3,
+        onComplete: () => {
+          reviewText.textContent = `"${reviews[currentReview].quote}"`;
+          reviewName.textContent = reviews[currentReview].name;
+          reviewRole.textContent = reviews[currentReview].role;
+          reviewImg.src = reviews[currentReview].img;
+          gsap.to('.testimonial-card', { opacity: 1, y: 0, duration: 0.4 });
+        }
+      });
+    }, 5000);
+
+    // Scroll Reveal Effects for Cards
+    gsap.utils.toArray('.why-card, .course-card, .faculty-card').forEach(card => {
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: "top 85%"
+        },
+        y: 30,
+        opacity: 0,
+        duration: 0.6
+      });
+    });
+  </script>
+</body>
+</html>

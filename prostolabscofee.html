@@ -1,0 +1,2217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bloom Café — Good Coffee. Good Mood.</title>
+  <meta name="description" content="Your cozy neighborhood spot for freshly roasted coffee, warm sourdough pastries, and sunlit mornings.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fredoka:wght@500;600&family=Caveat:wght@600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* ==========================================================================
+       CSS VARIABLES & CORE STYLES
+       ========================================================================== */
+    :root {
+      --bg-cream: #FFF9F2;
+      --light-brown: #C89F7A;
+      --coffee-brown: #6F4E37;
+      --white: #FFFFFF;
+      --warm-beige: #F4E9DD;
+      --sage-green: #9CAF88;
+      --sage-light: #EBF1E6;
+      --dark-text: #2E2E2E;
+      --muted-text: #6B6560;
+      
+      --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-heading: 'Fredoka', cursive, sans-serif;
+      --font-hand: 'Caveat', cursive;
+
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 24px;
+      --radius-full: 999px;
+
+      --shadow-soft: 0 10px 30px -5px rgba(111, 78, 55, 0.08);
+      --shadow-hover: 0 20px 45px -10px rgba(111, 78, 55, 0.18);
+      --shadow-subtle: 0 4px 15px rgba(0,0,0,0.03);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--dark-text);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-heading);
+      color: var(--dark-text);
+      line-height: 1.2;
+    }
+
+    p {
+      color: var(--muted-text);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-padding {
+      padding: 100px 0;
+    }
+
+    /* Section Header Helper */
+    .section-title-wrap {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 56px auto;
+    }
+
+    .subtitle-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--sage-light);
+      color: var(--sage-green);
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      margin-bottom: 12px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      cursor: pointer;
+      border: none;
+      outline: none;
+    }
+
+    .btn-primary {
+      background-color: var(--coffee-brown);
+      color: var(--white);
+      box-shadow: 0 6px 20px rgba(111, 78, 55, 0.25);
+    }
+
+    .btn-primary:hover {
+      background-color: #593e2b;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(111, 78, 55, 0.35);
+    }
+
+    .btn-secondary {
+      background-color: var(--warm-beige);
+      color: var(--coffee-brown);
+    }
+
+    .btn-secondary:hover {
+      background-color: #ebdcd0;
+      transform: translateY(-3px);
+    }
+
+    .btn-sage {
+      background-color: var(--sage-green);
+      color: var(--white);
+    }
+
+    .btn-sage:hover {
+      background-color: #8a9d76;
+      transform: translateY(-3px);
+    }
+
+    /* Floating Steam Keyframes */
+    @keyframes steam {
+      0% { transform: translateY(0) scaleX(1); opacity: 0; }
+      50% { opacity: 0.6; }
+      100% { transform: translateY(-20px) scaleX(1.5); opacity: 0; }
+    }
+
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(3deg); }
+    }
+
+    /* ==========================================================================
+       NAVBAR
+       ========================================================================== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 20px 0;
+      transition: all 0.3s ease;
+    }
+
+    .navbar.scrolled {
+      background-color: rgba(255, 249, 242, 0.92);
+      backdrop-filter: blur(12px);
+      padding: 12px 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      color: var(--coffee-brown);
+      font-weight: 600;
+    }
+
+    .logo-icon {
+      color: var(--sage-green);
+      font-size: 1.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--dark-text);
+      transition: color 0.2s ease;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--coffee-brown);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--sage-green);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-btn {
+      padding: 10px 22px;
+      font-size: 0.9rem;
+    }
+
+    .mobile-toggle {
+      display: none;
+      font-size: 1.5rem;
+      color: var(--coffee-brown);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Mobile Nav Drawer */
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 80%;
+      max-width: 320px;
+      height: 100vh;
+      background-color: var(--bg-cream);
+      z-index: 1001;
+      padding: 40px 28px;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.08);
+      transition: right 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .mobile-drawer.active {
+      right: 0;
+    }
+
+    .mobile-drawer-close {
+      align-self: flex-end;
+      font-size: 1.6rem;
+      background: none;
+      border: none;
+      color: var(--dark-text);
+      cursor: pointer;
+    }
+
+    .mobile-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .mobile-nav-list a {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      color: var(--dark-text);
+    }
+
+    /* Overlay */
+    .nav-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.2);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ==========================================================================
+       HERO SECTION
+       ========================================================================== */
+    .hero {
+      padding-top: 140px;
+      padding-bottom: 80px;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--warm-beige);
+      color: var(--coffee-brown);
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 8px 18px;
+      border-radius: var(--radius-full);
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-size: clamp(3.2rem, 5.5vw, 4.8rem);
+      color: var(--dark-text);
+      margin-bottom: 20px;
+      line-height: 1.08;
+    }
+
+    .hero-title span {
+      color: var(--coffee-brown);
+      position: relative;
+    }
+
+    .hero-title span::after {
+      content: '';
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      width: 100%;
+      height: 12px;
+      background-color: rgba(156, 175, 136, 0.3);
+      z-index: -1;
+      border-radius: 6px;
+    }
+
+    .hero-description {
+      font-size: 1.15rem;
+      color: var(--muted-text);
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* Hero Visual Area */
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-image-frame {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      border: 8px solid var(--white);
+      transform: rotate(-1.5deg);
+      transition: transform 0.5s ease;
+    }
+
+    .hero-image-frame:hover {
+      transform: rotate(0deg);
+    }
+
+    .hero-image-frame img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+    }
+
+    /* Floating Card Widget */
+    .floating-card {
+      position: absolute;
+      background: var(--white);
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-hover);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      z-index: 10;
+      animation: floatSlow 4s ease-in-out infinite;
+    }
+
+    .card-top-right {
+      top: -20px;
+      right: -20px;
+    }
+
+    .card-bottom-left {
+      bottom: 30px;
+      left: -30px;
+      animation-delay: 2s;
+    }
+
+    .cup-icon-wrapper {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      background-color: var(--warm-beige);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--coffee-brown);
+      font-size: 1.2rem;
+    }
+
+    /* Steam Animation */
+    .steam-container {
+      position: absolute;
+      top: -12px;
+      display: flex;
+      gap: 3px;
+    }
+
+    .steam-line {
+      width: 2px;
+      height: 12px;
+      background-color: var(--light-brown);
+      border-radius: 2px;
+      animation: steam 2s infinite ease-out;
+    }
+
+    .steam-line:nth-child(2) { animation-delay: 0.5s; }
+    .steam-line:nth-child(3) { animation-delay: 1s; }
+
+    /* Floating Beans SVG Graphics */
+    .floating-bean {
+      position: absolute;
+      pointer-events: none;
+      z-index: 5;
+      opacity: 0.7;
+    }
+
+    .bean-1 { top: 10%; left: -40px; width: 36px; transform: rotate(20deg); }
+    .bean-2 { bottom: 10%; right: -20px; width: 44px; transform: rotate(-30deg); }
+
+    /* ==========================================================================
+       ABOUT SECTION
+       ========================================================================== */
+    .about {
+      background-color: var(--white);
+      position: relative;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-images-wrapper {
+      position: relative;
+    }
+
+    .about-img-main {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      width: 88%;
+    }
+
+    .about-img-sub {
+      position: absolute;
+      bottom: -30px;
+      right: 0;
+      width: 55%;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 6px solid var(--white);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .handwritten-note {
+      font-family: var(--font-hand);
+      font-size: 1.8rem;
+      color: var(--sage-green);
+      margin-top: 12px;
+      display: inline-block;
+      transform: rotate(-3deg);
+    }
+
+    .about-content h2 {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+    }
+
+    .about-text {
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+
+    .about-features-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .about-feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      color: var(--dark-text);
+    }
+
+    .about-feature-item i {
+      color: var(--sage-green);
+      background-color: var(--sage-light);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+    }
+
+    /* ==========================================================================
+       BEST SELLERS SECTION
+       ========================================================================== */
+    .best-sellers {
+      background-color: var(--bg-cream);
+    }
+
+    .bestseller-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+
+    .bestseller-card {
+      background-color: var(--white);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-subtle);
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bestseller-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .pop-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background-color: var(--coffee-brown);
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      z-index: 2;
+    }
+
+    .bestseller-img-box {
+      width: 100%;
+      height: 180px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .bestseller-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .bestseller-card:hover .bestseller-img-box img {
+      transform: scale(1.08);
+    }
+
+    .bestseller-info {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .rating-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: #F5A623;
+      margin-bottom: 8px;
+    }
+
+    .rating-row span {
+      color: var(--muted-text);
+      font-weight: 600;
+    }
+
+    .bestseller-title {
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+    }
+
+    .bestseller-price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 12px;
+    }
+
+    .bestseller-price {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      color: var(--coffee-brown);
+      font-weight: 600;
+    }
+
+    .add-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: var(--warm-beige);
+      color: var(--coffee-brown);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .add-btn:hover {
+      background-color: var(--coffee-brown);
+      color: var(--white);
+    }
+
+    /* ==========================================================================
+       MENU SECTION
+       ========================================================================== */
+    .menu-section {
+      background-color: var(--warm-beige);
+    }
+
+    .menu-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .tab-btn {
+      padding: 12px 26px;
+      border-radius: var(--radius-full);
+      background-color: var(--white);
+      color: var(--dark-text);
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      background-color: var(--coffee-brown);
+      color: var(--white);
+      box-shadow: 0 4px 15px rgba(111, 78, 55, 0.2);
+    }
+
+    /* Dynamic Category Display - Horizontal Cards Layout */
+    .menu-items-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 24px;
+    }
+
+    .menu-item-horizontal {
+      background-color: var(--white);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      box-shadow: var(--shadow-subtle);
+      transition: all 0.3s ease;
+    }
+
+    .menu-item-horizontal:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .menu-item-img {
+      width: 100px;
+      height: 100px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .menu-item-details {
+      flex-grow: 1;
+    }
+
+    .menu-item-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+
+    .menu-item-name {
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+
+    .menu-item-price {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      color: var(--coffee-brown);
+      font-weight: 600;
+    }
+
+    .menu-item-desc {
+      font-size: 0.85rem;
+      color: var(--muted-text);
+      line-height: 1.4;
+    }
+
+    /* ==========================================================================
+       WHY PEOPLE LOVE US
+       ========================================================================== */
+    .why-love-us {
+      background-color: var(--white);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px;
+    }
+
+    .feature-box {
+      background-color: var(--bg-cream);
+      padding: 32px 24px;
+      border-radius: var(--radius-md);
+      text-align: center;
+      transition: transform 0.3s ease;
+      border: 1px solid rgba(200, 159, 122, 0.15);
+    }
+
+    .feature-box:hover {
+      transform: translateY(-6px);
+      background-color: var(--warm-beige);
+    }
+
+    .feature-icon-circle {
+      width: 64px;
+      height: 64px;
+      background-color: var(--white);
+      color: var(--coffee-brown);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin: 0 auto 20px auto;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .feature-box h4 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+
+    .feature-box p {
+      font-size: 0.9rem;
+    }
+
+    /* ==========================================================================
+       GALLERY — REDESIGNED INSTAGRAM / LIFESTYLE FEED
+       ========================================================================== */
+    .gallery-section {
+      background-color: var(--bg-cream);
+      position: relative;
+      overflow: hidden;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(200, 159, 122, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(156, 175, 136, 0.1) 0%, transparent 45%);
+    }
+
+    /* Decorative Background Coffee Bean SVGs */
+    .bg-bean {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.15;
+      z-index: 0;
+    }
+
+    .bg-bean-left {
+      top: 15%;
+      left: -30px;
+      width: 140px;
+      transform: rotate(-25deg);
+    }
+
+    .bg-bean-right {
+      bottom: 10%;
+      right: -40px;
+      width: 160px;
+      transform: rotate(35deg);
+    }
+
+    /* Pinterest / Instagram Responsive Columns */
+    .insta-gallery-grid {
+      display: flex;
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+
+    .insta-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Individual Card Design */
+    .insta-card {
+      position: relative;
+      border-radius: var(--radius-lg); /* 24px */
+      overflow: hidden;
+      background-color: var(--white);
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+      cursor: pointer;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    /* Height variants for natural staggered heights */
+    .insta-card.h-short { height: 310px; }
+    .insta-card.h-medium { height: 390px; }
+    .insta-card.h-tall { height: 470px; }
+
+    .insta-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* Gradient Overlay */
+    .insta-card-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to top,
+        rgba(30, 20, 15, 0.88) 0%,
+        rgba(30, 20, 15, 0.4) 50%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px;
+      z-index: 2;
+    }
+
+    /* Soft Warm Glow Effect */
+    .insta-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-lg);
+      box-shadow: inset 0 0 0 2px rgba(200, 159, 122, 0.3);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    /* Card Content Reveal */
+    .insta-card-content {
+      transform: translateY(24px);
+      transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .insta-card-title {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      color: var(--white);
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .insta-card-desc {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.88);
+      line-height: 1.4;
+      margin-bottom: 16px;
+      font-weight: 400;
+    }
+
+    /* Instagram Style Interaction Row */
+    .insta-card-stats {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s;
+    }
+
+    .insta-stat-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--white);
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .insta-stat-item i {
+      font-size: 1.05rem;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .insta-stat-item.heart-btn:hover i {
+      color: #ff5b5b;
+      transform: scale(1.2);
+    }
+
+    /* Hover States */
+    .insta-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .insta-card:hover::after {
+      opacity: 1;
+    }
+
+    .insta-card:hover .insta-card-img {
+      transform: scale(1.08);
+    }
+
+    .insta-card:hover .insta-card-overlay {
+      opacity: 1;
+    }
+
+    .insta-card:hover .insta-card-content {
+      transform: translateY(0);
+    }
+
+    .insta-card:hover .insta-card-stats {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       TESTIMONIALS SECTION
+       ========================================================================== */
+    .testimonials {
+      background-color: var(--sage-light);
+    }
+
+    .testimonial-card-wrapper {
+      max-width: 720px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .testimonial-card {
+      background-color: var(--white);
+      padding: 40px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+    }
+
+    .testi-stars {
+      color: #F5A623;
+      margin-bottom: 16px;
+      font-size: 1.1rem;
+    }
+
+    .testi-quote {
+      font-size: 1.25rem;
+      color: var(--dark-text);
+      line-height: 1.6;
+      margin-bottom: 28px;
+      font-style: italic;
+    }
+
+    .testi-user {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .testi-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .testi-info {
+      text-align: left;
+    }
+
+    .testi-info h5 {
+      font-size: 1.1rem;
+    }
+
+    .testi-info p {
+      font-size: 0.85rem;
+      color: var(--muted-text);
+    }
+
+    /* Testimonial Nav Dots */
+    .testi-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: rgba(156, 175, 136, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      background-color: var(--sage-green);
+      width: 28px;
+      border-radius: 10px;
+    }
+
+    /* ==========================================================================
+       LOCATION & HOURS SECTION
+       ========================================================================== */
+    .location-section {
+      background-color: var(--white);
+    }
+
+    .location-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .location-card {
+      background-color: var(--bg-cream);
+      padding: 40px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(200, 159, 122, 0.2);
+    }
+
+    .location-card h3 {
+      font-size: 2rem;
+      margin-bottom: 24px;
+    }
+
+    .info-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .info-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .info-item i {
+      color: var(--sage-green);
+      font-size: 1.2rem;
+      margin-top: 4px;
+    }
+
+    .info-item strong {
+      display: block;
+      color: var(--dark-text);
+      font-weight: 600;
+    }
+
+    .info-item p {
+      font-size: 0.95rem;
+    }
+
+    .map-frame {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      height: 420px;
+      position: relative;
+    }
+
+    .map-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .map-tag {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--white);
+      padding: 12px 20px;
+      border-radius: var(--radius-full);
+      box-shadow: var(--shadow-hover);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: var(--coffee-brown);
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    .footer {
+      background-color: var(--warm-beige);
+      padding-top: 60px;
+      padding-bottom: 30px;
+      border-top: 1px solid rgba(200, 159, 122, 0.2);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-brand .logo {
+      margin-bottom: 16px;
+    }
+
+    .footer-brand p {
+      font-size: 0.95rem;
+      max-width: 300px;
+      margin-bottom: 20px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 12px;
+    }
+
+    .social-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background-color: var(--white);
+      color: var(--coffee-brown);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .social-btn:hover {
+      background-color: var(--coffee-brown);
+      color: var(--white);
+      transform: translateY(-3px);
+    }
+
+    .footer-column h5 {
+      font-size: 1.2rem;
+      margin-bottom: 18px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      color: var(--muted-text);
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--coffee-brown);
+    }
+
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .newsletter-input {
+      padding: 12px 18px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(0,0,0,0.1);
+      outline: none;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      background-color: var(--white);
+    }
+
+    .newsletter-input:focus {
+      border-color: var(--sage-green);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      font-size: 0.85rem;
+      color: var(--muted-text);
+    }
+
+    /* ==========================================================================
+       RESPONSIVE MEDIA QUERIES
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .hero-description { margin-left: auto; margin-right: auto; }
+      .hero-cta { justify-content: center; }
+      .hero-visual { max-width: 500px; margin: 0 auto; }
+      .about-grid { grid-template-columns: 1fr; }
+      
+      /* Gallery Tablet 2 Columns */
+      .insta-gallery-grid {
+        flex-wrap: wrap;
+      }
+      .insta-col {
+        flex: 0 0 calc(50% - 12px);
+      }
+
+      .location-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links, .nav-btn { display: none; }
+      .mobile-toggle { display: block; }
+      .section-padding { padding: 60px 0; }
+      .hero { padding-top: 120px; }
+
+      /* Gallery Mobile 1 Column */
+      .insta-col {
+        flex: 0 0 100%;
+      }
+      .insta-card.h-short,
+      .insta-card.h-medium,
+      .insta-card.h-tall {
+        height: 380px; /* Uniform optimal height for mobile feeds */
+      }
+
+      .footer-grid { grid-template-columns: 1fr; }
+      .about-features-list { grid-template-columns: 1fr; }
+      .card-bottom-left { bottom: 10px; left: -10px; }
+      .card-top-right { top: -10px; right: -10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#" class="logo">
+        <i class="fa-solid fa-leaf logo-icon"></i>
+        Bloom Café
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#about" class="nav-link">Our Story</a></li>
+        <li><a href="#menu" class="nav-link">Menu</a></li>
+        <li><a href="#bestsellers" class="nav-link">Best Sellers</a></li>
+        <li><a href="#gallery" class="nav-link">Life at Bloom</a></li>
+        <li><a href="#location" class="nav-link">Visit Us</a></li>
+      </ul>
+
+      <a href="#location" class="btn btn-primary nav-btn">Order Ahead</a>
+
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Open menu">
+        <i class="fa-solid fa-bars-staggered"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobile-drawer">
+    <button class="mobile-drawer-close" id="mobile-close"><i class="fa-solid fa-xmark"></i></button>
+    <ul class="mobile-nav-list">
+      <li><a href="#about" class="mobile-link">Our Story</a></li>
+      <li><a href="#menu" class="mobile-link">Menu</a></li>
+      <li><a href="#bestsellers" class="mobile-link">Best Sellers</a></li>
+      <li><a href="#gallery" class="mobile-link">Life at Bloom</a></li>
+      <li><a href="#location" class="mobile-link">Visit Us</a></li>
+    </ul>
+    <a href="#location" class="btn btn-primary mobile-link" style="text-align:center;">Visit Us Today</a>
+  </div>
+  <div class="nav-overlay" id="nav-overlay"></div>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-text-area">
+          <div class="hero-tag">
+            <i class="fa-solid fa-sun" style="color:#F5A623;"></i>
+            Sunlit Morning Vibes & Fresh Brews
+          </div>
+          <h1 class="hero-title">
+            Good Coffee.<br>
+            <span>Good Mood.</span>
+          </h1>
+          <p class="hero-description">
+            Your cozy neighborhood sanctuary for artisan espresso, fresh sourdough croissants, and quiet moments in natural light.
+          </p>
+          <div class="hero-cta">
+            <a href="#menu" class="btn btn-primary">
+              View Our Menu <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <a href="#location" class="btn btn-secondary">
+              <i class="fa-solid fa-location-dot"></i> Visit Today
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <!-- Floating Beans SVGs -->
+          <svg class="floating-bean bean-1" viewBox="0 0 50 50">
+            <path fill="#6F4E37" d="M25,5 C15,5 5,15 5,25 C5,35 15,45 25,45 C35,45 45,35 45,25 C45,15 35,5 25,5 Z M22,35 C20,30 28,20 25,12"></path>
+          </svg>
+          <svg class="floating-bean bean-2" viewBox="0 0 50 50">
+            <path fill="#C89F7A" d="M25,5 C15,5 5,15 5,25 C5,35 15,45 25,45 C35,45 45,35 45,25 C45,15 35,5 25,5 Z M22,35 C20,30 28,20 25,12"></path>
+          </svg>
+
+          <!-- Top-Right Floating Widget -->
+          <div class="floating-card card-top-right">
+            <div class="cup-icon-wrapper">
+              <div class="steam-container">
+                <div class="steam-line"></div>
+                <div class="steam-line"></div>
+                <div class="steam-line"></div>
+              </div>
+              <i class="fa-solid fa-mug-hot"></i>
+            </div>
+            <div>
+              <strong style="display:block; font-size:0.9rem; color:var(--dark-text);">Fresh Batch</strong>
+              <span style="font-size:0.8rem; color:var(--muted-text);">Brewed 5 mins ago</span>
+            </div>
+          </div>
+
+          <!-- Bottom-Left Floating Widget -->
+          <div class="floating-card card-bottom-left">
+            <div style="width:40px; height:40px; background:var(--sage-light); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--sage-green);">
+              <i class="fa-solid fa-heart"></i>
+            </div>
+            <div>
+              <strong style="display:block; font-size:0.9rem; color:var(--dark-text);">100% Organic</strong>
+              <span style="font-size:0.8rem; color:var(--muted-text);">Locally sourced oats</span>
+            </div>
+          </div>
+
+          <!-- Main Hero Image -->
+          <div class="hero-image-frame">
+            <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80" alt="Bright and sunlit café interior with plants and coffee lovers">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="section-padding about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-images-wrapper">
+          <div class="about-img-main">
+            <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80" alt="Cozy wooden café seating area with sunlight">
+          </div>
+          <div class="about-img-sub">
+            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80" alt="Freshly poured latte art">
+          </div>
+        </div>
+
+        <div class="about-content">
+          <div class="subtitle-badge"><i class="fa-solid fa-seedling"></i> Welcome To Bloom</div>
+          <h2>A Sunny Space for Slow Mornings</h2>
+          <p class="about-text">
+            Bloom Café was built on a simple idea: coffee tastes better when you take a moment to savor it. We created a warm, plant-filled spot where the light streams in and the smell of freshly ground beans fills the room.
+          </p>
+          <p class="about-text">
+            Whether you're diving into a good book, catching up with an old friend, or starting your workday with a creamy Matcha Latte—we're here to make your morning a little brighter.
+          </p>
+
+          <span class="handwritten-note">"Your friendly home away from home."</span>
+
+          <ul class="about-features-list">
+            <li class="about-feature-item"><i class="fa-solid fa-check"></i> Single-Origin Beans</li>
+            <li class="about-feature-item"><i class="fa-solid fa-check"></i> Oat Milk Specialist</li>
+            <li class="about-feature-item"><i class="fa-solid fa-check"></i> Daily In-House Bakery</li>
+            <li class="about-feature-item"><i class="fa-solid fa-check"></i> Dog Treats Available</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Best Sellers Section -->
+  <section class="section-padding best-sellers" id="bestsellers">
+    <div class="container">
+      <div class="section-title-wrap">
+        <div class="subtitle-badge"><i class="fa-solid fa-star"></i> Crowd Favorites</div>
+        <h2 class="section-title">Most Loved Sips</h2>
+        <p>Handcrafted beverages made with extra care and organic ingredients.</p>
+      </div>
+
+      <div class="bestseller-cards-grid">
+        <!-- Card 1 -->
+        <div class="bestseller-card">
+          <span class="pop-badge">Top Favorite</span>
+          <div class="bestseller-img-box">
+            <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80" alt="Iced Vanilla Oat Latte">
+          </div>
+          <div class="bestseller-info">
+            <div class="rating-row">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <span>(4.9)</span>
+            </div>
+            <h3 class="bestseller-title">Iced Oat Latte</h3>
+            <p style="font-size:0.85rem; margin-bottom:12px;">Espresso over chilled oat milk & homemade vanilla syrup.</p>
+            <div class="bestseller-price-row">
+              <span class="bestseller-price">$5.50</span>
+              <button class="add-btn" aria-label="Add item"><i class="fa-solid fa-plus"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bestseller-card">
+          <span class="pop-badge" style="background-color: var(--sage-green);">Matcha</span>
+          <div class="bestseller-img-box">
+            <img src="https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=600&q=80" alt="Iced Matcha Latte">
+          </div>
+          <div class="bestseller-info">
+            <div class="rating-row">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <span>(4.8)</span>
+            </div>
+            <h3 class="bestseller-title">Cloud Matcha</h3>
+            <p style="font-size:0.85rem; margin-bottom:12px;">Ceremonial grade Uji matcha topped with sweet cream foam.</p>
+            <div class="bestseller-price-row">
+              <span class="bestseller-price">$6.00</span>
+              <button class="add-btn" aria-label="Add item"><i class="fa-solid fa-plus"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bestseller-card">
+          <div class="bestseller-img-box">
+            <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80" alt="Honey Cinnamon Cappuccino">
+          </div>
+          <div class="bestseller-info">
+            <div class="rating-row">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <span>(5.0)</span>
+            </div>
+            <h3 class="bestseller-title">Honey Cappuccino</h3>
+            <p style="font-size:0.85rem; margin-bottom:12px;">Silky micro-foam dusted with organic Ceylon cinnamon.</p>
+            <div class="bestseller-price-row">
+              <span class="bestseller-price">$4.80</span>
+              <button class="add-btn" aria-label="Add item"><i class="fa-solid fa-plus"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="bestseller-card">
+          <div class="bestseller-img-box">
+            <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80" alt="Cold Brew Vanilla Foam">
+          </div>
+          <div class="bestseller-info">
+            <div class="rating-row">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <span>(4.9)</span>
+            </div>
+            <h3 class="bestseller-title">Slow Cold Brew</h3>
+            <p style="font-size:0.85rem; margin-bottom:12px;">Steeped for 18 hours for maximum smoothness and low acidity.</p>
+            <div class="bestseller-price-row">
+              <span class="bestseller-price">$5.00</span>
+              <button class="add-btn" aria-label="Add item"><i class="fa-solid fa-plus"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Section with Dynamic Tabs -->
+  <section class="section-padding menu-section" id="menu">
+    <div class="container">
+      <div class="section-title-wrap">
+        <div class="subtitle-badge"><i class="fa-solid fa-utensils"></i> Tasty Treats & Drinks</div>
+        <h2 class="section-title">Explore Our Full Menu</h2>
+        <p>Everything is made fresh with real ingredients and lots of love.</p>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="menu-tabs">
+        <button class="tab-btn active" data-category="coffee">Espresso & Coffee</button>
+        <button class="tab-btn" data-category="cold">Cold Drinks</button>
+        <button class="tab-btn" data-category="pastries">Fresh Pastries</button>
+        <button class="tab-btn" data-category="breakfast">Breakfast</button>
+      </div>
+
+      <!-- Menu Grid Container -->
+      <div class="menu-items-container" id="menu-grid">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Why People Love Us -->
+  <section class="section-padding why-love-us">
+    <div class="container">
+      <div class="section-title-wrap">
+        <div class="subtitle-badge"><i class="fa-solid fa-smile"></i> Feel At Home</div>
+        <h2 class="section-title">Why You'll Love Bloom</h2>
+        <p>Simple touches that turn your everyday coffee run into a joyful ritual.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-box">
+          <div class="feature-icon-circle"><i class="fa-solid fa-fire-flame-curved"></i></div>
+          <h4>Freshly Roasted</h4>
+          <p>Beans roasted in small batches every Monday to ensure optimal flavor notes.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon-circle"><i class="fa-solid fa-wifi"></i></div>
+          <h4>Super Fast Wi-Fi</h4>
+          <p>Power outlets at almost every table for remote working and studying.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon-circle"><i class="fa-solid fa-paw"></i></div>
+          <h4>Pet Friendly</h4>
+          <p>Four-legged friends are always welcome with free treats at the counter.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon-circle"><i class="fa-solid fa-bread-slice"></i></div>
+          <h4>Fresh Bakery Daily</h4>
+          <p>Warm sourdough pastries baked fresh every morning by 7:00 AM.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       REDESIGNED GALLERY SECTION (INSTAGRAM LIFESTYLE FEED)
+       ========================================================================== -->
+  <section class="section-padding gallery-section" id="gallery">
+    <!-- Subtle Coffee Bean SVG Accents -->
+    <svg class="bg-bean bg-bean-left" viewBox="0 0 50 50">
+      <path fill="#C89F7A" d="M25,5 C15,5 5,15 5,25 C5,35 15,45 25,45 C35,45 45,35 45,25 C45,15 35,5 25,5 Z M22,35 C20,30 28,20 25,12"></path>
+    </svg>
+    <svg class="bg-bean bg-bean-right" viewBox="0 0 50 50">
+      <path fill="#6F4E37" d="M25,5 C15,5 5,15 5,25 C5,35 15,45 25,45 C35,45 45,35 45,25 C45,15 35,5 25,5 Z M22,35 C20,30 28,20 25,12"></path>
+    </svg>
+
+    <div class="container">
+      <div class="section-title-wrap">
+        <div class="subtitle-badge"><i class="fa-brands fa-instagram"></i> @bloomcafestudio</div>
+        <h2 class="section-title">Life at Bloom Café</h2>
+        <p class="section-desc">More than coffee — it's where conversations begin, ideas grow, and memories are made.</p>
+      </div>
+
+      <!-- 4 Column Pinterest / Instagram Style Feed -->
+      <div class="insta-gallery-grid">
+        
+        <!-- COLUMN 1 -->
+        <div class="insta-col">
+          <div class="insta-card h-tall">
+            <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=700&q=80" alt="Friends laughing over coffee and cake" class="insta-card-img">
+            <div class="insta-card-overlay">
+              <div class="insta-card-content">
+                <h3 class="insta-card-title">Morning Laughs</h3>
+                <p class="insta-card-desc">Nothing beats slow weekend catchups with best friends & warm cappuccinos.</p>
+                <div class="insta-card-stats">
+                  <span class="insta-stat-item heart-btn"><i class="fa-solid fa-heart"></i> 1.8k</span>
+                  <span class="insta-stat-item"><i class="fa-solid fa-comment"></i> 124</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="insta-card h-short">
+            <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=700&q=80" alt="Golden warm sourdough croissant" class="insta-card-img">
+            <div class="insta-card-overlay">
+              <div class="insta-card-content">
+                <h3 class="insta-card-title">Golden & Flaky</h3>
+                <p class="insta-card-desc">Straight out of our oven at 7:00 AM every single morning.</p>
+                <div class="insta-card-stats">
+                  <span class="insta-stat-item heart-btn"><i class="fa-solid fa-heart"></i> 2.4k</span>
+                  <span class="insta-stat-item"><i class="fa-solid fa-comment"></i> 182</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLUMN 2 -->
+        <div class="insta-col">
+          <div class="insta-card h-short">
+            <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=700&q=80" alt="Beautiful latte art poured in ceramic cup" class="insta-card-img">
+            <div class="insta-card-overlay">
+              <div class="insta-card-content">
+                <h3 class="insta-card-title">Art in a Cup</h3>
+                <p class="insta-card-desc">Pouring love into every micro-foam rosette.</p>
+                <div class="insta-card-stats">
+                  <span class="insta-stat-item heart-btn"><i class="fa-solid fa-heart"></i> 3.1k</span>
+                  <span class="insta-stat-item"><i class="fa-solid fa-comment"></i> 204</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="insta-card h-tall">
+            <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=700&q=80" alt="Remote worker on laptop with coffee at wooden table" class="insta-card-img">
+            <div class="insta-card-overlay">
+              <div class="insta-card-content">
+                <h3 class="insta-card-title">Creative Corner</h3>
+                <p class="insta-card-desc">Sunlit wooden tables, fast Wi-Fi, and endless oat lattes for flow state.</p>
+                <div class="insta-card-stats">
+                  <span class="insta-stat-item heart-btn"><i class="fa-solid fa-heart"></i> 1.5k</span>
+                  <span class="insta-stat-item"><i class="fa-solid fa-comment"></i> 98</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLUMN 3 -->
+        <div class="insta-col">
+          <div class="insta-card h-medium">
+            <img src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&w=700&q=80" alt="Outdoor sunlit patio seating surrounded by plants" class="insta-card-img">
+            <div class="insta-card-overlay">
+              <div class="insta-card-content">
+                <h3 class="insta-card-title">Garden Terrace</h3>
+                <p class="insta-card-desc">Soak up the morning sun on our lush plant-filled patio.</p>
+                <div class="insta-card-stats">
+                  <span class="insta-stat-item heart-btn"><i class="fa-solid fa-heart"></i> 2.8k</span>
+                  <span class="insta-stat-item"><i class="fa-solid fa-comment"></i> 156</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="insta-card h-medium">
+            <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=700&q=80" alt="Cozy cafe corner with green indoor houseplants" class="insta-card-img">
+            <div class="insta-card-overlay">
+              <div class="insta-card-content">
+                <h3 class="insta-card-title">Plant Haven</h3>
+                <p class="insta-card-desc">Surrounding your coffee break with natural greens and quiet calm.</p>
+                <div class="insta-card-stats">
+                  <span class="insta-stat-item heart-btn"><i class="fa-solid fa-heart"></i> 1.9k</span>
+                  <span class="insta-stat-item"><i class="fa-solid fa-comment"></i> 110</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLUMN 4 -->
+        <div class="insta-col">
+          <div class="insta-card h-tall">
+            <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=700&q=80" alt="Book and coffee cup on warm oak table" class="insta-card-img">
+            <div class="insta-card-overlay">
+              <div class="insta-card-content">
+                <h3 class="insta-card-title">Quiet Chapters</h3>
+                <p class="insta-card-desc">Your favorite book meets a fresh pour-over on a peaceful Tuesday.</p>
+                <div class="insta-card-stats">
+                  <span class="insta-stat-item heart-btn"><i class="fa-solid fa-heart"></i> 2.2k</span>
+                  <span class="insta-stat-item"><i class="fa-solid fa-comment"></i> 140</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="insta-card h-short">
+            <img src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=700&q=80" alt="Slice of cheesecake on ceramic plate" class="insta-card-img">
+            <div class="insta-card-overlay">
+              <div class="insta-card-content">
+                <h3 class="insta-card-title">Sweet Afternoon</h3>
+                <p class="insta-card-desc">Creamy Basque cheesecake paired perfectly with cold brew.</p>
+                <div class="insta-card-stats">
+                  <span class="insta-stat-item heart-btn"><i class="fa-solid fa-heart"></i> 2.9k</span>
+                  <span class="insta-stat-item"><i class="fa-solid fa-comment"></i> 175</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="section-padding testimonials">
+    <div class="container">
+      <div class="section-title-wrap">
+        <div class="subtitle-badge"><i class="fa-solid fa-quote-left"></i> Happy Guests</div>
+        <h2 class="section-title">Neighborhood Love</h2>
+      </div>
+
+      <div class="testimonial-card-wrapper">
+        <div class="testimonial-card" id="testimonial-card">
+          <div class="testi-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testi-quote" id="testi-quote">
+            "Bloom Café is my favorite spot in the neighborhood. The natural sunlight, the friendly staff, and their Iced Oat Latte literally make my whole morning."
+          </p>
+          <div class="testi-user">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" alt="Guest Avatar" class="testi-avatar" id="testi-avatar">
+            <div class="testi-info">
+              <h5 id="testi-name">Maya Lin</h5>
+              <p id="testi-role">Regular Guest</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-dots" id="testi-dots">
+          <div class="dot active" onclick="setTestimonial(0)"></div>
+          <div class="dot" onclick="setTestimonial(1)"></div>
+          <div class="dot" onclick="setTestimonial(2)"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location & Hours Section -->
+  <section class="section-padding location-section" id="location">
+    <div class="container">
+      <div class="location-grid">
+        <div class="location-card">
+          <h3>Come Say Hello!</h3>
+          <ul class="info-list">
+            <li class="info-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <div>
+                <strong>Location</strong>
+                <p>248 Sunshine Boulevard, Green District</p>
+              </div>
+            </li>
+
+            <li class="info-item">
+              <i class="fa-solid fa-clock"></i>
+              <div>
+                <strong>Opening Hours</strong>
+                <p>Mon - Fri: 7:00 AM – 6:00 PM</p>
+                <p>Sat - Sun: 8:00 AM – 7:00 PM</p>
+              </div>
+            </li>
+
+            <li class="info-item">
+              <i class="fa-solid fa-square-parking"></i>
+              <div>
+                <strong>Parking & Wi-Fi</strong>
+                <p>Free street parking & bike racks in front.</p>
+              </div>
+            </li>
+          </ul>
+
+          <div style="margin-top:28px;">
+            <a href="https://maps.google.com" target="_blank" class="btn btn-sage">
+              Get Directions <i class="fa-solid fa-route"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="map-frame">
+          <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1000&q=80" alt="Café location map visual">
+          <div class="map-tag">
+            <i class="fa-solid fa-mug-hot"></i> Bloom Café Here
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <i class="fa-solid fa-leaf logo-icon"></i>
+            Bloom Café
+          </a>
+          <p>Your sunlit neighborhood café for good coffee, fresh pastries, and warm moments.</p>
+          <div class="social-links">
+            <a href="#" class="social-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-btn" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h5>Quick Links</h5>
+          <ul class="footer-links">
+            <li><a href="#about">Our Story</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#bestsellers">Best Sellers</a></li>
+            <li><a href="#gallery">Life at Bloom</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h5>Hours</h5>
+          <ul class="footer-links">
+            <li>Mon-Fri: 7am - 6pm</li>
+            <li>Sat-Sun: 8am - 7pm</li>
+            <li style="color:var(--sage-green); font-weight:600; margin-top:6px;">Fresh Pastries Daily</li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h5>Stay Connected</h5>
+          <p style="font-size:0.85rem; margin-bottom:12px;">Get friendly coffee tips & seasonal drink updates.</p>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thanks for joining our newsletter!');">
+            <input type="email" placeholder="Your email address" class="newsletter-input" required>
+            <button type="submit" class="btn btn-primary" style="padding:10px 20px; font-size:0.85rem;">Subscribe</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Bloom Café. All rights reserved. Made with warmth and care.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP & ScrollTrigger JS Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- JavaScript Application Logic -->
+  <script>
+    // Registered GSAP Plugin
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Menu Data Set
+    const menuData = {
+      coffee: [
+        { name: "House Drip Coffee", price: "$3.50", desc: "Smooth medium roast with chocolate & hazelnut notes.", img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=300&q=80" },
+        { name: "Flat White", price: "$4.50", desc: "Double shot of espresso with velvety micro-foamed milk.", img: "https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=300&q=80" },
+        { name: "Cinnamon Mocha", price: "$5.20", desc: "Rich Dutch cocoa blend with espresso and cinnamon.", img: "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=300&q=80" },
+        { name: "Pour Over Filter", price: "$5.00", desc: "Single-origin Ethiopian bean with delicate floral flavors.", img: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=300&q=80" }
+      ],
+      cold: [
+        { name: "Iced Vanilla Oat Latte", price: "$5.50", desc: "Our signature espresso poured over cold oat milk.", img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=300&q=80" },
+        { name: "Sparkling Espresso", price: "$4.80", desc: "Espresso over chilled tonic water and fresh orange slice.", img: "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=300&q=80" },
+        { name: "Berry Hibiscus Iced Tea", price: "$4.50", desc: "Organic cold-steeped hibiscus tea with fresh raspberries.", img: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=300&q=80" },
+        { name: "Iced Cloud Matcha", price: "$6.00", desc: "Japanese Uji matcha with light vanilla cream float.", img: "https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=300&q=80" }
+      ],
+      pastries: [
+        { name: "Butter Sourdough Croissant", price: "$4.20", desc: "Flaky, golden layers made with French cultured butter.", img: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=300&q=80" },
+        { name: "Almond Twice-Baked Bun", price: "$4.80", desc: "Filled with rich almond frangipane and toasted flakes.", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=300&q=80" },
+        { name: "Blueberry Lemon Scone", price: "$3.90", desc: "Baked fresh daily with wild blueberries & lemon glaze.", img: "https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?auto=format&fit=crop&w=300&q=80" },
+        { name: "Sea Salt Chocolate Chunk", price: "$3.50", desc: "Soft-baked cookie topped with flakes of Maldon sea salt.", img: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=300&q=80" }
+      ],
+      breakfast: [
+        { name: "Avocado Sourdough Toast", price: "$9.50", desc: "Smashed avocado, cherry tomatoes & chili flakes on sourdough.", img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=300&q=80" },
+        { name: "Warm Berry Granola Bowl", price: "$8.20", desc: "House-baked oat granola, Greek yogurt & honey drizzle.", img: "https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?auto=format&fit=crop&w=300&q=80" },
+        { name: "Egg & Cheese Brioche", price: "$8.80", desc: "Fluffy scrambled eggs, sharp cheddar & chive aioli.", img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=300&q=80" }
+      ]
+    };
+
+    // Render Menu Items Function
+    function renderMenuItems(category) {
+      const container = document.getElementById('menu-grid');
+      container.innerHTML = '';
+
+      const items = menuData[category] || menuData.coffee;
+      
+      items.forEach(item => {
+        const itemEl = document.createElement('div');
+        itemEl.className = 'menu-item-horizontal';
+        itemEl.innerHTML = `
+          <img src="${item.img}" alt="${item.name}" class="menu-item-img">
+          <div class="menu-item-details">
+            <div class="menu-item-head">
+              <h4 class="menu-item-name">${item.name}</h4>
+              <span class="menu-item-price">${item.price}</span>
+            </div>
+            <p class="menu-item-desc">${item.desc}</p>
+          </div>
+        `;
+        container.appendChild(itemEl);
+      });
+
+      // Animate newly rendered items smoothly
+      gsap.from('.menu-item-horizontal', {
+        opacity: 0,
+        y: 15,
+        duration: 0.4,
+        stagger: 0.08,
+        ease: 'power2.out'
+      });
+    }
+
+    // Initialize Tab Listeners
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const category = btn.getAttribute('data-category');
+        renderMenuItems(category);
+      });
+    });
+
+    // Initial render
+    renderMenuItems('coffee');
+
+    // Navbar Scroll Background Toggle
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 40) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile Menu Toggle
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const mobileDrawer = document.getElementById('mobile-drawer');
+    const mobileClose = document.getElementById('mobile-close');
+    const navOverlay = document.getElementById('nav-overlay');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    function openDrawer() {
+      mobileDrawer.classList.add('active');
+      navOverlay.classList.add('active');
+    }
+
+    function closeDrawer() {
+      mobileDrawer.classList.remove('active');
+      navOverlay.classList.remove('active');
+    }
+
+    mobileToggle.addEventListener('click', openDrawer);
+    mobileClose.addEventListener('click', closeDrawer);
+    navOverlay.addEventListener('click', closeDrawer);
+    mobileLinks.forEach(link => link.addEventListener('click', closeDrawer));
+
+    // Testimonial Slider Data & Logic
+    const testimonials = [
+      {
+        quote: "Bloom Café is my favorite spot in the neighborhood. The natural sunlight, the friendly staff, and their Iced Oat Latte literally make my whole morning.",
+        name: "Maya Lin",
+        role: "Regular Guest",
+        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80"
+      },
+      {
+        quote: "The croissants here are ridiculously good—flaky, buttery, and baked fresh every morning. You can really taste the quality.",
+        name: "David Miller",
+        role: "Local Foodie",
+        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80"
+      },
+      {
+        quote: "Super cozy, bright, and dog-friendly! I love working here on weekday mornings with my Matcha Latte.",
+        name: "Emma Watson",
+        role: "Freelance Designer",
+        avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80"
+      }
+    ];
+
+    function setTestimonial(index) {
+      const card = document.getElementById('testimonial-card');
+      const dots = document.querySelectorAll('.dot');
+
+      dots.forEach(d => d.classList.remove('active'));
+      dots[index].classList.add('active');
+
+      gsap.to(card, {
+        opacity: 0,
+        y: 10,
+        duration: 0.25,
+        onComplete: () => {
+          document.getElementById('testi-quote').textContent = `"${testimonials[index].quote}"`;
+          document.getElementById('testi-name').textContent = testimonials[index].name;
+          document.getElementById('testi-role').textContent = testimonials[index].role;
+          document.getElementById('testi-avatar').src = testimonials[index].avatar;
+
+          gsap.to(card, { opacity: 1, y: 0, duration: 0.35 });
+        }
+      });
+    }
+
+    // Auto Slide Testimonials
+    let currentTesti = 0;
+    setInterval(() => {
+      currentTesti = (currentTesti + 1) % testimonials.length;
+      setTestimonial(currentTesti);
+    }, 6000);
+
+    // Subtle 3D Tilt Micro-Interaction for Instagram Cards
+    const instaCards = document.querySelectorAll('.insta-card');
+    instaCards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        const rotateX = (-y / rect.height) * 8;
+        const rotateY = (x / rect.width) * 8;
+
+        gsap.to(card, {
+          rotateX: rotateX,
+          rotateY: rotateY,
+          duration: 0.4,
+          ease: 'power1.out'
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          rotateX: 0,
+          rotateY: 0,
+          duration: 0.6,
+          ease: 'power2.out'
+        });
+      });
+    });
+
+    // Scroll Animations with GSAP & ScrollTrigger
+    gsap.from('.hero-text-area', {
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      ease: 'power3.out'
+    });
+
+    gsap.from('.hero-visual', {
+      opacity: 0,
+      scale: 0.95,
+      duration: 1.2,
+      delay: 0.2,
+      ease: 'power2.out'
+    });
+
+    gsap.utils.toArray('.section-title-wrap').forEach(title => {
+      gsap.from(title, {
+        scrollTrigger: {
+          trigger: title,
+          start: 'top 85%'
+        },
+        opacity: 0,
+        y: 20,
+        duration: 0.8
+      });
+    });
+
+    // Stagger Reveal for Instagram Cards
+    gsap.from('.insta-card', {
+      scrollTrigger: {
+        trigger: '#gallery',
+        start: 'top 75%'
+      },
+      opacity: 0,
+      y: 40,
+      duration: 0.8,
+      stagger: 0.12,
+      ease: 'power2.out'
+    });
+
+    gsap.utils.toArray('.bestseller-card').forEach((card, idx) => {
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 88%'
+        },
+        opacity: 0,
+        y: 30,
+        duration: 0.6,
+        delay: idx * 0.1
+      });
+    });
+
+    gsap.utils.toArray('.feature-box').forEach((box, idx) => {
+      gsap.from(box, {
+        scrollTrigger: {
+          trigger: box,
+          start: 'top 88%'
+        },
+        opacity: 0,
+        y: 25,
+        duration: 0.5,
+        delay: idx * 0.1
+      });
+    });
+  </script>
+</body>
+</html>
